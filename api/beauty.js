@@ -7,9 +7,9 @@ export default async function handler(req, res) {
   const NOTION_TOKEN = process.env.NOTION_TOKEN;
   if (!NOTION_TOKEN) { res.status(500).json({ error: '環境變數未設定' }); return; }
 
-  // 正確的 Notion database ID
-  const NOTION_DB_INTENSIVE   = '1c72437f4e1080cf8057eb822b5be04d'; // 密集期
-  const NOTION_DB_MAINTENANCE = '1c72437f4e1081d9a02bdaaaf95eae8d'; // 保養期
+  // UUID 格式的 database ID
+  const NOTION_DB_INTENSIVE   = '1c72437f-4e10-80cf-8057-eb822b5be04d'; // 密集期
+  const NOTION_DB_MAINTENANCE = '1c72437f-4e10-81d9-a02b-daaf95eae8d';  // 保養期
 
   async function queryDB(dbId, type) {
     try {
@@ -27,37 +27,28 @@ export default async function handler(req, res) {
               { property: '預約狀態', select: { equals: '需追蹤' } },
             ]
           },
-          sorts: [{ property: '分級', direction: 'ascending' }],
           page_size: 100,
         }),
       });
+
+      if (!r.ok) {
+        const errText = await r.text();
+        console.error(`DB ${type} query failed:`, errText);
+        return [];
+      }
+
       const data = await r.json();
       if (!data.results) return [];
 
       return data.results.map(page => {
         const p = page.properties;
+        const getName = () => p['姓名']?.title?.[0]?.text?.content || '—';
+        const getSelect = (key) => p[key]?.select?.name || '';
+        const getDate = (key) => p[key]?.date?.start || '';
+        const getText = (key) => p[key]?.rich_text?.[0]?.text?.content || '';
 
-        const getName = () =>
-          p['姓名']?.title?.[0]?.text?.content || '—';
-        const getSelect = (key) =>
-          p[key]?.select?.name || '';
-        const getDate = (key) =>
-          p[key]?.date?.start || '';
-        const getText = (key) =>
-          p[key]?.rich_text?.[0]?.text?.content || '';
-        const getNum = (key) =>
-          p[key]?.number || 0;
-
-        // 最後施做日期（密集期和保養期欄位名稱可能不同）
-        const lastDate =
-          getDate('最後施做') ||
-          getDate('最後一次施做日期') ||
-          getDate('預計回診日期') ||
-          getDate('初診日期');
-
-        const daysAgo = lastDate
-          ? Math.floor((new Date() - new Date(lastDate)) / 864e5)
-          : null;
+        const lastDate = getDate('最後施做') || getDate('最後一次施做日期') || getDate('預計回診日期') || getDate('初診日期');
+        const daysAgo = lastDate ? Math.floor((new Date() - new Date(lastDate)) / 864e5) : null;
 
         return {
           id: page.id,
@@ -70,7 +61,6 @@ export default async function handler(req, res) {
           nextDate: getDate('預計回診日期'),
           note: getText('備註') || getText('備注'),
           therapy: p['療程']?.multi_select?.map(t => t.name).join('、') || '',
-          doneCount: getNum('已完成次數'),
         };
       });
     } catch(e) {
