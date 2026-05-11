@@ -20,8 +20,8 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text
 .topbar{padding:12px 20px 0;display:flex;align-items:center;justify-content:space-between}
 .topbar-logo{font-size:15px;font-weight:700;color:#fff}
 .topbar-date{font-size:11px;color:rgba(255,255,255,.65)}
-.nav-bar{display:flex;padding:0 4px}
-.nav-btn{flex:1;padding:10px 4px;font-size:12px;font-weight:500;font-family:'Noto Sans TC',sans-serif;color:rgba(255,255,255,.55);background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
+.nav-bar{display:flex;padding:0 2px}
+.nav-btn{flex:1;padding:9px 2px;font-size:11px;font-weight:500;font-family:'Noto Sans TC',sans-serif;color:rgba(255,255,255,.55);background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
 .nav-btn.active{color:#fff;border-bottom-color:#fff}
 .progress-bar{display:flex;gap:3px;padding:6px 20px 10px}
 .prog-seg{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.25);transition:background .3s}
@@ -51,31 +51,23 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text
 .nc-btn:active{background:var(--accent-light);transform:scale(.9)}
 .nc-val{font-size:24px;font-weight:700;min-width:34px;text-align:center}
 
-/* 空檔 */
-.slot-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
-.slot-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:12px}
-.slot-name{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:8px}
-.slot-opts{display:flex;flex-direction:column;gap:5px}
-.slot-opt{padding:7px 8px;font-size:12px;font-family:'Noto Sans TC',sans-serif;font-weight:500;border-radius:8px;border:1px solid var(--border);background:var(--bg);cursor:pointer;color:var(--text2);text-align:center;transition:all .15s}
-.slot-opt.pf{background:var(--green-bg);color:var(--green);border-color:var(--green);font-weight:700}
-.slot-opt.po{background:var(--amber-bg);color:var(--amber);border-color:var(--amber);font-weight:700}
-.slot-opt.pu{background:#F5F5F5;color:var(--text3);border-color:#ddd}
+/* 空檔輸入 */
+.slot-input-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.slot-input-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:14px 12px}
+.slot-input-label{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:10px}
+.slot-input-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.slot-input-row:last-child{margin-bottom:0}
+.slot-input-sublabel{font-size:12px;color:var(--text2)}
+.slot-num-input{width:56px;font-size:16px;font-family:'Noto Sans TC',sans-serif;padding:6px 8px;border-radius:8px;border:1px solid var(--border);text-align:center;outline:none;background:var(--bg)}
+.slot-num-input:focus{border-color:var(--accent)}
 
-/* 跟進 */
+/* 跟進卡 */
 .followup-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:16px;margin-bottom:16px}
-.followup-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0}
-.followup-row+.followup-row{border-top:1px solid var(--border);margin-top:6px;padding-top:12px}
-.followup-label{font-size:13px;color:var(--text2)}
+.followup-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0}
+.followup-row+.followup-row{border-top:1px solid var(--border)}
+.followup-label{font-size:13px;color:var(--text)}
 .followup-sub{font-size:11px;color:var(--text3);margin-top:2px}
-
-/* 初診 */
-.consult-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:16px;margin-bottom:16px}
-.consult-title{font-size:13px;font-weight:700;margin-bottom:14px}
-.consult-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)}
-.consult-row:last-child{border-bottom:none}
-.consult-label{font-size:13px;color:var(--text)}
-.consult-sub{font-size:11px;color:var(--text3);margin-top:2px}
-.consult-note{font-size:12px;color:var(--text3);background:var(--amber-bg);border-radius:10px;padding:10px 12px;margin-top:12px;line-height:1.6}
+.consult-note{font-size:12px;color:var(--amber);background:var(--amber-bg);border-radius:10px;padding:10px 12px;margin-top:12px;line-height:1.6}
 
 textarea.note-area{width:100%;font-size:13px;font-family:'Noto Sans TC',sans-serif;border-radius:12px;padding:12px 14px;min-height:72px;border:1px solid var(--border);background:var(--card);color:var(--text);resize:vertical;outline:none;margin-bottom:16px}
 textarea.note-area:focus{border-color:var(--accent)}
@@ -83,7 +75,7 @@ textarea.note-area:focus{border-color:var(--accent)}
 
 /* 總覽 */
 .sum-card{background:var(--card);border-radius:16px;border:1px solid var(--border);overflow:hidden;margin-bottom:16px}
-.sum-section-title{padding:7px 14px;font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.8px;text-transform:uppercase;border-bottom:1px solid var(--border);background:#FAFAF8}
+.sum-sec{padding:7px 14px;font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.8px;text-transform:uppercase;border-bottom:1px solid var(--border);background:#FAFAF8}
 .sum-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px}
 .sum-row:last-child{border-bottom:none}
 .sum-key{color:var(--text2)}.sum-val{font-weight:700;text-align:right;max-width:60%}
@@ -112,12 +104,6 @@ textarea.note-area:focus{border-color:var(--accent)}
 .metric-sub{font-size:11px;color:var(--text3);margin-top:3px}
 .section-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:14px;margin-bottom:12px}
 .ai-text{font-size:13px;color:var(--text);line-height:1.8}
-.slot-status-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.slot-status-card{border-radius:10px;padding:10px 12px;text-align:center}
-.slot-full{background:var(--green-bg)}.slot-open{background:var(--amber-bg)}.slot-unk{background:#F5F5F5}
-.slot-status-label{font-size:11px;color:var(--text2);margin-bottom:3px}
-.slot-status-val{font-size:13px;font-weight:700}
-.slot-full .slot-status-val{color:var(--green)}.slot-open .slot-status-val{color:var(--amber)}.slot-unk .slot-status-val{color:var(--text3)}
 
 /* KPI */
 .kpi-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
@@ -143,6 +129,21 @@ textarea.note-area:focus{border-color:var(--accent)}
 .proj-check{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--border);background:var(--bg);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;transition:all .15s}
 .proj-check.done{background:var(--green);border-color:var(--green);color:#fff}
 
+/* 設定頁 */
+.setting-table{background:var(--card);border-radius:14px;border:1px solid var(--border);overflow:hidden;margin-bottom:16px}
+.setting-header{display:grid;grid-template-columns:80px 1fr 1fr;gap:0;background:#FAFAF8;border-bottom:1px solid var(--border)}
+.setting-header-cell{padding:10px 12px;font-size:11px;font-weight:700;color:var(--text3);text-align:center}
+.setting-header-cell:first-child{text-align:left}
+.setting-row{display:grid;grid-template-columns:80px 1fr 1fr;border-bottom:1px solid var(--border)}
+.setting-row:last-child{border-bottom:none}
+.setting-day{padding:14px 12px;font-size:13px;font-weight:500;color:var(--text);display:flex;align-items:center}
+.setting-cell{padding:10px 12px;display:flex;align-items:center;justify-content:center}
+.setting-input{width:60px;font-size:16px;font-family:'Noto Sans TC',sans-serif;padding:7px 8px;border-radius:8px;border:1px solid var(--border);text-align:center;outline:none;background:var(--bg)}
+.setting-input:focus{border-color:var(--accent)}
+.save-setting-btn{width:100%;padding:14px;font-size:14px;font-family:'Noto Sans TC',sans-serif;font-weight:700;border-radius:14px;border:none;background:var(--accent);color:#fff;cursor:pointer;transition:all .15s}
+.save-setting-btn:active{transform:scale(.97)}
+.setting-saved{text-align:center;font-size:12px;color:var(--green);margin-top:8px;display:none}
+
 /* 密碼 */
 .pwd-wrap{padding:48px 20px;text-align:center}
 .pwd-icon{font-size:40px;margin-bottom:16px}
@@ -165,7 +166,6 @@ textarea.note-area:focus{border-color:var(--accent)}
 </head>
 <body>
 <div class="app">
-
   <div class="header-fixed">
     <div class="topbar">
       <span class="topbar-logo">🏥 雲玖中醫</span>
@@ -173,8 +173,9 @@ textarea.note-area:focus{border-color:var(--accent)}
     </div>
     <div class="nav-bar">
       <button class="nav-btn active" onclick="switchPage('report',this)">📋 填報</button>
-      <button class="nav-btn" onclick="switchPage('manager',this)">📊 店長看板</button>
-      <button class="nav-btn" onclick="switchPage('owner',this)">🔐 老闆看板</button>
+      <button class="nav-btn" onclick="switchPage('manager',this)">📊 店長</button>
+      <button class="nav-btn" onclick="switchPage('owner',this)">🔐 老闆</button>
+      <button class="nav-btn" onclick="switchPage('setting',this)">⚙️ 設定</button>
     </div>
     <div class="progress-bar" id="prog-bar">
       <div class="prog-seg on" id="ps0"></div>
@@ -200,7 +201,7 @@ textarea.note-area:focus{border-color:var(--accent)}
     <!-- S1 數字 -->
     <div class="step" id="s1">
       <div class="step-heading">今日就診數字</div>
-      <div class="step-sub">從報表直接填，沒開診的時段填 0</div>
+      <div class="step-sub">從報表直接填，沒開診填 0</div>
       <div class="sec-label">就診人數</div>
       <div class="num-grid-3">
         <div class="num-card"><div class="num-card-label">☀️ 早診</div><div class="num-controls"><button class="nc-btn" onclick="adj('m',-1)">−</button><span class="nc-val" id="v-m">0</span><button class="nc-btn" onclick="adj('m',1)">+</button></div></div>
@@ -220,13 +221,44 @@ textarea.note-area:focus{border-color:var(--accent)}
       </div>
     </div>
 
-    <!-- S2 空檔 + 跟進 + 初診 -->
+    <!-- S2 空檔 + 跟進 -->
     <div class="step" id="s2">
-      <div class="step-heading">空檔、跟進與初診</div>
-      <div class="step-sub">今日最重要的三件事</div>
+      <div class="step-heading">空檔與跟進</div>
+      <div class="step-sub">填今日開放格數與跟進狀況</div>
 
-      <div class="sec-label">明後天空檔狀態</div>
-      <div class="slot-grid" id="slot-grid"></div>
+      <div class="sec-label">今日自費空檔（開放格數）</div>
+      <div class="slot-input-grid">
+        <div class="slot-input-card">
+          <div class="slot-input-label">✨ 美顏針</div>
+          <div class="slot-input-row">
+            <span class="slot-input-sublabel">今日開放</span>
+            <input type="number" class="slot-num-input" id="slot-facial-total" min="0" placeholder="0">
+          </div>
+          <div class="slot-input-row">
+            <span class="slot-input-sublabel">實際到診</span>
+            <span style="font-size:16px;font-weight:700;color:var(--accent)" id="slot-facial-actual">0</span>
+          </div>
+          <div class="slot-input-row">
+            <span class="slot-input-sublabel">空檔率</span>
+            <span style="font-size:14px;font-weight:700" id="slot-facial-rate">—</span>
+          </div>
+        </div>
+        <div class="slot-input-card">
+          <div class="slot-input-label">🔪 針刀</div>
+          <div class="slot-input-row">
+            <span class="slot-input-sublabel">今日開放</span>
+            <input type="number" class="slot-num-input" id="slot-nk-total" min="0" placeholder="0">
+          </div>
+          <div class="slot-input-row">
+            <span class="slot-input-sublabel">實際到診</span>
+            <span style="font-size:16px;font-weight:700;color:var(--accent)" id="slot-nk-actual">0</span>
+          </div>
+          <div class="slot-input-row">
+            <span class="slot-input-sublabel">空檔率</span>
+            <span style="font-size:14px;font-weight:700" id="slot-nk-rate">—</span>
+          </div>
+        </div>
+      </div>
 
       <div class="sec-label">今日初診諮詢跟進</div>
       <div class="followup-card">
@@ -244,7 +276,7 @@ textarea.note-area:focus{border-color:var(--accent)}
         <div class="followup-row">
           <div>
             <div class="followup-label">48小時內跟進人數</div>
-            <div class="followup-sub">店長主動聯繫的</div>
+            <div class="followup-sub">店長主動聯繫</div>
           </div>
           <div class="num-controls">
             <button class="nc-btn" onclick="adj('fu',-1)">−</button>
@@ -255,7 +287,7 @@ textarea.note-area:focus{border-color:var(--accent)}
         <div class="followup-row">
           <div>
             <div class="followup-label">成功轉預約</div>
-            <div class="followup-sub">當場或跟進後預約成功</div>
+            <div class="followup-sub">當場或跟進後</div>
           </div>
           <div class="num-controls">
             <button class="nc-btn" onclick="adj('cv',-1)">−</button>
@@ -263,7 +295,7 @@ textarea.note-area:focus{border-color:var(--accent)}
             <button class="nc-btn" onclick="adj('cv',1)">+</button>
           </div>
         </div>
-        <div class="consult-note">💡 沒有當場轉單的諮詢，請引導患者填 Google 表單，店長 48 小時內跟進</div>
+        <div class="consult-note">💡 沒有當場轉單的，請引導患者填 Google 表單，店長 48 小時內跟進</div>
       </div>
 
       <div class="note-label">今日備注（選填）</div>
@@ -273,7 +305,7 @@ textarea.note-area:focus{border-color:var(--accent)}
     <!-- S3 確認 -->
     <div class="step" id="s3">
       <div class="step-heading">確認後送出</div>
-      <div class="step-sub">資料直接存進 Notion，老闆隨時看得到</div>
+      <div class="step-sub">資料直接存進 Notion</div>
       <div class="sum-card" id="sum-card"></div>
       <div class="err-box" id="err-box"></div>
     </div>
@@ -301,37 +333,17 @@ textarea.note-area:focus{border-color:var(--accent)}
       <div><div class="dash-title">店長看板</div><div class="dash-sub" id="mgr-date"></div></div>
       <button class="refresh-btn" onclick="loadManagerData()">🔄 更新</button>
     </div>
-
     <div class="sec-label">本週核心指標</div>
     <div class="kpi-card">
-      <div>
-        <div class="kpi-label">初診轉單率</div>
-        <div class="kpi-val" id="kpi-conv">—</div>
-        <div class="kpi-sub">目標 30%</div>
-      </div>
-      <div class="kpi-right">
-        <div class="kpi-detail" id="kpi-conv-detail">從 Notion 載入中</div>
-        <div class="kpi-bar-wrap"><div class="kpi-bar danger" id="kpi-conv-bar" style="width:0%"></div></div>
-      </div>
+      <div><div class="kpi-label">初診轉單率</div><div class="kpi-val" id="kpi-conv">—</div><div class="kpi-sub">目標 30%</div></div>
+      <div class="kpi-right"><div class="kpi-detail" id="kpi-conv-detail">載入中</div><div class="kpi-bar-wrap"><div class="kpi-bar danger" id="kpi-conv-bar" style="width:0%"></div></div></div>
     </div>
     <div class="kpi-card" style="margin-bottom:16px">
-      <div>
-        <div class="kpi-label">自費空檔填滿率</div>
-        <div class="kpi-val" id="kpi-slot">—</div>
-        <div class="kpi-sub">目標 90%</div>
-      </div>
-      <div class="kpi-right">
-        <div class="kpi-detail" id="kpi-slot-detail">從 Notion 載入中</div>
-        <div class="kpi-bar-wrap"><div class="kpi-bar danger" id="kpi-slot-bar" style="width:0%"></div></div>
-      </div>
+      <div><div class="kpi-label">自費空檔填滿率</div><div class="kpi-val" id="kpi-slot">—</div><div class="kpi-sub">目標 90%</div></div>
+      <div class="kpi-right"><div class="kpi-detail" id="kpi-slot-detail">載入中</div><div class="kpi-bar-wrap"><div class="kpi-bar danger" id="kpi-slot-bar" style="width:0%"></div></div></div>
     </div>
-
-    <div class="sec-label">明後天空檔</div>
-    <div class="section-card"><div class="slot-status-grid" id="mgr-slots"><div class="loading-inline">載入中...</div></div></div>
-
     <div class="sec-label">患者追蹤專案</div>
     <div id="mgr-projects"><div class="loading-inline">載入中...</div></div>
-
     <div class="sec-label">AI 今日建議</div>
     <div class="section-card"><div class="ai-text" id="mgr-ai">從 Notion 分析中...</div></div>
   </div>
@@ -353,44 +365,39 @@ textarea.note-area:focus{border-color:var(--accent)}
         <div><div class="dash-title">老闆看板</div><div class="dash-sub" id="owner-date"></div></div>
         <button class="refresh-btn" onclick="loadOwnerData()">🔄 更新</button>
       </div>
-
       <div class="sec-label">本週核心指標</div>
       <div class="kpi-card">
-        <div>
-          <div class="kpi-label">初診轉單率</div>
-          <div class="kpi-val" id="o-conv">—</div>
-          <div class="kpi-sub">目標 30%</div>
-        </div>
-        <div class="kpi-right">
-          <div class="kpi-detail" id="o-conv-detail">載入中</div>
-          <div class="kpi-bar-wrap"><div class="kpi-bar danger" id="o-conv-bar" style="width:0%"></div></div>
-        </div>
+        <div><div class="kpi-label">初診轉單率</div><div class="kpi-val" id="o-conv">—</div><div class="kpi-sub">目標 30%</div></div>
+        <div class="kpi-right"><div class="kpi-detail" id="o-conv-detail">載入中</div><div class="kpi-bar-wrap"><div class="kpi-bar danger" id="o-conv-bar" style="width:0%"></div></div></div>
       </div>
       <div class="kpi-card" style="margin-bottom:16px">
-        <div>
-          <div class="kpi-label">空檔填滿率</div>
-          <div class="kpi-val" id="o-slot">—</div>
-          <div class="kpi-sub">目標 90%</div>
-        </div>
-        <div class="kpi-right">
-          <div class="kpi-detail" id="o-slot-detail">載入中</div>
-          <div class="kpi-bar-wrap"><div class="kpi-bar danger" id="o-slot-bar" style="width:0%"></div></div>
-        </div>
+        <div><div class="kpi-label">空檔填滿率</div><div class="kpi-val" id="o-slot">—</div><div class="kpi-sub">目標 90%</div></div>
+        <div class="kpi-right"><div class="kpi-detail" id="o-slot-detail">載入中</div><div class="kpi-bar-wrap"><div class="kpi-bar danger" id="o-slot-bar" style="width:0%"></div></div></div>
       </div>
-
       <div class="sec-label">本週數量總覽</div>
-      <div class="metric-grid" id="owner-metrics">
-        <div class="loading-inline" style="grid-column:span 2">載入中...</div>
-      </div>
-
-      <div class="sec-label">明後天空檔</div>
-      <div class="section-card"><div class="slot-status-grid" id="owner-slots"><div class="loading-inline">載入中...</div></div></div>
-
+      <div class="metric-grid" id="owner-metrics"><div class="loading-inline" style="grid-column:span 2">載入中...</div></div>
       <div class="sec-label">AI 策略分析</div>
       <div class="section-card"><div class="ai-text" id="owner-ai">從 Notion 分析中...</div></div>
-
       <button onclick="lockOwner()" style="margin-top:8px;width:100%;padding:12px;font-size:13px;font-family:'Noto Sans TC',sans-serif;border-radius:12px;border:1px solid var(--border);background:var(--card);cursor:pointer;color:var(--text3)">登出老闆模式</button>
     </div>
+  </div>
+
+  <!-- ===== 設定頁 ===== -->
+  <div class="page" id="page-setting">
+    <div class="dash-header">
+      <div><div class="dash-title">空檔格數設定</div><div class="dash-sub">設定後填報會自動帶入，可隨時修改</div></div>
+    </div>
+    <div class="sec-label">每週固定開放格數</div>
+    <div class="setting-table">
+      <div class="setting-header">
+        <div class="setting-header-cell">星期</div>
+        <div class="setting-header-cell">✨ 美顏針</div>
+        <div class="setting-header-cell">🔪 針刀</div>
+      </div>
+      <div id="setting-rows"></div>
+    </div>
+    <button class="save-setting-btn" onclick="saveSettings()">💾 儲存設定</button>
+    <div class="setting-saved" id="setting-saved">✓ 已儲存！填報時會自動帶入今天的格數</div>
   </div>
 
   <div class="loading-overlay" id="loading">
@@ -402,12 +409,7 @@ textarea.note-area:focus{border-color:var(--accent)}
 <script>
 const OWNER_PWD="18166";
 const FIXED_NAMES=["惠玲","詩瑩","韻鈞"];
-const SLOT_DEFS=[
-  {key:"明天美顏針空檔",label:"明天 ✨ 美顏針"},
-  {key:"明天針刀空檔",label:"明天 🔪 針刀"},
-  {key:"後天美顏針空檔",label:"後天 ✨ 美顏針"},
-  {key:"後天針刀空檔",label:"後天 🔪 針刀"},
-];
+const DAYS=["週一","週二","週三","週四","週五","週六"];
 const PATIENTS=[
   {name:"郭巧富",status:"需預約",grade:"A好咖",last:"2026-02-05",therapy:"美顏針"},
   {name:"周暐珈",status:"需預約",grade:"A好咖",last:"2025-09-02",therapy:"美顏針"},
@@ -418,14 +420,89 @@ const PATIENTS=[
 ];
 
 let cur=0;
-let D={m:0,a:0,e:0,f:0,nk:0,h1:0,h2:0,fu:0,cv:0,np_consult:0,slots:{},note:"",reporter:""};
+let D={m:0,a:0,e:0,f:0,nk:0,h1:0,h2:0,fu:0,cv:0,np_consult:0,
+       slot_facial_total:0,slot_nk_total:0,note:"",reporter:""};
 
 const today=new Date();
+const todayDow=today.getDay(); // 0=日,1=一,...,6=六
 const dateDisp=today.toLocaleDateString('zh-TW',{month:'long',day:'numeric',weekday:'short'});
 const dateStr=today.toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'});
 document.getElementById('topbar-date').textContent=dateDisp;
 document.getElementById('mgr-date').textContent=dateDisp;
 document.getElementById('owner-date').textContent=dateDisp;
+
+// 設定頁建立
+const settingRows=document.getElementById('setting-rows');
+DAYS.forEach((day,i)=>{
+  const row=document.createElement('div');
+  row.className='setting-row';
+  row.innerHTML=`
+    <div class="setting-day">${day}</div>
+    <div class="setting-cell"><input type="number" class="setting-input" id="set-f-${i}" min="0" placeholder="0"></div>
+    <div class="setting-cell"><input type="number" class="setting-input" id="set-nk-${i}" min="0" placeholder="0"></div>`;
+  settingRows.appendChild(row);
+});
+
+// 載入已存設定
+function loadSettings(){
+  try{
+    const s=JSON.parse(localStorage.getItem('yj_slot_settings')||'{}');
+    DAYS.forEach((_,i)=>{
+      if(s[`f_${i}`]!=null) document.getElementById(`set-f-${i}`).value=s[`f_${i}`];
+      if(s[`nk_${i}`]!=null) document.getElementById(`set-nk-${i}`).value=s[`nk_${i}`];
+    });
+  }catch(e){}
+}
+
+function saveSettings(){
+  const s={};
+  DAYS.forEach((_,i)=>{
+    s[`f_${i}`]=parseInt(document.getElementById(`set-f-${i}`).value)||0;
+    s[`nk_${i}`]=parseInt(document.getElementById(`set-nk-${i}`).value)||0;
+  });
+  try{localStorage.setItem('yj_slot_settings',JSON.stringify(s));}catch(e){}
+  document.getElementById('setting-saved').style.display='block';
+  setTimeout(()=>document.getElementById('setting-saved').style.display='none',2500);
+  // 如果今天是工作日，更新填報頁的預設值
+  autoFillTodaySlots();
+}
+
+function getTodaySlots(){
+  try{
+    const s=JSON.parse(localStorage.getItem('yj_slot_settings')||'{}');
+    const dow=todayDow===0?null:todayDow-1; // 週一=0...週六=5，週日=null
+    if(dow===null||dow>5) return {facial:0,nk:0};
+    return {facial:s[`f_${dow}`]||0,nk:s[`nk_${dow}`]||0};
+  }catch(e){return {facial:0,nk:0};}
+}
+
+function autoFillTodaySlots(){
+  const slots=getTodaySlots();
+  document.getElementById('slot-facial-total').value=slots.facial||'';
+  document.getElementById('slot-nk-total').value=slots.nk||'';
+  updateSlotRates();
+}
+
+function updateSlotRates(){
+  const facialTotal=parseInt(document.getElementById('slot-facial-total').value)||0;
+  const nkTotal=parseInt(document.getElementById('slot-nk-total').value)||0;
+  const facialActual=D.f||0;
+  const nkActual=D.nk||0;
+  document.getElementById('slot-facial-actual').textContent=facialActual;
+  document.getElementById('slot-nk-actual').textContent=nkActual;
+  if(facialTotal>0){
+    const rate=Math.round(facialActual/facialTotal*100);
+    const el=document.getElementById('slot-facial-rate');
+    el.textContent=rate+'%';
+    el.style.color=rate>=90?'var(--green)':rate>=70?'var(--amber)':'var(--red)';
+  }else document.getElementById('slot-facial-rate').textContent='—';
+  if(nkTotal>0){
+    const rate=Math.round(nkActual/nkTotal*100);
+    const el=document.getElementById('slot-nk-rate');
+    el.textContent=rate+'%';
+    el.style.color=rate>=90?'var(--green)':rate>=70?'var(--amber)':'var(--red)';
+  }else document.getElementById('slot-nk-rate').textContent='—';
+}
 
 // 頁面切換
 function switchPage(p,btn){
@@ -435,6 +512,7 @@ function switchPage(p,btn){
   btn.classList.add('active');
   document.getElementById('prog-bar').style.display=p==='report'?'flex':'none';
   if(p==='manager') loadManagerData();
+  if(p==='setting'){loadSettings();}
 }
 
 // 填報者
@@ -451,7 +529,6 @@ FIXED_NAMES.forEach(n=>{
   };
   ng.appendChild(b);
 });
-// 其他按鈕
 const otherBtn=document.createElement('button');
 otherBtn.className='name-btn'; otherBtn.textContent='其他';
 otherBtn.onclick=()=>{
@@ -463,39 +540,21 @@ otherBtn.onclick=()=>{
   document.getElementById('btn-next').disabled=true;
 };
 ng.appendChild(otherBtn);
-
 function onNameInput(){
   const val=document.getElementById('name-input').value.trim();
   D.reporter=val;
   document.getElementById('btn-next').disabled=!val;
 }
 
-// 空檔
-const sg=document.getElementById('slot-grid');
-SLOT_DEFS.forEach(slot=>{
-  const card=document.createElement('div');card.className='slot-card';
-  card.innerHTML=`<div class="slot-name">${slot.label}</div>`;
-  const opts=document.createElement('div');opts.className='slot-opts';opts.id='sl-'+slot.key;
-  [{l:'額滿',c:'pf'},{l:'有空檔',c:'po'},{l:'未確認',c:'pu'}].forEach(opt=>{
-    const b=document.createElement('button');b.className='slot-opt';b.textContent=opt.l;
-    b.onclick=()=>{
-      opts.querySelectorAll('.slot-opt').forEach(x=>x.className='slot-opt');
-      b.className='slot-opt '+opt.c; D.slots[slot.key]=opt.l;
-    };
-    opts.appendChild(b);
-  });
-  card.appendChild(opts); sg.appendChild(card);
-});
-
 function adj(k,d){
   if(!(k in D)) D[k]=0;
   D[k]=Math.max(0,(D[k]||0)+d);
   document.getElementById('v-'+k).textContent=D[k];
+  // 實際到診數改變時更新空檔率
+  if(k==='f'||k==='nk') updateSlotRates();
 }
 
-function updProg(){
-  for(let i=0;i<4;i++) document.getElementById('ps'+i).className='prog-seg'+(i<=cur?' on':'');
-}
+function updProg(){for(let i=0;i<4;i++) document.getElementById('ps'+i).className='prog-seg'+(i<=cur?' on':'');}
 
 function goStep(n){
   document.getElementById('s'+cur).classList.remove('visible');
@@ -508,6 +567,8 @@ function goStep(n){
   document.getElementById('btn-back').style.display=n===0?'none':'block';
   document.getElementById('btn-next').disabled=n===0&&!D.reporter;
   document.getElementById('btn-next').textContent=n===3?'✓ 確認送出':'下一步 →';
+  // 進入 S2 時自動帶入今天格數
+  if(n===2){autoFillTodaySlots(); document.getElementById('slot-facial-actual').textContent=D.f||0; document.getElementById('slot-nk-actual').textContent=D.nk||0;}
   if(n===3) buildSummary();
   window.scrollTo(0,0);
 }
@@ -516,26 +577,31 @@ function goBack(){if(cur>0)goStep(cur-1);}
 
 function buildSummary(){
   D.note=document.getElementById('note').value;
+  D.slot_facial_total=parseInt(document.getElementById('slot-facial-total').value)||0;
+  D.slot_nk_total=parseInt(document.getElementById('slot-nk-total').value)||0;
   const tot=D.m+D.a+D.e;
   const convRate=D.fu>0?Math.round(D.cv/D.fu*100)+'%':'—';
+  const facialRate=D.slot_facial_total>0?Math.round(D.f/D.slot_facial_total*100)+'%':'—';
+  const nkRate=D.slot_nk_total>0?Math.round(D.nk/D.slot_nk_total*100)+'%':'—';
   document.getElementById('sum-card').innerHTML=`
-    <div class="sum-section-title">今日數字</div>
+    <div class="sum-sec">今日數字</div>
     <div class="sum-row"><span class="sum-key">填報者</span><span class="sum-val">${D.reporter}</span></div>
     <div class="sum-row"><span class="sum-key">就診人數</span><span class="sum-val">${tot} 人（早${D.m}／午${D.a}／晚${D.e}）</span></div>
-    <div class="sum-row"><span class="sum-key">美顏針 / 針刀</span><span class="sum-val">${D.f} 次 ／ ${D.nk} 次</span></div>
+    <div class="sum-row"><span class="sum-key">美顏針</span><span class="sum-val">${D.f} / ${D.slot_facial_total} 格（${facialRate}）</span></div>
+    <div class="sum-row"><span class="sum-key">針刀</span><span class="sum-val">${D.nk} / ${D.slot_nk_total} 格（${nkRate}）</span></div>
     <div class="sum-row"><span class="sum-key">轉骨 / 客製水藥</span><span class="sum-val">${D.h1} 張 ／ ${D.h2} 張</span></div>
-    <div class="sum-section-title">今日初診跟進</div>
-    <div class="sum-row"><span class="sum-key">今日諮詢總人數</span><span class="sum-val">${D.np_consult} 人</span></div>
-    <div class="sum-row"><span class="sum-key">48小時內跟進</span><span class="sum-val">${D.fu} 人</span></div>
-    <div class="sum-row"><span class="sum-key">成功轉預約</span><span class="sum-val">${D.cv} 人（轉單率 ${convRate}）</span></div>
-    <div class="sum-section-title">空檔狀態</div>
-    ${SLOT_DEFS.map(s=>`<div class="sum-row"><span class="sum-key">${s.label}</span><span class="sum-val">${D.slots[s.key]||'—'}</span></div>`).join('')}
-    <div class="sum-section-title">備注</div>
+    <div class="sum-sec">今日跟進</div>
+    <div class="sum-row"><span class="sum-key">今日諮詢人數</span><span class="sum-val">${D.np_consult} 人</span></div>
+    <div class="sum-row"><span class="sum-key">48小時跟進</span><span class="sum-val">${D.fu} 人</span></div>
+    <div class="sum-row"><span class="sum-key">成功轉預約</span><span class="sum-val">${D.cv} 人（${convRate}）</span></div>
+    <div class="sum-sec">備注</div>
     <div class="sum-row"><span class="sum-key">備注</span><span class="sum-val" style="font-weight:400;font-size:12px">${D.note||'—'}</span></div>`;
 }
 
 async function submitReport(){
   D.note=document.getElementById('note').value;
+  D.slot_facial_total=parseInt(document.getElementById('slot-facial-total').value)||0;
+  D.slot_nk_total=parseInt(document.getElementById('slot-nk-total').value)||0;
   showLoading('儲存到 Notion...');
   document.getElementById('err-box').style.display='none';
   try{
@@ -546,9 +612,10 @@ async function submitReport(){
     hideLoading();
     if(!res.ok){const e=await res.json();throw new Error(e.error||'伺服器錯誤');}
     const tot=D.m+D.a+D.e;
-    const convRate=D.fu>0?Math.round(D.cv/D.fu*100)+'%':'—';
+    const facialRate=D.slot_facial_total>0?Math.round(D.f/D.slot_facial_total*100)+'%':'—';
+    const nkRate=D.slot_nk_total>0?Math.round(D.nk/D.slot_nk_total*100)+'%':'—';
     document.getElementById('success-sub').innerHTML=
-      `${D.reporter} 完成今日填報 🎉<br>就診 <strong>${tot}</strong> 人 ／ 美顏針 <strong>${D.f}</strong> 次<br>諮詢 <strong>${D.np_consult}</strong> 人，轉預約 <strong>${D.cv}</strong> 人（${convRate}）<br><br>資料已存入 Notion ✓`;
+      `${D.reporter} 完成今日填報 🎉<br>就診 <strong>${tot}</strong> 人<br>美顏針填滿率 <strong>${facialRate}</strong> ／ 針刀 <strong>${nkRate}</strong><br>轉預約 <strong>${D.cv}</strong> 人<br><br>資料已存入 Notion ✓`;
     goStep(4);
   }catch(e){
     hideLoading();
@@ -559,7 +626,7 @@ async function submitReport(){
 }
 
 function resetReport(){
-  D={m:0,a:0,e:0,f:0,nk:0,h1:0,h2:0,fu:0,cv:0,np_consult:0,slots:{},note:"",reporter:""};
+  D={m:0,a:0,e:0,f:0,nk:0,h1:0,h2:0,fu:0,cv:0,np_consult:0,slot_facial_total:0,slot_nk_total:0,note:"",reporter:""};
   ['m','a','e','f','nk','h1','h2','fu','cv','np_consult'].forEach(k=>{
     const el=document.getElementById('v-'+k); if(el) el.textContent='0';
   });
@@ -568,54 +635,36 @@ function resetReport(){
   document.getElementById('name-input').value='';
   document.getElementById('name-input-wrap').style.display='none';
   ng.querySelectorAll('.name-btn').forEach(b=>b.classList.remove('picked'));
-  document.querySelectorAll('.slot-opt').forEach(b=>b.className='slot-opt');
   document.getElementById('report-nav').style.display='flex';
   document.getElementById('prog-bar').style.display='flex';
   goStep(0);
 }
 
-// 共用：更新 KPI 顯示
-function updateKPI(convId,convDetailId,convBarId,slotId,slotDetailId,slotBarId,metrics){
-  const {convRate,totalFU,totalCV,slotRate,fullSlots,totalSlots}=metrics;
-  document.getElementById(convId).textContent=convRate!==null?convRate+'%':'—';
-  document.getElementById(convDetailId).textContent=totalFU>0?`${totalCV}/${totalFU} 人`:convRate===null?'本週無跟進資料':'—';
-  const cbar=document.getElementById(convBarId);
-  cbar.style.width=Math.min(convRate||0,100)+'%';
-  cbar.className='kpi-bar '+(convRate>=30?'':convRate>=20?'warn':'danger');
-  document.getElementById(slotId).textContent=slotRate!==null?slotRate+'%':'—';
-  document.getElementById(slotDetailId).textContent=totalSlots>0?`${fullSlots}/${totalSlots} 格額滿`:'尚未填報空檔';
-  const sbar=document.getElementById(slotBarId);
-  sbar.style.width=Math.min(slotRate||0,100)+'%';
-  sbar.className='kpi-bar '+(slotRate>=90?'':slotRate>=70?'warn':'danger');
-}
-
-// 渲染空檔
-function renderSlots(containerId,latestSlots){
-  document.getElementById(containerId).innerHTML=SLOT_DEFS.map(s=>{
-    const val=(latestSlots&&latestSlots[s.key])||'未填';
-    const cls=val==='額滿'?'slot-full':val==='有空檔'?'slot-open':'slot-unk';
-    return `<div class="slot-status-card ${cls}"><div class="slot-status-label">${s.label}</div><div class="slot-status-val">${val}</div></div>`;
-  }).join('');
-}
-
 // 店長看板
 function daysSince(d){if(!d)return 999;return Math.floor((new Date()-new Date(d))/864e5);}
+
+function updateKPI(convId,convDetailId,convBarId,slotId,slotDetailId,slotBarId,m){
+  const {convRate,totalFU,totalCV,slotRate,filledSlots,totalSlots}=m;
+  document.getElementById(convId).textContent=convRate!==null?convRate+'%':'—';
+  document.getElementById(convDetailId).textContent=totalFU>0?`${totalCV}/${totalFU} 人`:'本週無跟進資料';
+  const cb=document.getElementById(convBarId);
+  cb.style.width=Math.min(convRate||0,100)+'%';
+  cb.className='kpi-bar '+(convRate>=30?'':convRate>=20?'warn':'danger');
+  document.getElementById(slotId).textContent=slotRate!==null?slotRate+'%':'—';
+  document.getElementById(slotDetailId).textContent=totalSlots>0?`${filledSlots}/${totalSlots} 格已填滿`:'尚未填報';
+  const sb=document.getElementById(slotBarId);
+  sb.style.width=Math.min(slotRate||0,100)+'%';
+  sb.className='kpi-bar '+(slotRate>=90?'':slotRate>=70?'warn':'danger');
+}
 
 async function loadManagerData(){
   try{
     const res=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({role:'manager'})});
     const result=await res.json();
-    if(result.metrics){
-      updateKPI('kpi-conv','kpi-conv-detail','kpi-conv-bar','kpi-slot','kpi-slot-detail','kpi-slot-bar',result.metrics);
-      renderSlots('mgr-slots',result.metrics.latestSlots);
-    }
-    if(result.text) document.getElementById('mgr-ai').innerHTML=result.text;
-    else document.getElementById('mgr-ai').textContent='AI 分析需要 Anthropic API Key，請聯繫管理員設定。';
-  }catch(e){
-    document.getElementById('mgr-ai').textContent='載入失敗，請重試。';
-  }
+    if(result.metrics) updateKPI('kpi-conv','kpi-conv-detail','kpi-conv-bar','kpi-slot','kpi-slot-detail','kpi-slot-bar',result.metrics);
+    document.getElementById('mgr-ai').innerHTML=result.text||'AI 分析需要 Anthropic API Key。';
+  }catch(e){document.getElementById('mgr-ai').textContent='載入失敗，請重試。';}
 
-  // 患者追蹤
   const urgent=PATIENTS.filter(p=>p.status==='需預約'&&(p.grade.includes('A')||p.grade.includes('B')));
   const track=PATIENTS.filter(p=>p.status==='需追蹤');
   document.getElementById('mgr-projects').innerHTML=`
@@ -634,7 +683,6 @@ async function loadManagerData(){
       </div>`).join('')}${track.length>5?`<div style="text-align:center;padding:8px;font-size:12px;color:var(--text3)">還有 ${track.length-5} 人...</div>`:''}</div>
     </div>`;
 }
-
 function toggleCheck(el){const done=el.classList.toggle('done');el.textContent=done?'✓':'○';}
 
 // 老闆
@@ -657,18 +705,14 @@ async function loadOwnerData(){
     if(result.metrics){
       const m=result.metrics;
       updateKPI('o-conv','o-conv-detail','o-conv-bar','o-slot','o-slot-detail','o-slot-bar',m);
-      renderSlots('owner-slots',m.latestSlots);
       document.getElementById('owner-metrics').innerHTML=`
         <div class="metric-card"><div class="metric-label">本週就診</div><div class="metric-val">${m.totalPts}</div><div class="metric-sub">人次</div></div>
         <div class="metric-card"><div class="metric-label">美顏針</div><div class="metric-val">${m.totalF}</div><div class="metric-sub">人次</div></div>
         <div class="metric-card"><div class="metric-label">針刀</div><div class="metric-val">${m.totalNK}</div><div class="metric-sub">人次</div></div>
         <div class="metric-card"><div class="metric-label">初診諮詢</div><div class="metric-val">${m.totalNP||'—'}</div><div class="metric-sub">本週累計</div></div>`;
     }
-    if(result.text) document.getElementById('owner-ai').innerHTML=result.text;
-    else document.getElementById('owner-ai').textContent='AI 分析需要 Anthropic API Key，請聯繫管理員設定。';
-  }catch(e){
-    document.getElementById('owner-ai').textContent='載入失敗，請重試。';
-  }
+    document.getElementById('owner-ai').innerHTML=result.text||'AI 分析需要 Anthropic API Key。';
+  }catch(e){document.getElementById('owner-ai').textContent='載入失敗，請重試。';}
 }
 
 function lockOwner(){
@@ -678,9 +722,11 @@ function lockOwner(){
   document.getElementById('pwd-err').style.display='none';
 }
 
-function showLoading(txt){document.getElementById('loading-text').textContent=txt||'處理中...';document.getElementById('loading').classList.add('show');}
+function showLoading(txt){document.getElementById('loading-text').textContent=txt;document.getElementById('loading').classList.add('show');}
 function hideLoading(){document.getElementById('loading').classList.remove('show');}
 
+// 初始化
+loadSettings();
 updProg();
 </script>
 </body>
