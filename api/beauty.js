@@ -7,12 +7,12 @@ export default async function handler(req, res) {
   const NOTION_TOKEN = process.env.NOTION_TOKEN;
   if (!NOTION_TOKEN) { res.status(500).json({ error: '環境變數未設定' }); return; }
 
-  // UUID 格式的 database ID
   const NOTION_DB_INTENSIVE   = '1c72437f-4e10-80cf-8057-eb822b5be04d'; // 密集期
   const NOTION_DB_MAINTENANCE = '1c72437f-4e10-81d9-a02b-daaf95eae8d';  // 保養期
 
   async function queryDB(dbId, type) {
     try {
+      // 預約狀態是 status 類型，filter 用 status 語法
       const r = await fetch(`https://api.notion.com/v1/databases/${dbId}/query`, {
         method: 'POST',
         headers: {
@@ -23,8 +23,8 @@ export default async function handler(req, res) {
         body: JSON.stringify({
           filter: {
             or: [
-              { property: '預約狀態', select: { equals: '需預約' } },
-              { property: '預約狀態', select: { equals: '需追蹤' } },
+              { property: '預約狀態', status: { equals: '需預約' } },
+              { property: '預約狀態', status: { equals: '需追蹤' } },
             ]
           },
           page_size: 100,
@@ -43,6 +43,7 @@ export default async function handler(req, res) {
       return data.results.map(page => {
         const p = page.properties;
         const getName = () => p['姓名']?.title?.[0]?.text?.content || '—';
+        const getStatus = (key) => p[key]?.status?.name || '';
         const getSelect = (key) => p[key]?.select?.name || '';
         const getDate = (key) => p[key]?.date?.start || '';
         const getText = (key) => p[key]?.rich_text?.[0]?.text?.content || '';
@@ -54,7 +55,7 @@ export default async function handler(req, res) {
           id: page.id,
           name: getName(),
           grade: getSelect('分級'),
-          status: getSelect('預約狀態'),
+          status: getStatus('預約狀態'),
           type,
           lastDate,
           daysAgo,
