@@ -402,14 +402,7 @@ textarea.note-area:focus{border-color:var(--accent)}
 const OWNER_PWD="18166";
 const FIXED_NAMES=["惠玲","詩瑩","韻鈞"];
 const DAYS=["週一","週二","週三","週四","週五","週六"];
-const BEAUTY_PATIENTS=[
-  {name:"郭巧富",status:"需預約",grade:"A好咖",last:"2026-02-05"},
-  {name:"周暐珈",status:"需預約",grade:"A好咖",last:"2025-09-02"},
-  {name:"黃英美",status:"需追蹤",grade:"B老客戶",last:"2025-11-11"},
-  {name:"張碧菁",status:"需預約",grade:"B老客戶",last:"2026-01-22"},
-  {name:"李秀卿",status:"需預約",grade:"B老客戶",last:"2026-01-20"},
-  {name:"李慧婷",status:"需預約",grade:"B老客戶",last:"2025-06-17"},
-];
+
 
 let cur=0;
 let D={m:0,a:0,e:0,f:0,nk:0,h1:0,h2:0,fu:0,cv:0,np_consult:0,
@@ -756,24 +749,43 @@ async function loadManagerData(){
     }
   }catch(e){document.getElementById('mgr-followup').innerHTML='<div class="empty-note">載入失敗，請重試</div>';}
 
-  // 美顏針患者
-  const urgent=BEAUTY_PATIENTS.filter(p=>p.status==='需預約'&&(p.grade.includes('A')||p.grade.includes('B')));
-  const track=BEAUTY_PATIENTS.filter(p=>p.status==='需追蹤');
-  document.getElementById('mgr-projects').innerHTML=`
-    <div class="proj-card">
-      <div class="proj-header"><div class="proj-title">✨ 美顏針 A/B 級待追蹤</div><span class="proj-badge badge-red">${urgent.length} 人</span></div>
-      <div class="proj-body">${urgent.map(p=>`<div class="proj-item">
-        <div class="proj-check" onclick="toggleCheck(this)">○</div>
-        <div style="flex:1"><div class="proj-name">${p.name}</div><div class="proj-meta">${p.grade} · ${daysSince(p.last)} 天未回診</div></div>
-      </div>`).join('')}</div>
-    </div>
-    ${track.length?`<div class="proj-card">
-      <div class="proj-header"><div class="proj-title">✨ 美顏針需追蹤</div><span class="proj-badge badge-amber">${track.length} 人</span></div>
-      <div class="proj-body">${track.slice(0,5).map(p=>`<div class="proj-item">
-        <div class="proj-check" onclick="toggleCheck(this)">○</div>
-        <div style="flex:1"><div class="proj-name">${p.name}</div><div class="proj-meta">${p.grade} · ${daysSince(p.last)} 天未回診</div></div>
-      </div>`).join('')}</div>
-    </div>`:''}`;
+  // 美顏針患者：從 Notion 即時抓
+  try {
+    const bRes = await fetch('/api/beauty', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({})});
+    const bData = await bRes.json();
+    const urgent = bData.urgent || [];
+    const track = bData.tracking || [];
+
+    if (!urgent.length && !track.length) {
+      document.getElementById('mgr-projects').innerHTML = '<div class="empty-note">✨ 目前無需追蹤的美顏針患者 🎉</div>';
+    } else {
+      document.getElementById('mgr-projects').innerHTML = `
+        ${urgent.length ? `<div class="proj-card">
+          <div class="proj-header"><div class="proj-title">✨ 美顏針待預約</div><span class="proj-badge badge-red">${urgent.length} 人</span></div>
+          <div class="proj-body">${urgent.map(p=>`<div class="proj-item">
+            <div class="proj-check" onclick="toggleCheck(this)">○</div>
+            <div style="flex:1">
+              <div class="proj-name">${p.name} <span style="font-size:11px;color:var(--text3);font-weight:400">${p.grade||''}</span></div>
+              <div class="proj-meta">${p.type} · ${p.daysAgo!=null?p.daysAgo+'天未回診':''}${p.note?' · '+p.note:''}</div>
+            </div>
+          </div>`).join('')}</div>
+        </div>` : ''}
+        ${track.length ? `<div class="proj-card">
+          <div class="proj-header"><div class="proj-title">✨ 美顏針需追蹤</div><span class="proj-badge badge-amber">${track.length} 人</span></div>
+          <div class="proj-body">${track.slice(0,8).map(p=>`<div class="proj-item">
+            <div class="proj-check" onclick="toggleCheck(this)">○</div>
+            <div style="flex:1">
+              <div class="proj-name">${p.name} <span style="font-size:11px;color:var(--text3);font-weight:400">${p.grade||''}</span></div>
+              <div class="proj-meta">${p.type} · ${p.daysAgo!=null?p.daysAgo+'天未回診':''}${p.note?' · '+p.note:''}</div>
+            </div>
+          </div>`).join('')}
+          ${track.length>8?`<div style="text-align:center;padding:8px;font-size:12px;color:var(--text3)">還有 ${track.length-8} 人...</div>`:''}
+          </div>
+        </div>` : ''}`;
+    }
+  } catch(e) {
+    document.getElementById('mgr-projects').innerHTML = '<div class="empty-note">美顏針患者資料載入失敗，請重試</div>';
+  }
 }
 
 function toggleCheck(el){const done=el.classList.toggle('done');el.textContent=done?'✓':'○';}
