@@ -15,7 +15,6 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 .app{max-width:480px;margin:0 auto;min-height:100vh}
-
 .header-fixed{position:sticky;top:0;z-index:50;background:var(--accent)}
 .topbar{padding:12px 20px 0;display:flex;align-items:center;justify-content:space-between}
 .topbar-logo{font-size:15px;font-weight:700;color:#fff}
@@ -26,22 +25,16 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text
 .progress-bar{display:flex;gap:3px;padding:6px 20px 10px}
 .prog-seg{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.25);transition:background .3s}
 .prog-seg.on{background:#fff}
-
 .page{display:none;padding:24px 20px 100px}.page.active{display:block}
 .step{display:none}.step.visible{display:block}
 .step-heading{font-size:21px;font-weight:700;margin-bottom:4px;letter-spacing:-.3px}
 .step-sub{font-size:13px;color:var(--text2);margin-bottom:22px;font-weight:300;line-height:1.6}
 .sec-label{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;margin-top:4px}
-
-/* 填報者 */
 .name-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
 .name-btn{padding:20px 12px;font-size:17px;font-weight:500;font-family:'Noto Sans TC',sans-serif;border-radius:14px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;color:var(--text2);transition:all .18s;text-align:center}
-.name-btn:active{transform:scale(.96)}
 .name-btn.picked{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700}
 .name-input-wrap{display:none;margin-bottom:8px}
 .name-input{width:100%;font-size:16px;font-family:'Noto Sans TC',sans-serif;padding:14px 16px;border-radius:14px;border:1.5px solid var(--accent);background:var(--card);color:var(--text);outline:none}
-
-/* 數字卡 */
 .num-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
 .num-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}
 .num-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:14px 8px;text-align:center}
@@ -50,51 +43,64 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text
 .nc-btn{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--border);background:var(--bg);cursor:pointer;font-size:18px;color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;transition:all .12s}
 .nc-btn:active{background:var(--accent-light);transform:scale(.9)}
 .nc-val{font-size:24px;font-weight:700;min-width:34px;text-align:center}
-
-/* 空檔輸入 */
 .slot-input-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
 .slot-input-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:14px 12px}
 .slot-input-label{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:10px}
-.slot-input-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.slot-input-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .slot-input-row:last-child{margin-bottom:0}
 .slot-input-sublabel{font-size:12px;color:var(--text2)}
 .slot-num-input{width:56px;font-size:16px;font-family:'Noto Sans TC',sans-serif;padding:6px 8px;border-radius:8px;border:1px solid var(--border);text-align:center;outline:none;background:var(--bg)}
 .slot-num-input:focus{border-color:var(--accent)}
-
-/* 跟進卡 */
 .followup-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:16px;margin-bottom:16px}
 .followup-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0}
 .followup-row+.followup-row{border-top:1px solid var(--border)}
 .followup-label{font-size:13px;color:var(--text)}
 .followup-sub{font-size:11px;color:var(--text3);margin-top:2px}
 .consult-note{font-size:12px;color:var(--amber);background:var(--amber-bg);border-radius:10px;padding:10px 12px;margin-top:12px;line-height:1.6}
-
+/* 初診登記 */
+.reg-section{margin-bottom:16px}
+.reg-card{background:var(--card);border-radius:14px;border:1px solid var(--border);overflow:hidden;margin-bottom:10px}
+.reg-header{padding:12px 14px;background:#FAFAF8;border-bottom:1px solid var(--border);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:space-between}
+.reg-body{padding:12px 14px}
+.reg-row{display:flex;gap:8px;margin-bottom:8px;align-items:center}
+.reg-input{flex:1;font-size:14px;font-family:'Noto Sans TC',sans-serif;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:var(--bg);outline:none;color:var(--text)}
+.reg-input:focus{border-color:var(--accent)}
+.reg-input.chart{width:100px;flex:none}
+.add-patient-btn{padding:8px 14px;font-size:12px;font-family:'Noto Sans TC',sans-serif;font-weight:700;border-radius:10px;border:none;background:var(--accent-light);color:var(--accent);cursor:pointer;white-space:nowrap}
+.patient-tag{display:flex;align-items:center;gap:6px;background:var(--accent-light);border-radius:8px;padding:6px 10px;margin-bottom:6px;font-size:13px}
+.patient-tag-name{flex:1;color:var(--accent);font-weight:500}
+.patient-tag-remove{background:none;border:none;cursor:pointer;color:var(--text3);font-size:16px;padding:0 2px}
+/* 回診確認 */
+.checkin-card{background:var(--card);border-radius:14px;border:1px solid var(--border);overflow:hidden;margin-bottom:10px}
+.checkin-header{padding:12px 14px;border-bottom:1px solid var(--border);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:space-between}
+.checkin-badge{font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px}
+.badge-red{background:var(--red-bg);color:var(--red)}
+.badge-green{background:var(--green-bg);color:var(--green)}
+.checkin-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px}
+.checkin-item:last-child{border-bottom:none}
+.checkin-info{flex:1}
+.checkin-name{font-weight:500}
+.checkin-meta{font-size:11px;color:var(--text3);margin-top:2px}
+.checkin-btn{padding:6px 14px;font-size:12px;font-family:'Noto Sans TC',sans-serif;font-weight:700;border-radius:20px;border:1.5px solid var(--border);background:var(--bg);cursor:pointer;color:var(--text2);transition:all .15s;white-space:nowrap}
+.checkin-btn.checked{background:var(--green-bg);color:var(--green);border-color:var(--green)}
 textarea.note-area{width:100%;font-size:13px;font-family:'Noto Sans TC',sans-serif;border-radius:12px;padding:12px 14px;min-height:72px;border:1px solid var(--border);background:var(--card);color:var(--text);resize:vertical;outline:none;margin-bottom:16px}
 textarea.note-area:focus{border-color:var(--accent)}
 .note-label{font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:500}
-
-/* 總覽 */
 .sum-card{background:var(--card);border-radius:16px;border:1px solid var(--border);overflow:hidden;margin-bottom:16px}
 .sum-sec{padding:7px 14px;font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.8px;text-transform:uppercase;border-bottom:1px solid var(--border);background:#FAFAF8}
 .sum-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px}
 .sum-row:last-child{border-bottom:none}
 .sum-key{color:var(--text2)}.sum-val{font-weight:700;text-align:right;max-width:60%}
-
-/* 底部 */
 .bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:rgba(247,245,240,.96);backdrop-filter:blur(10px);padding:10px 20px 26px;border-top:1px solid var(--border);display:flex;gap:10px;z-index:100}
 .btn-back{flex:1;padding:14px;font-size:13px;font-family:'Noto Sans TC',sans-serif;font-weight:500;border-radius:14px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;color:var(--text2)}
 .btn-next{flex:2;padding:14px;font-size:14px;font-family:'Noto Sans TC',sans-serif;font-weight:700;border-radius:14px;border:none;background:var(--accent);color:#fff;cursor:pointer;transition:all .15s}
 .btn-next:active{transform:scale(.97)}.btn-next:disabled{opacity:.35;cursor:not-allowed}
-
-/* 成功 */
 .success-wrap{text-align:center;padding:48px 20px}
 .success-circle{width:80px;height:80px;border-radius:50%;background:var(--green-bg);display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 20px}
 .success-title{font-size:20px;font-weight:700;margin-bottom:8px}
 .success-sub{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:24px}
 .notion-btn{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;font-family:'Noto Sans TC',sans-serif;color:var(--accent);border:1.5px solid var(--accent);border-radius:12px;padding:10px 18px;text-decoration:none;margin-bottom:14px;background:var(--accent-light)}
 .reset-btn{display:block;font-size:13px;color:var(--text3);background:none;border:none;cursor:pointer;font-family:'Noto Sans TC',sans-serif;margin:10px auto 0;text-decoration:underline}
-
-/* 看板 */
 .dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .dash-title{font-size:16px;font-weight:700}.dash-sub{font-size:12px;color:var(--text3)}
 .metric-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}
@@ -104,8 +110,6 @@ textarea.note-area:focus{border-color:var(--accent)}
 .metric-sub{font-size:11px;color:var(--text3);margin-top:3px}
 .section-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:14px;margin-bottom:12px}
 .ai-text{font-size:13px;color:var(--text);line-height:1.8}
-
-/* KPI */
 .kpi-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
 .kpi-label{font-size:12px;color:var(--text2);margin-bottom:4px}
 .kpi-val{font-size:28px;font-weight:700}
@@ -115,36 +119,29 @@ textarea.note-area:focus{border-color:var(--accent)}
 .kpi-bar-wrap{width:80px;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
 .kpi-bar{height:100%;border-radius:4px;background:var(--green);transition:width .5s}
 .kpi-bar.warn{background:var(--amber)}.kpi-bar.danger{background:var(--red)}
-
-/* 患者追蹤 */
 .proj-card{background:var(--card);border-radius:14px;border:1px solid var(--border);overflow:hidden;margin-bottom:10px}
 .proj-header{padding:12px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
 .proj-title{font-size:13px;font-weight:700}
 .proj-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
-.badge-red{background:var(--red-bg);color:var(--red)}.badge-amber{background:var(--amber-bg);color:var(--amber)}
+.badge-amber{background:var(--amber-bg);color:var(--amber)}
 .proj-body{padding:10px 14px}
 .proj-item{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px}
 .proj-item:last-child{border-bottom:none}
 .proj-name{flex:1}.proj-meta{font-size:11px;color:var(--text3)}
 .proj-check{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--border);background:var(--bg);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;transition:all .15s}
 .proj-check.done{background:var(--green);border-color:var(--green);color:#fff}
-
-/* 設定頁 */
 .setting-table{background:var(--card);border-radius:14px;border:1px solid var(--border);overflow:hidden;margin-bottom:16px}
-.setting-header{display:grid;grid-template-columns:80px 1fr 1fr;gap:0;background:#FAFAF8;border-bottom:1px solid var(--border)}
+.setting-header{display:grid;grid-template-columns:72px 1fr 1fr;background:#FAFAF8;border-bottom:1px solid var(--border)}
 .setting-header-cell{padding:10px 12px;font-size:11px;font-weight:700;color:var(--text3);text-align:center}
 .setting-header-cell:first-child{text-align:left}
-.setting-row{display:grid;grid-template-columns:80px 1fr 1fr;border-bottom:1px solid var(--border)}
+.setting-row{display:grid;grid-template-columns:72px 1fr 1fr;border-bottom:1px solid var(--border)}
 .setting-row:last-child{border-bottom:none}
 .setting-day{padding:14px 12px;font-size:13px;font-weight:500;color:var(--text);display:flex;align-items:center}
 .setting-cell{padding:10px 12px;display:flex;align-items:center;justify-content:center}
 .setting-input{width:60px;font-size:16px;font-family:'Noto Sans TC',sans-serif;padding:7px 8px;border-radius:8px;border:1px solid var(--border);text-align:center;outline:none;background:var(--bg)}
 .setting-input:focus{border-color:var(--accent)}
-.save-setting-btn{width:100%;padding:14px;font-size:14px;font-family:'Noto Sans TC',sans-serif;font-weight:700;border-radius:14px;border:none;background:var(--accent);color:#fff;cursor:pointer;transition:all .15s}
-.save-setting-btn:active{transform:scale(.97)}
+.save-setting-btn{width:100%;padding:14px;font-size:14px;font-family:'Noto Sans TC',sans-serif;font-weight:700;border-radius:14px;border:none;background:var(--accent);color:#fff;cursor:pointer}
 .setting-saved{text-align:center;font-size:12px;color:var(--green);margin-top:8px;display:none}
-
-/* 密碼 */
 .pwd-wrap{padding:48px 20px;text-align:center}
 .pwd-icon{font-size:40px;margin-bottom:16px}
 .pwd-title{font-size:18px;font-weight:700;margin-bottom:8px}
@@ -153,7 +150,6 @@ textarea.note-area:focus{border-color:var(--accent)}
 .pwd-input:focus{border-color:var(--accent)}
 .pwd-btn{padding:12px 32px;font-size:14px;font-family:'Noto Sans TC',sans-serif;font-weight:700;border-radius:14px;border:none;background:var(--accent);color:#fff;cursor:pointer}
 .pwd-err{font-size:12px;color:var(--red);margin-top:8px;display:none}
-
 .err-box{background:var(--red-bg);color:var(--red);border-radius:10px;padding:10px 14px;font-size:13px;margin-bottom:12px;display:none;line-height:1.6}
 .loading-overlay{display:none;position:fixed;inset:0;background:rgba(44,95,90,.88);z-index:999;align-items:center;justify-content:center;flex-direction:column;gap:16px}
 .loading-overlay.show{display:flex}
@@ -162,6 +158,7 @@ textarea.note-area:focus{border-color:var(--accent)}
 @keyframes spin{to{transform:rotate(360deg)}}
 .refresh-btn{font-size:12px;padding:6px 12px;border-radius:20px;border:1px solid var(--border);background:var(--card);cursor:pointer;color:var(--text2);font-family:'Noto Sans TC',sans-serif}
 .loading-inline{text-align:center;padding:20px;color:var(--text3);font-size:13px}
+.empty-note{text-align:center;padding:16px;color:var(--text3);font-size:13px;background:var(--card);border-radius:14px;border:1px solid var(--border);margin-bottom:10px}
 </style>
 </head>
 <body>
@@ -182,6 +179,7 @@ textarea.note-area:focus{border-color:var(--accent)}
       <div class="prog-seg" id="ps1"></div>
       <div class="prog-seg" id="ps2"></div>
       <div class="prog-seg" id="ps3"></div>
+      <div class="prog-seg" id="ps4"></div>
     </div>
   </div>
 
@@ -224,94 +222,86 @@ textarea.note-area:focus{border-color:var(--accent)}
     <!-- S2 空檔 + 跟進 -->
     <div class="step" id="s2">
       <div class="step-heading">空檔與跟進</div>
-      <div class="step-sub">填今日開放格數與跟進狀況</div>
-
-      <div class="sec-label">今日自費空檔（開放格數）</div>
+      <div class="step-sub">填今日開放格數與諮詢跟進狀況</div>
+      <div class="sec-label">今日自費空檔</div>
       <div class="slot-input-grid">
         <div class="slot-input-card">
           <div class="slot-input-label">✨ 美顏針</div>
-          <div class="slot-input-row">
-            <span class="slot-input-sublabel">今日開放</span>
-            <input type="number" class="slot-num-input" id="slot-facial-total" min="0" placeholder="0">
-          </div>
-          <div class="slot-input-row">
-            <span class="slot-input-sublabel">實際到診</span>
-            <span style="font-size:16px;font-weight:700;color:var(--accent)" id="slot-facial-actual">0</span>
-          </div>
-          <div class="slot-input-row">
-            <span class="slot-input-sublabel">空檔率</span>
-            <span style="font-size:14px;font-weight:700" id="slot-facial-rate">—</span>
-          </div>
+          <div class="slot-input-row"><span class="slot-input-sublabel">今日開放</span><input type="number" class="slot-num-input" id="slot-facial-total" min="0" placeholder="0" oninput="updateSlotRates()"></div>
+          <div class="slot-input-row"><span class="slot-input-sublabel">實際到診</span><span style="font-size:16px;font-weight:700;color:var(--accent)" id="slot-facial-actual">0</span></div>
+          <div class="slot-input-row"><span class="slot-input-sublabel">填滿率</span><span style="font-size:14px;font-weight:700" id="slot-facial-rate">—</span></div>
         </div>
         <div class="slot-input-card">
           <div class="slot-input-label">🔪 針刀</div>
-          <div class="slot-input-row">
-            <span class="slot-input-sublabel">今日開放</span>
-            <input type="number" class="slot-num-input" id="slot-nk-total" min="0" placeholder="0">
-          </div>
-          <div class="slot-input-row">
-            <span class="slot-input-sublabel">實際到診</span>
-            <span style="font-size:16px;font-weight:700;color:var(--accent)" id="slot-nk-actual">0</span>
-          </div>
-          <div class="slot-input-row">
-            <span class="slot-input-sublabel">空檔率</span>
-            <span style="font-size:14px;font-weight:700" id="slot-nk-rate">—</span>
-          </div>
+          <div class="slot-input-row"><span class="slot-input-sublabel">今日開放</span><input type="number" class="slot-num-input" id="slot-nk-total" min="0" placeholder="0" oninput="updateSlotRates()"></div>
+          <div class="slot-input-row"><span class="slot-input-sublabel">實際到診</span><span style="font-size:16px;font-weight:700;color:var(--accent)" id="slot-nk-actual">0</span></div>
+          <div class="slot-input-row"><span class="slot-input-sublabel">填滿率</span><span style="font-size:14px;font-weight:700" id="slot-nk-rate">—</span></div>
         </div>
       </div>
-
       <div class="sec-label">今日初診諮詢跟進</div>
       <div class="followup-card">
         <div class="followup-row">
-          <div>
-            <div class="followup-label">今日諮詢總人數</div>
-            <div class="followup-sub">現場 + 電話 + 表單</div>
-          </div>
-          <div class="num-controls">
-            <button class="nc-btn" onclick="adj('np_consult',-1)">−</button>
-            <span class="nc-val" id="v-np_consult">0</span>
-            <button class="nc-btn" onclick="adj('np_consult',1)">+</button>
-          </div>
+          <div><div class="followup-label">今日諮詢總人數</div><div class="followup-sub">現場 + 電話 + 表單</div></div>
+          <div class="num-controls"><button class="nc-btn" onclick="adj('np_consult',-1)">−</button><span class="nc-val" id="v-np_consult">0</span><button class="nc-btn" onclick="adj('np_consult',1)">+</button></div>
         </div>
         <div class="followup-row">
-          <div>
-            <div class="followup-label">48小時內跟進人數</div>
-            <div class="followup-sub">店長主動聯繫</div>
-          </div>
-          <div class="num-controls">
-            <button class="nc-btn" onclick="adj('fu',-1)">−</button>
-            <span class="nc-val" id="v-fu">0</span>
-            <button class="nc-btn" onclick="adj('fu',1)">+</button>
-          </div>
+          <div><div class="followup-label">48小時內跟進</div><div class="followup-sub">店長主動聯繫</div></div>
+          <div class="num-controls"><button class="nc-btn" onclick="adj('fu',-1)">−</button><span class="nc-val" id="v-fu">0</span><button class="nc-btn" onclick="adj('fu',1)">+</button></div>
         </div>
         <div class="followup-row">
-          <div>
-            <div class="followup-label">成功轉預約</div>
-            <div class="followup-sub">當場或跟進後</div>
-          </div>
-          <div class="num-controls">
-            <button class="nc-btn" onclick="adj('cv',-1)">−</button>
-            <span class="nc-val" id="v-cv">0</span>
-            <button class="nc-btn" onclick="adj('cv',1)">+</button>
-          </div>
+          <div><div class="followup-label">成功轉預約</div><div class="followup-sub">當場或跟進後</div></div>
+          <div class="num-controls"><button class="nc-btn" onclick="adj('cv',-1)">−</button><span class="nc-val" id="v-cv">0</span><button class="nc-btn" onclick="adj('cv',1)">+</button></div>
         </div>
-        <div class="consult-note">💡 沒有當場轉單的，請引導患者填 Google 表單，店長 48 小時內跟進</div>
+        <div class="consult-note">💡 沒有當場轉單的，請引導填 Google 表單，店長 48 小時內跟進</div>
       </div>
-
       <div class="note-label">今日備注（選填）</div>
       <textarea class="note-area" id="note" placeholder="庫存異常、人力調度、補位情況..."></textarea>
     </div>
 
-    <!-- S3 確認 -->
+    <!-- S3 初診登記 + 回診確認 -->
     <div class="step" id="s3">
+      <div class="step-heading">初診登記 & 回診確認</div>
+      <div class="step-sub">登記今日新初診，確認預計回診患者</div>
+
+      <div class="sec-label">今日初診登記</div>
+      <div class="reg-card">
+        <div class="reg-header">🔪 針刀初診 <span style="font-size:11px;font-weight:400;color:var(--text3)">7天後提醒回診</span></div>
+        <div class="reg-body">
+          <div id="nk-patients"></div>
+          <div class="reg-row">
+            <input type="text" class="reg-input" id="nk-name" placeholder="姓名">
+            <input type="text" class="reg-input chart" id="nk-chart" placeholder="病歷號">
+            <button class="add-patient-btn" onclick="addPatient('needleknife')">+ 新增</button>
+          </div>
+        </div>
+      </div>
+      <div class="reg-card">
+        <div class="reg-header">🌿 轉骨初診 <span style="font-size:11px;font-weight:400;color:var(--text3)">14天後提醒回診</span></div>
+        <div class="reg-body">
+          <div id="growth-patients"></div>
+          <div class="reg-row">
+            <input type="text" class="reg-input" id="growth-name" placeholder="姓名">
+            <input type="text" class="reg-input chart" id="growth-chart" placeholder="病歷號">
+            <button class="add-patient-btn" onclick="addPatient('growth')">+ 新增</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec-label">今日回診確認</div>
+      <div id="checkin-loading" class="loading-inline">載入應回診患者中...</div>
+      <div id="checkin-list"></div>
+    </div>
+
+    <!-- S4 確認送出 -->
+    <div class="step" id="s4">
       <div class="step-heading">確認後送出</div>
       <div class="step-sub">資料直接存進 Notion</div>
       <div class="sum-card" id="sum-card"></div>
       <div class="err-box" id="err-box"></div>
     </div>
 
-    <!-- S4 成功 -->
-    <div class="step" id="s4">
+    <!-- S5 成功 -->
+    <div class="step" id="s5">
       <div class="success-wrap">
         <div class="success-circle">✅</div>
         <div class="success-title">今日回報完成！</div>
@@ -342,10 +332,12 @@ textarea.note-area:focus{border-color:var(--accent)}
       <div><div class="kpi-label">自費空檔填滿率</div><div class="kpi-val" id="kpi-slot">—</div><div class="kpi-sub">目標 90%</div></div>
       <div class="kpi-right"><div class="kpi-detail" id="kpi-slot-detail">載入中</div><div class="kpi-bar-wrap"><div class="kpi-bar danger" id="kpi-slot-bar" style="width:0%"></div></div></div>
     </div>
-    <div class="sec-label">患者追蹤專案</div>
+    <div class="sec-label">首次回診提醒</div>
+    <div id="mgr-followup"><div class="loading-inline">載入中...</div></div>
+    <div class="sec-label">美顏針患者追蹤</div>
     <div id="mgr-projects"><div class="loading-inline">載入中...</div></div>
     <div class="sec-label">AI 今日建議</div>
-    <div class="section-card"><div class="ai-text" id="mgr-ai">從 Notion 分析中...</div></div>
+    <div class="section-card"><div class="ai-text" id="mgr-ai">分析中...</div></div>
   </div>
 
   <!-- ===== 老闆看板 ===== -->
@@ -377,7 +369,7 @@ textarea.note-area:focus{border-color:var(--accent)}
       <div class="sec-label">本週數量總覽</div>
       <div class="metric-grid" id="owner-metrics"><div class="loading-inline" style="grid-column:span 2">載入中...</div></div>
       <div class="sec-label">AI 策略分析</div>
-      <div class="section-card"><div class="ai-text" id="owner-ai">從 Notion 分析中...</div></div>
+      <div class="section-card"><div class="ai-text" id="owner-ai">分析中...</div></div>
       <button onclick="lockOwner()" style="margin-top:8px;width:100%;padding:12px;font-size:13px;font-family:'Noto Sans TC',sans-serif;border-radius:12px;border:1px solid var(--border);background:var(--card);cursor:pointer;color:var(--text3)">登出老闆模式</button>
     </div>
   </div>
@@ -385,7 +377,7 @@ textarea.note-area:focus{border-color:var(--accent)}
   <!-- ===== 設定頁 ===== -->
   <div class="page" id="page-setting">
     <div class="dash-header">
-      <div><div class="dash-title">空檔格數設定</div><div class="dash-sub">設定後填報會自動帶入，可隨時修改</div></div>
+      <div><div class="dash-title">空檔格數設定</div><div class="dash-sub">填一次，填報時自動帶入，可隨時修改</div></div>
     </div>
     <div class="sec-label">每週固定開放格數</div>
     <div class="setting-table">
@@ -397,7 +389,7 @@ textarea.note-area:focus{border-color:var(--accent)}
       <div id="setting-rows"></div>
     </div>
     <button class="save-setting-btn" onclick="saveSettings()">💾 儲存設定</button>
-    <div class="setting-saved" id="setting-saved">✓ 已儲存！填報時會自動帶入今天的格數</div>
+    <div class="setting-saved" id="setting-saved">✓ 已儲存！填報時會自動帶入今天格數</div>
   </div>
 
   <div class="loading-overlay" id="loading">
@@ -410,40 +402,39 @@ textarea.note-area:focus{border-color:var(--accent)}
 const OWNER_PWD="18166";
 const FIXED_NAMES=["惠玲","詩瑩","韻鈞"];
 const DAYS=["週一","週二","週三","週四","週五","週六"];
-const PATIENTS=[
-  {name:"郭巧富",status:"需預約",grade:"A好咖",last:"2026-02-05",therapy:"美顏針"},
-  {name:"周暐珈",status:"需預約",grade:"A好咖",last:"2025-09-02",therapy:"美顏針"},
-  {name:"黃英美",status:"需追蹤",grade:"B老客戶",last:"2025-11-11",therapy:"美顏針"},
-  {name:"張碧菁",status:"需預約",grade:"B老客戶",last:"2026-01-22",therapy:"美顏針"},
-  {name:"李秀卿",status:"需預約",grade:"B老客戶",last:"2026-01-20",therapy:"美顏針"},
-  {name:"李慧婷",status:"需預約",grade:"B老客戶",last:"2025-06-17",therapy:"美顏針"},
+const BEAUTY_PATIENTS=[
+  {name:"郭巧富",status:"需預約",grade:"A好咖",last:"2026-02-05"},
+  {name:"周暐珈",status:"需預約",grade:"A好咖",last:"2025-09-02"},
+  {name:"黃英美",status:"需追蹤",grade:"B老客戶",last:"2025-11-11"},
+  {name:"張碧菁",status:"需預約",grade:"B老客戶",last:"2026-01-22"},
+  {name:"李秀卿",status:"需預約",grade:"B老客戶",last:"2026-01-20"},
+  {name:"李慧婷",status:"需預約",grade:"B老客戶",last:"2025-06-17"},
 ];
 
 let cur=0;
 let D={m:0,a:0,e:0,f:0,nk:0,h1:0,h2:0,fu:0,cv:0,np_consult:0,
        slot_facial_total:0,slot_nk_total:0,note:"",reporter:""};
+let newPatients={needleknife:[],growth:[]};
+let checkinDone=new Set(); // 已勾選的 page_id
 
 const today=new Date();
-const todayDow=today.getDay(); // 0=日,1=一,...,6=六
+const todayDow=today.getDay();
 const dateDisp=today.toLocaleDateString('zh-TW',{month:'long',day:'numeric',weekday:'short'});
 const dateStr=today.toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'});
 document.getElementById('topbar-date').textContent=dateDisp;
 document.getElementById('mgr-date').textContent=dateDisp;
 document.getElementById('owner-date').textContent=dateDisp;
 
-// 設定頁建立
+// 設定頁
 const settingRows=document.getElementById('setting-rows');
 DAYS.forEach((day,i)=>{
-  const row=document.createElement('div');
-  row.className='setting-row';
-  row.innerHTML=`
-    <div class="setting-day">${day}</div>
+  const row=document.createElement('div'); row.className='setting-row';
+  row.innerHTML=`<div class="setting-day">${day}</div>
     <div class="setting-cell"><input type="number" class="setting-input" id="set-f-${i}" min="0" placeholder="0"></div>
     <div class="setting-cell"><input type="number" class="setting-input" id="set-nk-${i}" min="0" placeholder="0"></div>`;
   settingRows.appendChild(row);
 });
 
-// 載入已存設定
 function loadSettings(){
   try{
     const s=JSON.parse(localStorage.getItem('yj_slot_settings')||'{}');
@@ -463,14 +454,12 @@ function saveSettings(){
   try{localStorage.setItem('yj_slot_settings',JSON.stringify(s));}catch(e){}
   document.getElementById('setting-saved').style.display='block';
   setTimeout(()=>document.getElementById('setting-saved').style.display='none',2500);
-  // 如果今天是工作日，更新填報頁的預設值
-  autoFillTodaySlots();
 }
 
 function getTodaySlots(){
   try{
     const s=JSON.parse(localStorage.getItem('yj_slot_settings')||'{}');
-    const dow=todayDow===0?null:todayDow-1; // 週一=0...週六=5，週日=null
+    const dow=todayDow===0?null:todayDow-1;
     if(dow===null||dow>5) return {facial:0,nk:0};
     return {facial:s[`f_${dow}`]||0,nk:s[`nk_${dow}`]||0};
   }catch(e){return {facial:0,nk:0};}
@@ -484,24 +473,20 @@ function autoFillTodaySlots(){
 }
 
 function updateSlotRates(){
-  const facialTotal=parseInt(document.getElementById('slot-facial-total').value)||0;
+  const fTotal=parseInt(document.getElementById('slot-facial-total').value)||0;
   const nkTotal=parseInt(document.getElementById('slot-nk-total').value)||0;
-  const facialActual=D.f||0;
-  const nkActual=D.nk||0;
-  document.getElementById('slot-facial-actual').textContent=facialActual;
-  document.getElementById('slot-nk-actual').textContent=nkActual;
-  if(facialTotal>0){
-    const rate=Math.round(facialActual/facialTotal*100);
-    const el=document.getElementById('slot-facial-rate');
-    el.textContent=rate+'%';
-    el.style.color=rate>=90?'var(--green)':rate>=70?'var(--amber)':'var(--red)';
-  }else document.getElementById('slot-facial-rate').textContent='—';
-  if(nkTotal>0){
-    const rate=Math.round(nkActual/nkTotal*100);
-    const el=document.getElementById('slot-nk-rate');
-    el.textContent=rate+'%';
-    el.style.color=rate>=90?'var(--green)':rate>=70?'var(--amber)':'var(--red)';
-  }else document.getElementById('slot-nk-rate').textContent='—';
+  document.getElementById('slot-facial-actual').textContent=D.f||0;
+  document.getElementById('slot-nk-actual').textContent=D.nk||0;
+  const setRate=(elId,actual,total)=>{
+    const el=document.getElementById(elId);
+    if(total>0){
+      const r=Math.round(actual/total*100);
+      el.textContent=r+'%';
+      el.style.color=r>=90?'var(--green)':r>=70?'var(--amber)':'var(--red)';
+    }else el.textContent='—';
+  };
+  setRate('slot-facial-rate',D.f||0,fTotal);
+  setRate('slot-nk-rate',D.nk||0,nkTotal);
 }
 
 // 頁面切換
@@ -512,18 +497,16 @@ function switchPage(p,btn){
   btn.classList.add('active');
   document.getElementById('prog-bar').style.display=p==='report'?'flex':'none';
   if(p==='manager') loadManagerData();
-  if(p==='setting'){loadSettings();}
+  if(p==='setting') loadSettings();
 }
 
 // 填報者
 const ng=document.getElementById('name-grid');
 FIXED_NAMES.forEach(n=>{
-  const b=document.createElement('button');
-  b.className='name-btn'; b.textContent=n;
+  const b=document.createElement('button'); b.className='name-btn'; b.textContent=n;
   b.onclick=()=>{
     ng.querySelectorAll('.name-btn').forEach(x=>x.classList.remove('picked'));
-    b.classList.add('picked');
-    D.reporter=n;
+    b.classList.add('picked'); D.reporter=n;
     document.getElementById('name-input-wrap').style.display='none';
     document.getElementById('btn-next').disabled=false;
   };
@@ -533,28 +516,96 @@ const otherBtn=document.createElement('button');
 otherBtn.className='name-btn'; otherBtn.textContent='其他';
 otherBtn.onclick=()=>{
   ng.querySelectorAll('.name-btn').forEach(x=>x.classList.remove('picked'));
-  otherBtn.classList.add('picked');
-  D.reporter='';
+  otherBtn.classList.add('picked'); D.reporter='';
   document.getElementById('name-input-wrap').style.display='block';
   document.getElementById('name-input').focus();
   document.getElementById('btn-next').disabled=true;
 };
 ng.appendChild(otherBtn);
 function onNameInput(){
-  const val=document.getElementById('name-input').value.trim();
-  D.reporter=val;
-  document.getElementById('btn-next').disabled=!val;
+  D.reporter=document.getElementById('name-input').value.trim();
+  document.getElementById('btn-next').disabled=!D.reporter;
 }
 
 function adj(k,d){
   if(!(k in D)) D[k]=0;
   D[k]=Math.max(0,(D[k]||0)+d);
   document.getElementById('v-'+k).textContent=D[k];
-  // 實際到診數改變時更新空檔率
   if(k==='f'||k==='nk') updateSlotRates();
 }
 
-function updProg(){for(let i=0;i<4;i++) document.getElementById('ps'+i).className='prog-seg'+(i<=cur?' on':'');}
+// 初診登記
+function addPatient(therapy){
+  const nameId=therapy==='needleknife'?'nk-name':'growth-name';
+  const chartId=therapy==='needleknife'?'nk-chart':'growth-chart';
+  const name=document.getElementById(nameId).value.trim();
+  const chart=document.getElementById(chartId).value.trim();
+  if(!name){alert('請填寫姓名');return;}
+  newPatients[therapy].push({name,chart_no:chart});
+  document.getElementById(nameId).value='';
+  document.getElementById(chartId).value='';
+  renderPatientTags(therapy);
+}
+
+function removePatient(therapy,idx){
+  newPatients[therapy].splice(idx,1);
+  renderPatientTags(therapy);
+}
+
+function renderPatientTags(therapy){
+  const containerId=therapy==='needleknife'?'nk-patients':'growth-patients';
+  const el=document.getElementById(containerId);
+  el.innerHTML=newPatients[therapy].map((p,i)=>`
+    <div class="patient-tag">
+      <span class="patient-tag-name">${p.name}${p.chart_no?' ('+p.chart_no+')':''}</span>
+      <button class="patient-tag-remove" onclick="removePatient('${therapy}',${i})">×</button>
+    </div>`).join('');
+}
+
+// 回診確認
+async function loadCheckinList(){
+  try{
+    const res=await fetch('/api/patients',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({})});
+    const result=await res.json();
+    document.getElementById('checkin-loading').style.display='none';
+    const patients=result.patients||[];
+    if(!patients.length){
+      document.getElementById('checkin-list').innerHTML='<div class="empty-note">今日無預計回診患者 🎉</div>';
+      return;
+    }
+    document.getElementById('checkin-list').innerHTML=patients.map(p=>`
+      <div class="checkin-card" id="ci-${p.id}">
+        <div class="checkin-header">
+          ${p.therapy==='針刀'?'🔪':'🌿'} ${p.therapy} 首次回診提醒
+          <span class="checkin-badge ${p.days_over>0?'badge-red':'badge-amber'}">${p.days_over>0?'逾期'+p.days_over+'天':'今日'}</span>
+        </div>
+        <div class="checkin-item">
+          <div class="checkin-info">
+            <div class="checkin-name">${p.name}${p.chart_no?' · '+p.chart_no:''}</div>
+            <div class="checkin-meta">預計回診：${p.next_date}</div>
+          </div>
+          <button class="checkin-btn" id="ci-btn-${p.id}" onclick="markCheckin('${p.id}','${p.therapy}',this)">已回診 ✓</button>
+        </div>
+      </div>`).join('');
+  }catch(e){
+    document.getElementById('checkin-loading').textContent='載入失敗，請重試';
+  }
+}
+
+async function markCheckin(pageId,therapy,btn){
+  btn.disabled=true; btn.textContent='更新中...';
+  try{
+    const res=await fetch('/api/checkin',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page_id:pageId,therapy})});
+    const result=await res.json();
+    if(result.success){
+      btn.classList.add('checked'); btn.textContent='✓ 已確認';
+      checkinDone.add(pageId);
+    }
+  }catch(e){btn.disabled=false; btn.textContent='已回診 ✓';}
+}
+
+// 步驟
+function updProg(){for(let i=0;i<5;i++) document.getElementById('ps'+i).className='prog-seg'+(i<=cur?' on':'');}
 
 function goStep(n){
   document.getElementById('s'+cur).classList.remove('visible');
@@ -562,17 +613,17 @@ function goStep(n){
   document.getElementById('s'+n).classList.add('visible');
   updProg();
   const nav=document.getElementById('report-nav');
-  if(n===4){nav.style.display='none';return;}
+  if(n===5){nav.style.display='none';return;}
   nav.style.display='flex';
   document.getElementById('btn-back').style.display=n===0?'none':'block';
   document.getElementById('btn-next').disabled=n===0&&!D.reporter;
-  document.getElementById('btn-next').textContent=n===3?'✓ 確認送出':'下一步 →';
-  // 進入 S2 時自動帶入今天格數
-  if(n===2){autoFillTodaySlots(); document.getElementById('slot-facial-actual').textContent=D.f||0; document.getElementById('slot-nk-actual').textContent=D.nk||0;}
-  if(n===3) buildSummary();
+  document.getElementById('btn-next').textContent=n===4?'✓ 確認送出':'下一步 →';
+  if(n===2){autoFillTodaySlots();document.getElementById('slot-facial-actual').textContent=D.f;document.getElementById('slot-nk-actual').textContent=D.nk;}
+  if(n===3) loadCheckinList();
+  if(n===4) buildSummary();
   window.scrollTo(0,0);
 }
-function goNext(){if(cur===3)submitReport();else goStep(cur+1);}
+function goNext(){if(cur===4)submitReport();else goStep(cur+1);}
 function goBack(){if(cur>0)goStep(cur-1);}
 
 function buildSummary(){
@@ -581,19 +632,23 @@ function buildSummary(){
   D.slot_nk_total=parseInt(document.getElementById('slot-nk-total').value)||0;
   const tot=D.m+D.a+D.e;
   const convRate=D.fu>0?Math.round(D.cv/D.fu*100)+'%':'—';
-  const facialRate=D.slot_facial_total>0?Math.round(D.f/D.slot_facial_total*100)+'%':'—';
+  const fRate=D.slot_facial_total>0?Math.round(D.f/D.slot_facial_total*100)+'%':'—';
   const nkRate=D.slot_nk_total>0?Math.round(D.nk/D.slot_nk_total*100)+'%':'—';
+  const nkNew=newPatients.needleknife.map(p=>p.name).join('、')||'無';
+  const growthNew=newPatients.growth.map(p=>p.name).join('、')||'無';
   document.getElementById('sum-card').innerHTML=`
     <div class="sum-sec">今日數字</div>
     <div class="sum-row"><span class="sum-key">填報者</span><span class="sum-val">${D.reporter}</span></div>
     <div class="sum-row"><span class="sum-key">就診人數</span><span class="sum-val">${tot} 人（早${D.m}／午${D.a}／晚${D.e}）</span></div>
-    <div class="sum-row"><span class="sum-key">美顏針</span><span class="sum-val">${D.f} / ${D.slot_facial_total} 格（${facialRate}）</span></div>
-    <div class="sum-row"><span class="sum-key">針刀</span><span class="sum-val">${D.nk} / ${D.slot_nk_total} 格（${nkRate}）</span></div>
-    <div class="sum-row"><span class="sum-key">轉骨 / 客製水藥</span><span class="sum-val">${D.h1} 張 ／ ${D.h2} 張</span></div>
+    <div class="sum-row"><span class="sum-key">美顏針</span><span class="sum-val">${D.f}/${D.slot_facial_total}格（${fRate}）</span></div>
+    <div class="sum-row"><span class="sum-key">針刀</span><span class="sum-val">${D.nk}/${D.slot_nk_total}格（${nkRate}）</span></div>
+    <div class="sum-row"><span class="sum-key">轉骨／客製水藥</span><span class="sum-val">${D.h1}張／${D.h2}張</span></div>
     <div class="sum-sec">今日跟進</div>
-    <div class="sum-row"><span class="sum-key">今日諮詢人數</span><span class="sum-val">${D.np_consult} 人</span></div>
-    <div class="sum-row"><span class="sum-key">48小時跟進</span><span class="sum-val">${D.fu} 人</span></div>
+    <div class="sum-row"><span class="sum-key">諮詢總人數</span><span class="sum-val">${D.np_consult} 人</span></div>
     <div class="sum-row"><span class="sum-key">成功轉預約</span><span class="sum-val">${D.cv} 人（${convRate}）</span></div>
+    <div class="sum-sec">今日初診登記</div>
+    <div class="sum-row"><span class="sum-key">針刀初診</span><span class="sum-val" style="font-weight:400;font-size:12px">${nkNew}</span></div>
+    <div class="sum-row"><span class="sum-key">轉骨初診</span><span class="sum-val" style="font-weight:400;font-size:12px">${growthNew}</span></div>
     <div class="sum-sec">備注</div>
     <div class="sum-row"><span class="sum-key">備注</span><span class="sum-val" style="font-weight:400;font-size:12px">${D.note||'—'}</span></div>`;
 }
@@ -604,19 +659,29 @@ async function submitReport(){
   D.slot_nk_total=parseInt(document.getElementById('slot-nk-total').value)||0;
   showLoading('儲存到 Notion...');
   document.getElementById('err-box').style.display='none';
+
   try{
-    const res=await fetch('/api/submit',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({...D,date:dateStr})
-    });
+    // 1. 存每日填報
+    const res=await fetch('/api/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...D,date:dateStr})});
+    if(!res.ok){const e=await res.json();throw new Error(e.error||'填報儲存失敗');}
+
+    // 2. 登記新初診患者
+    const allNew=[
+      ...newPatients.needleknife.map(p=>({...p,therapy:'needleknife'})),
+      ...newPatients.growth.map(p=>({...p,therapy:'growth'})),
+    ];
+    for(const p of allNew){
+      await fetch('/api/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...p,date:dateStr})});
+    }
+
     hideLoading();
-    if(!res.ok){const e=await res.json();throw new Error(e.error||'伺服器錯誤');}
     const tot=D.m+D.a+D.e;
-    const facialRate=D.slot_facial_total>0?Math.round(D.f/D.slot_facial_total*100)+'%':'—';
+    const fRate=D.slot_facial_total>0?Math.round(D.f/D.slot_facial_total*100)+'%':'—';
     const nkRate=D.slot_nk_total>0?Math.round(D.nk/D.slot_nk_total*100)+'%':'—';
+    const newCount=allNew.length;
     document.getElementById('success-sub').innerHTML=
-      `${D.reporter} 完成今日填報 🎉<br>就診 <strong>${tot}</strong> 人<br>美顏針填滿率 <strong>${facialRate}</strong> ／ 針刀 <strong>${nkRate}</strong><br>轉預約 <strong>${D.cv}</strong> 人<br><br>資料已存入 Notion ✓`;
-    goStep(4);
+      `${D.reporter} 完成今日填報 🎉<br>就診 <strong>${tot}</strong> 人<br>美顏針填滿率 <strong>${fRate}</strong> ／ 針刀 <strong>${nkRate}</strong><br>轉預約 <strong>${D.cv}</strong> 人${newCount?'<br>新初診登記 <strong>'+newCount+'</strong> 人':''}<br><br>資料已存入 Notion ✓`;
+    goStep(5);
   }catch(e){
     hideLoading();
     const el=document.getElementById('err-box');
@@ -627,14 +692,17 @@ async function submitReport(){
 
 function resetReport(){
   D={m:0,a:0,e:0,f:0,nk:0,h1:0,h2:0,fu:0,cv:0,np_consult:0,slot_facial_total:0,slot_nk_total:0,note:"",reporter:""};
-  ['m','a','e','f','nk','h1','h2','fu','cv','np_consult'].forEach(k=>{
-    const el=document.getElementById('v-'+k); if(el) el.textContent='0';
-  });
+  newPatients={needleknife:[],growth:[]};
+  checkinDone=new Set();
+  ['m','a','e','f','nk','h1','h2','fu','cv','np_consult'].forEach(k=>{const el=document.getElementById('v-'+k);if(el)el.textContent='0';});
   document.getElementById('note').value='';
   document.getElementById('btn-next').disabled=true;
   document.getElementById('name-input').value='';
   document.getElementById('name-input-wrap').style.display='none';
   ng.querySelectorAll('.name-btn').forEach(b=>b.classList.remove('picked'));
+  ['nk-patients','growth-patients'].forEach(id=>document.getElementById(id).innerHTML='');
+  document.getElementById('checkin-loading').style.display='block';
+  document.getElementById('checkin-list').innerHTML='';
   document.getElementById('report-nav').style.display='flex';
   document.getElementById('prog-bar').style.display='flex';
   goStep(0);
@@ -643,46 +711,71 @@ function resetReport(){
 // 店長看板
 function daysSince(d){if(!d)return 999;return Math.floor((new Date()-new Date(d))/864e5);}
 
-function updateKPI(convId,convDetailId,convBarId,slotId,slotDetailId,slotBarId,m){
+function updateKPI(cId,cdId,cbId,sId,sdId,sbId,m){
   const {convRate,totalFU,totalCV,slotRate,filledSlots,totalSlots}=m;
-  document.getElementById(convId).textContent=convRate!==null?convRate+'%':'—';
-  document.getElementById(convDetailId).textContent=totalFU>0?`${totalCV}/${totalFU} 人`:'本週無跟進資料';
-  const cb=document.getElementById(convBarId);
+  document.getElementById(cId).textContent=convRate!==null?convRate+'%':'—';
+  document.getElementById(cdId).textContent=totalFU>0?`${totalCV}/${totalFU} 人`:'本週無跟進資料';
+  const cb=document.getElementById(cbId);
   cb.style.width=Math.min(convRate||0,100)+'%';
   cb.className='kpi-bar '+(convRate>=30?'':convRate>=20?'warn':'danger');
-  document.getElementById(slotId).textContent=slotRate!==null?slotRate+'%':'—';
-  document.getElementById(slotDetailId).textContent=totalSlots>0?`${filledSlots}/${totalSlots} 格已填滿`:'尚未填報';
-  const sb=document.getElementById(slotBarId);
+  document.getElementById(sId).textContent=slotRate!==null?slotRate+'%':'—';
+  document.getElementById(sdId).textContent=totalSlots>0?`${filledSlots}/${totalSlots} 格`:'尚未填報';
+  const sb=document.getElementById(sbId);
   sb.style.width=Math.min(slotRate||0,100)+'%';
   sb.className='kpi-bar '+(slotRate>=90?'':slotRate>=70?'warn':'danger');
 }
 
 async function loadManagerData(){
+  // KPI
   try{
     const res=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({role:'manager'})});
     const result=await res.json();
     if(result.metrics) updateKPI('kpi-conv','kpi-conv-detail','kpi-conv-bar','kpi-slot','kpi-slot-detail','kpi-slot-bar',result.metrics);
     document.getElementById('mgr-ai').innerHTML=result.text||'AI 分析需要 Anthropic API Key。';
-  }catch(e){document.getElementById('mgr-ai').textContent='載入失敗，請重試。';}
+  }catch(e){document.getElementById('mgr-ai').textContent='載入失敗';}
 
-  const urgent=PATIENTS.filter(p=>p.status==='需預約'&&(p.grade.includes('A')||p.grade.includes('B')));
-  const track=PATIENTS.filter(p=>p.status==='需追蹤');
+  // 首次回診提醒
+  try{
+    const res=await fetch('/api/patients',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({})});
+    const result=await res.json();
+    const pts=result.patients||[];
+    if(!pts.length){
+      document.getElementById('mgr-followup').innerHTML='<div class="empty-note">目前無待首次回診患者 🎉</div>';
+    }else{
+      document.getElementById('mgr-followup').innerHTML=`
+        <div class="proj-card">
+          <div class="proj-header"><div class="proj-title">📅 首次回診提醒</div><span class="proj-badge badge-red">${pts.length} 人</span></div>
+          <div class="proj-body">${pts.map(p=>`<div class="proj-item">
+            <div class="proj-check" onclick="toggleCheck(this)">○</div>
+            <div style="flex:1">
+              <div class="proj-name">${p.therapy==='針刀'?'🔪':'🌿'} ${p.name}${p.chart_no?' · '+p.chart_no:''}</div>
+              <div class="proj-meta">預計回診：${p.next_date}${p.days_over>0?' · 已逾期'+p.days_over+'天':''}</div>
+            </div>
+          </div>`).join('')}</div>
+        </div>`;
+    }
+  }catch(e){document.getElementById('mgr-followup').innerHTML='<div class="empty-note">載入失敗，請重試</div>';}
+
+  // 美顏針患者
+  const urgent=BEAUTY_PATIENTS.filter(p=>p.status==='需預約'&&(p.grade.includes('A')||p.grade.includes('B')));
+  const track=BEAUTY_PATIENTS.filter(p=>p.status==='需追蹤');
   document.getElementById('mgr-projects').innerHTML=`
     <div class="proj-card">
-      <div class="proj-header"><div class="proj-title">🔴 A/B 級患者待追蹤</div><span class="proj-badge badge-red">${urgent.length} 人</span></div>
+      <div class="proj-header"><div class="proj-title">✨ 美顏針 A/B 級待追蹤</div><span class="proj-badge badge-red">${urgent.length} 人</span></div>
       <div class="proj-body">${urgent.map(p=>`<div class="proj-item">
         <div class="proj-check" onclick="toggleCheck(this)">○</div>
-        <div style="flex:1"><div class="proj-name">${p.name}</div><div class="proj-meta">${p.grade} · ${p.therapy} · ${daysSince(p.last)} 天未回診</div></div>
+        <div style="flex:1"><div class="proj-name">${p.name}</div><div class="proj-meta">${p.grade} · ${daysSince(p.last)} 天未回診</div></div>
       </div>`).join('')}</div>
     </div>
-    <div class="proj-card">
-      <div class="proj-header"><div class="proj-title">🟡 需追蹤患者</div><span class="proj-badge badge-amber">${track.length} 人</span></div>
+    ${track.length?`<div class="proj-card">
+      <div class="proj-header"><div class="proj-title">✨ 美顏針需追蹤</div><span class="proj-badge badge-amber">${track.length} 人</span></div>
       <div class="proj-body">${track.slice(0,5).map(p=>`<div class="proj-item">
         <div class="proj-check" onclick="toggleCheck(this)">○</div>
         <div style="flex:1"><div class="proj-name">${p.name}</div><div class="proj-meta">${p.grade} · ${daysSince(p.last)} 天未回診</div></div>
-      </div>`).join('')}${track.length>5?`<div style="text-align:center;padding:8px;font-size:12px;color:var(--text3)">還有 ${track.length-5} 人...</div>`:''}</div>
-    </div>`;
+      </div>`).join('')}</div>
+    </div>`:''}`;
 }
+
 function toggleCheck(el){const done=el.classList.toggle('done');el.textContent=done?'✓':'○';}
 
 // 老闆
@@ -691,10 +784,7 @@ function checkPwd(){
     document.getElementById('owner-lock').style.display='none';
     document.getElementById('owner-content').style.display='block';
     loadOwnerData();
-  }else{
-    document.getElementById('pwd-err').style.display='block';
-    document.getElementById('pwd-input').value='';
-  }
+  }else{document.getElementById('pwd-err').style.display='block';document.getElementById('pwd-input').value='';}
 }
 document.getElementById('pwd-input').addEventListener('keydown',e=>{if(e.key==='Enter')checkPwd();});
 
@@ -712,7 +802,7 @@ async function loadOwnerData(){
         <div class="metric-card"><div class="metric-label">初診諮詢</div><div class="metric-val">${m.totalNP||'—'}</div><div class="metric-sub">本週累計</div></div>`;
     }
     document.getElementById('owner-ai').innerHTML=result.text||'AI 分析需要 Anthropic API Key。';
-  }catch(e){document.getElementById('owner-ai').textContent='載入失敗，請重試。';}
+  }catch(e){document.getElementById('owner-ai').textContent='載入失敗';}
 }
 
 function lockOwner(){
@@ -725,7 +815,6 @@ function lockOwner(){
 function showLoading(txt){document.getElementById('loading-text').textContent=txt;document.getElementById('loading').classList.add('show');}
 function hideLoading(){document.getElementById('loading').classList.remove('show');}
 
-// 初始化
 loadSettings();
 updProg();
 </script>
