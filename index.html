@@ -15,104 +15,135 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 .app{max-width:480px;margin:0 auto;min-height:100vh}
-.topbar{background:var(--accent);padding:14px 20px 0;display:flex;align-items:center;justify-content:space-between}
+
+.header-fixed{position:sticky;top:0;z-index:50;background:var(--accent)}
+.topbar{padding:12px 20px 0;display:flex;align-items:center;justify-content:space-between}
 .topbar-logo{font-size:15px;font-weight:700;color:#fff}
 .topbar-date{font-size:11px;color:rgba(255,255,255,.65)}
-.nav-bar{display:flex;background:var(--accent);padding:0 4px}
-.nav-btn{flex:1;padding:11px 4px;font-size:12px;font-weight:500;font-family:'Noto Sans TC',sans-serif;color:rgba(255,255,255,.55);background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
+.nav-bar{display:flex;padding:0 4px}
+.nav-btn{flex:1;padding:10px 4px;font-size:12px;font-weight:500;font-family:'Noto Sans TC',sans-serif;color:rgba(255,255,255,.55);background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
 .nav-btn.active{color:#fff;border-bottom-color:#fff}
-.page{display:none;padding:20px 20px 80px}.page.active{display:block}
-.progress-bar{display:flex;gap:3px;padding:0 20px 12px;background:var(--accent)}
+.progress-bar{display:flex;gap:3px;padding:6px 20px 10px}
 .prog-seg{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.25);transition:background .3s}
 .prog-seg.on{background:#fff}
+
+.page{display:none;padding:24px 20px 100px}.page.active{display:block}
 .step{display:none}.step.visible{display:block}
 .step-heading{font-size:21px;font-weight:700;margin-bottom:4px;letter-spacing:-.3px}
-.step-sub{font-size:13px;color:var(--text2);margin-bottom:20px;font-weight:300;line-height:1.6}
-.sec-label{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;margin-top:2px}
-.upload-area{border:1.5px dashed var(--border);border-radius:16px;background:var(--card);padding:28px 20px;text-align:center;cursor:pointer;margin-bottom:12px;transition:border-color .2s}
-.upload-area.has-img{padding:0;overflow:hidden}
-.upload-area img{width:100%;border-radius:14px;display:block}
-.upload-icon{font-size:30px;margin-bottom:8px}
-.upload-label{font-size:14px;color:var(--text2);font-weight:500}
-.upload-sub{font-size:12px;color:var(--text3);margin-top:4px}
-input[type=file]{display:none}
-.ai-read-btn{width:100%;padding:12px;font-size:14px;font-family:'Noto Sans TC',sans-serif;font-weight:700;border-radius:12px;border:none;background:var(--accent-light);color:var(--accent);cursor:pointer;margin-bottom:8px;transition:all .2s}
-.ai-read-btn:disabled{opacity:.4;cursor:not-allowed}
-.parse-msg{font-size:12px;border-radius:10px;padding:10px 14px;margin-bottom:14px;display:none;line-height:1.7}
-.msg-ok{background:var(--green-bg);color:var(--green)}.msg-warn{background:var(--amber-bg);color:var(--amber)}
-.or-line{text-align:center;font-size:12px;color:var(--text3);margin:14px 0;position:relative}
-.or-line::before,.or-line::after{content:'';position:absolute;top:50%;width:42%;height:1px;background:var(--border)}
-.or-line::before{left:0}.or-line::after{right:0}
+.step-sub{font-size:13px;color:var(--text2);margin-bottom:22px;font-weight:300;line-height:1.6}
+.sec-label{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;margin-top:4px}
+
+/* 填報者 */
+.name-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.name-btn{padding:20px 12px;font-size:17px;font-weight:500;font-family:'Noto Sans TC',sans-serif;border-radius:14px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;color:var(--text2);transition:all .18s;text-align:center}
+.name-btn:active{transform:scale(.96)}
+.name-btn.picked{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700}
+.name-input-wrap{display:none;margin-bottom:8px}
+.name-input{width:100%;font-size:16px;font-family:'Noto Sans TC',sans-serif;padding:14px 16px;border-radius:14px;border:1.5px solid var(--accent);background:var(--card);color:var(--text);outline:none}
+
+/* 數字卡 */
 .num-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
 .num-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}
-.num-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:12px 8px;text-align:center}
-.num-card-label{font-size:11px;color:var(--text2);margin-bottom:8px;font-weight:500}
+.num-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:14px 8px;text-align:center}
+.num-card-label{font-size:11px;color:var(--text2);margin-bottom:10px;font-weight:500}
 .num-controls{display:flex;align-items:center;justify-content:center;gap:8px}
-.nc-btn{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--border);background:var(--bg);cursor:pointer;font-size:17px;color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;transition:all .12s}
+.nc-btn{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--border);background:var(--bg);cursor:pointer;font-size:18px;color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;transition:all .12s}
 .nc-btn:active{background:var(--accent-light);transform:scale(.9)}
-.nc-val{font-size:22px;font-weight:700;min-width:32px;text-align:center}
+.nc-val{font-size:24px;font-weight:700;min-width:34px;text-align:center}
+
+/* 空檔 */
 .slot-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
 .slot-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:12px}
 .slot-name{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:8px}
 .slot-opts{display:flex;flex-direction:column;gap:5px}
-.slot-opt{padding:6px 8px;font-size:11px;font-family:'Noto Sans TC',sans-serif;font-weight:500;border-radius:8px;border:1px solid var(--border);background:var(--bg);cursor:pointer;color:var(--text2);text-align:center;transition:all .15s}
+.slot-opt{padding:7px 8px;font-size:12px;font-family:'Noto Sans TC',sans-serif;font-weight:500;border-radius:8px;border:1px solid var(--border);background:var(--bg);cursor:pointer;color:var(--text2);text-align:center;transition:all .15s}
 .slot-opt.pf{background:var(--green-bg);color:var(--green);border-color:var(--green);font-weight:700}
 .slot-opt.po{background:var(--amber-bg);color:var(--amber);border-color:var(--amber);font-weight:700}
 .slot-opt.pu{background:#F5F5F5;color:var(--text3);border-color:#ddd}
-.newpt-source{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:14px;margin-bottom:10px}
-.newpt-source-title{font-size:13px;font-weight:700;margin-bottom:10px}
-.newpt-items{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-.newpt-item{text-align:center}
-.newpt-item-label{font-size:10px;color:var(--text3);margin-bottom:5px;font-weight:500}
-.sm-btn{width:24px;height:24px;border-radius:50%;border:1px solid var(--border);background:var(--bg);cursor:pointer;font-size:13px;color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0}
-.sm-btn:active{background:var(--accent-light)}
-.sm-val{font-size:16px;font-weight:700;min-width:20px;text-align:center}
-.sm-controls{display:flex;align-items:center;justify-content:center;gap:5px}
+
+/* 跟進 */
+.followup-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:16px;margin-bottom:16px}
+.followup-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0}
+.followup-row+.followup-row{border-top:1px solid var(--border);margin-top:6px;padding-top:12px}
+.followup-label{font-size:13px;color:var(--text2)}
+.followup-sub{font-size:11px;color:var(--text3);margin-top:2px}
+
+/* 初診 */
+.consult-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:16px;margin-bottom:16px}
+.consult-title{font-size:13px;font-weight:700;margin-bottom:14px}
+.consult-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)}
+.consult-row:last-child{border-bottom:none}
+.consult-label{font-size:13px;color:var(--text)}
+.consult-sub{font-size:11px;color:var(--text3);margin-top:2px}
+.consult-note{font-size:12px;color:var(--text3);background:var(--amber-bg);border-radius:10px;padding:10px 12px;margin-top:12px;line-height:1.6}
+
 textarea.note-area{width:100%;font-size:13px;font-family:'Noto Sans TC',sans-serif;border-radius:12px;padding:12px 14px;min-height:72px;border:1px solid var(--border);background:var(--card);color:var(--text);resize:vertical;outline:none;margin-bottom:16px}
 textarea.note-area:focus{border-color:var(--accent)}
 .note-label{font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:500}
+
+/* 總覽 */
 .sum-card{background:var(--card);border-radius:16px;border:1px solid var(--border);overflow:hidden;margin-bottom:16px}
 .sum-section-title{padding:7px 14px;font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.8px;text-transform:uppercase;border-bottom:1px solid var(--border);background:#FAFAF8}
 .sum-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px}
 .sum-row:last-child{border-bottom:none}
-.sum-key{color:var(--text2)}.sum-val{font-weight:700;text-align:right;max-width:58%}
-.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:rgba(247,245,240,.95);backdrop-filter:blur(10px);padding:10px 20px 24px;border-top:1px solid var(--border);display:flex;gap:10px;z-index:100}
-.btn-back{flex:1;padding:13px;font-size:13px;font-family:'Noto Sans TC',sans-serif;font-weight:500;border-radius:14px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;color:var(--text2)}
-.btn-next{flex:2;padding:13px;font-size:14px;font-family:'Noto Sans TC',sans-serif;font-weight:700;border-radius:14px;border:none;background:var(--accent);color:#fff;cursor:pointer;transition:all .15s}
+.sum-key{color:var(--text2)}.sum-val{font-weight:700;text-align:right;max-width:60%}
+
+/* 底部 */
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:rgba(247,245,240,.96);backdrop-filter:blur(10px);padding:10px 20px 26px;border-top:1px solid var(--border);display:flex;gap:10px;z-index:100}
+.btn-back{flex:1;padding:14px;font-size:13px;font-family:'Noto Sans TC',sans-serif;font-weight:500;border-radius:14px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;color:var(--text2)}
+.btn-next{flex:2;padding:14px;font-size:14px;font-family:'Noto Sans TC',sans-serif;font-weight:700;border-radius:14px;border:none;background:var(--accent);color:#fff;cursor:pointer;transition:all .15s}
 .btn-next:active{transform:scale(.97)}.btn-next:disabled{opacity:.35;cursor:not-allowed}
+
+/* 成功 */
 .success-wrap{text-align:center;padding:48px 20px}
 .success-circle{width:80px;height:80px;border-radius:50%;background:var(--green-bg);display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 20px}
 .success-title{font-size:20px;font-weight:700;margin-bottom:8px}
 .success-sub{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:24px}
 .notion-btn{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;font-family:'Noto Sans TC',sans-serif;color:var(--accent);border:1.5px solid var(--accent);border-radius:12px;padding:10px 18px;text-decoration:none;margin-bottom:14px;background:var(--accent-light)}
 .reset-btn{display:block;font-size:13px;color:var(--text3);background:none;border:none;cursor:pointer;font-family:'Noto Sans TC',sans-serif;margin:10px auto 0;text-decoration:underline}
+
+/* 看板 */
 .dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .dash-title{font-size:16px;font-weight:700}.dash-sub{font-size:12px;color:var(--text3)}
 .metric-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}
 .metric-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:14px}
 .metric-label{font-size:11px;color:var(--text2);margin-bottom:6px;font-weight:500}
-.metric-val{font-size:24px;font-weight:700}
+.metric-val{font-size:26px;font-weight:700}
 .metric-sub{font-size:11px;color:var(--text3);margin-top:3px}
 .section-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:14px;margin-bottom:12px}
-.section-card-title{font-size:13px;font-weight:700;margin-bottom:10px}
-.ai-text{font-size:13px;color:var(--text);line-height:1.75}
+.ai-text{font-size:13px;color:var(--text);line-height:1.8}
 .slot-status-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .slot-status-card{border-radius:10px;padding:10px 12px;text-align:center}
 .slot-full{background:var(--green-bg)}.slot-open{background:var(--amber-bg)}.slot-unk{background:#F5F5F5}
 .slot-status-label{font-size:11px;color:var(--text2);margin-bottom:3px}
 .slot-status-val{font-size:13px;font-weight:700}
 .slot-full .slot-status-val{color:var(--green)}.slot-open .slot-status-val{color:var(--amber)}.slot-unk .slot-status-val{color:var(--text3)}
+
+/* KPI */
+.kpi-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.kpi-label{font-size:12px;color:var(--text2);margin-bottom:4px}
+.kpi-val{font-size:28px;font-weight:700}
+.kpi-sub{font-size:11px;color:var(--text3);margin-top:2px}
+.kpi-right{text-align:right}
+.kpi-detail{font-size:11px;color:var(--text3);margin-bottom:4px}
+.kpi-bar-wrap{width:80px;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.kpi-bar{height:100%;border-radius:4px;background:var(--green);transition:width .5s}
+.kpi-bar.warn{background:var(--amber)}.kpi-bar.danger{background:var(--red)}
+
+/* 患者追蹤 */
 .proj-card{background:var(--card);border-radius:14px;border:1px solid var(--border);overflow:hidden;margin-bottom:10px}
 .proj-header{padding:12px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
 .proj-title{font-size:13px;font-weight:700}
 .proj-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
-.badge-red{background:var(--red-bg);color:var(--red)}.badge-amber{background:var(--amber-bg);color:var(--amber)}.badge-green{background:var(--green-bg);color:var(--green)}
+.badge-red{background:var(--red-bg);color:var(--red)}.badge-amber{background:var(--amber-bg);color:var(--amber)}
 .proj-body{padding:10px 14px}
 .proj-item{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px}
 .proj-item:last-child{border-bottom:none}
 .proj-name{flex:1}.proj-meta{font-size:11px;color:var(--text3)}
 .proj-check{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--border);background:var(--bg);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;transition:all .15s}
 .proj-check.done{background:var(--green);border-color:var(--green);color:#fff}
+
+/* 密碼 */
 .pwd-wrap{padding:48px 20px;text-align:center}
 .pwd-icon{font-size:40px;margin-bottom:16px}
 .pwd-title{font-size:18px;font-weight:700;margin-bottom:8px}
@@ -121,58 +152,55 @@ textarea.note-area:focus{border-color:var(--accent)}
 .pwd-input:focus{border-color:var(--accent)}
 .pwd-btn{padding:12px 32px;font-size:14px;font-family:'Noto Sans TC',sans-serif;font-weight:700;border-radius:14px;border:none;background:var(--accent);color:#fff;cursor:pointer}
 .pwd-err{font-size:12px;color:var(--red);margin-top:8px;display:none}
-.revenue-row{display:flex;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px}
-.revenue-row:last-child{border-bottom:none}
-.revenue-label{color:var(--text2)}.revenue-val{font-weight:700;color:var(--accent)}
+
 .err-box{background:var(--red-bg);color:var(--red);border-radius:10px;padding:10px 14px;font-size:13px;margin-bottom:12px;display:none;line-height:1.6}
 .loading-overlay{display:none;position:fixed;inset:0;background:rgba(44,95,90,.88);z-index:999;align-items:center;justify-content:center;flex-direction:column;gap:16px}
 .loading-overlay.show{display:flex}
 .loading-spinner{width:40px;height:40px;border:3px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
 .loading-text{color:#fff;font-size:14px;font-weight:500}
 @keyframes spin{to{transform:rotate(360deg)}}
-.refresh-btn{font-size:12px;padding:6px 12px;border-radius:20px;border:1px solid var(--border);background:var(--card);cursor:pointer;color:var(--text2)}
+.refresh-btn{font-size:12px;padding:6px 12px;border-radius:20px;border:1px solid var(--border);background:var(--card);cursor:pointer;color:var(--text2);font-family:'Noto Sans TC',sans-serif}
+.loading-inline{text-align:center;padding:20px;color:var(--text3);font-size:13px}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="topbar">
-    <span class="topbar-logo">🏥 雲玖中醫</span>
-    <span class="topbar-date" id="topbar-date"></span>
-  </div>
-  <div class="nav-bar">
-    <button class="nav-btn active" id="nav-report" onclick="switchPage('report',this)">📋 填報</button>
-    <button class="nav-btn" id="nav-manager" onclick="switchPage('manager',this)">📊 店長看板</button>
-    <button class="nav-btn" id="nav-owner" onclick="switchPage('owner',this)">🔐 老闆看板</button>
-  </div>
 
-  <!-- ===== 填報頁 ===== -->
-  <div class="page active" id="page-report">
-    <div class="progress-bar">
+  <div class="header-fixed">
+    <div class="topbar">
+      <span class="topbar-logo">🏥 雲玖中醫</span>
+      <span class="topbar-date" id="topbar-date"></span>
+    </div>
+    <div class="nav-bar">
+      <button class="nav-btn active" onclick="switchPage('report',this)">📋 填報</button>
+      <button class="nav-btn" onclick="switchPage('manager',this)">📊 店長看板</button>
+      <button class="nav-btn" onclick="switchPage('owner',this)">🔐 老闆看板</button>
+    </div>
+    <div class="progress-bar" id="prog-bar">
       <div class="prog-seg on" id="ps0"></div>
       <div class="prog-seg" id="ps1"></div>
       <div class="prog-seg" id="ps2"></div>
       <div class="prog-seg" id="ps3"></div>
-      <div class="prog-seg" id="ps4"></div>
     </div>
+  </div>
 
+  <!-- ===== 填報頁 ===== -->
+  <div class="page active" id="page-report">
+
+    <!-- S0 填報者 -->
     <div class="step visible" id="s0">
       <div class="step-heading">今天是誰在填？</div>
-      <div class="step-sub">點你的名字就可以繼續</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px" id="name-grid"></div>
+      <div class="step-sub">點你的名字，或選「其他」自己輸入</div>
+      <div class="name-grid" id="name-grid"></div>
+      <div class="name-input-wrap" id="name-input-wrap">
+        <input type="text" class="name-input" id="name-input" placeholder="請輸入你的名字" oninput="onNameInput()">
+      </div>
     </div>
 
+    <!-- S1 數字 -->
     <div class="step" id="s1">
-      <div class="step-heading">上傳今日報表</div>
-      <div class="step-sub">拍照上傳，AI 自動讀取數字，可手動修改</div>
-      <div class="upload-area" id="upload-area" onclick="document.getElementById('file-input').click()">
-        <div class="upload-icon">📷</div>
-        <div class="upload-label">點此拍照或上傳報表</div>
-        <div class="upload-sub">支援 JPG、PNG</div>
-      </div>
-      <input type="file" id="file-input" accept="image/*" capture="environment">
-      <button class="ai-read-btn" id="ai-read-btn" disabled onclick="aiReadImage()">✨ AI 讀取報表數字</button>
-      <div class="parse-msg" id="parse-msg"></div>
-      <div class="or-line">確認數字，可手動調整</div>
+      <div class="step-heading">今日就診數字</div>
+      <div class="step-sub">從報表直接填，沒開診的時段填 0</div>
       <div class="sec-label">就診人數</div>
       <div class="num-grid-3">
         <div class="num-card"><div class="num-card-label">☀️ 早診</div><div class="num-controls"><button class="nc-btn" onclick="adj('m',-1)">−</button><span class="nc-val" id="v-m">0</span><button class="nc-btn" onclick="adj('m',1)">+</button></div></div>
@@ -192,28 +220,66 @@ textarea.note-area:focus{border-color:var(--accent)}
       </div>
     </div>
 
+    <!-- S2 空檔 + 跟進 + 初診 -->
     <div class="step" id="s2">
-      <div class="step-heading">明後天空檔狀態</div>
-      <div class="step-sub">確認或手動選擇，自費約診最重要</div>
+      <div class="step-heading">空檔、跟進與初診</div>
+      <div class="step-sub">今日最重要的三件事</div>
+
+      <div class="sec-label">明後天空檔狀態</div>
       <div class="slot-grid" id="slot-grid"></div>
+
+      <div class="sec-label">今日初診諮詢跟進</div>
+      <div class="followup-card">
+        <div class="followup-row">
+          <div>
+            <div class="followup-label">今日諮詢總人數</div>
+            <div class="followup-sub">現場 + 電話 + 表單</div>
+          </div>
+          <div class="num-controls">
+            <button class="nc-btn" onclick="adj('np_consult',-1)">−</button>
+            <span class="nc-val" id="v-np_consult">0</span>
+            <button class="nc-btn" onclick="adj('np_consult',1)">+</button>
+          </div>
+        </div>
+        <div class="followup-row">
+          <div>
+            <div class="followup-label">48小時內跟進人數</div>
+            <div class="followup-sub">店長主動聯繫的</div>
+          </div>
+          <div class="num-controls">
+            <button class="nc-btn" onclick="adj('fu',-1)">−</button>
+            <span class="nc-val" id="v-fu">0</span>
+            <button class="nc-btn" onclick="adj('fu',1)">+</button>
+          </div>
+        </div>
+        <div class="followup-row">
+          <div>
+            <div class="followup-label">成功轉預約</div>
+            <div class="followup-sub">當場或跟進後預約成功</div>
+          </div>
+          <div class="num-controls">
+            <button class="nc-btn" onclick="adj('cv',-1)">−</button>
+            <span class="nc-val" id="v-cv">0</span>
+            <button class="nc-btn" onclick="adj('cv',1)">+</button>
+          </div>
+        </div>
+        <div class="consult-note">💡 沒有當場轉單的諮詢，請引導患者填 Google 表單，店長 48 小時內跟進</div>
+      </div>
+
       <div class="note-label">今日備注（選填）</div>
       <textarea class="note-area" id="note" placeholder="庫存異常、人力調度、補位情況..."></textarea>
     </div>
 
+    <!-- S3 確認 -->
     <div class="step" id="s3">
-      <div class="step-heading">今日初診諮詢</div>
-      <div class="step-sub">有才填，依來源和項目分開記錄</div>
-      <div id="newpt-section"></div>
-    </div>
-
-    <div class="step" id="s4">
       <div class="step-heading">確認後送出</div>
       <div class="step-sub">資料直接存進 Notion，老闆隨時看得到</div>
       <div class="sum-card" id="sum-card"></div>
       <div class="err-box" id="err-box"></div>
     </div>
 
-    <div class="step" id="s5">
+    <!-- S4 成功 -->
+    <div class="step" id="s4">
       <div class="success-wrap">
         <div class="success-circle">✅</div>
         <div class="success-title">今日回報完成！</div>
@@ -235,12 +301,39 @@ textarea.note-area:focus{border-color:var(--accent)}
       <div><div class="dash-title">店長看板</div><div class="dash-sub" id="mgr-date"></div></div>
       <button class="refresh-btn" onclick="loadManagerData()">🔄 更新</button>
     </div>
-    <div class="sec-label">患者追蹤專案</div>
-    <div id="mgr-projects"><div style="text-align:center;padding:20px;color:var(--text3);font-size:13px">載入中...</div></div>
+
+    <div class="sec-label">本週核心指標</div>
+    <div class="kpi-card">
+      <div>
+        <div class="kpi-label">初診轉單率</div>
+        <div class="kpi-val" id="kpi-conv">—</div>
+        <div class="kpi-sub">目標 30%</div>
+      </div>
+      <div class="kpi-right">
+        <div class="kpi-detail" id="kpi-conv-detail">從 Notion 載入中</div>
+        <div class="kpi-bar-wrap"><div class="kpi-bar danger" id="kpi-conv-bar" style="width:0%"></div></div>
+      </div>
+    </div>
+    <div class="kpi-card" style="margin-bottom:16px">
+      <div>
+        <div class="kpi-label">自費空檔填滿率</div>
+        <div class="kpi-val" id="kpi-slot">—</div>
+        <div class="kpi-sub">目標 90%</div>
+      </div>
+      <div class="kpi-right">
+        <div class="kpi-detail" id="kpi-slot-detail">從 Notion 載入中</div>
+        <div class="kpi-bar-wrap"><div class="kpi-bar danger" id="kpi-slot-bar" style="width:0%"></div></div>
+      </div>
+    </div>
+
     <div class="sec-label">明後天空檔</div>
-    <div class="section-card"><div class="slot-status-grid" id="mgr-slots"></div></div>
+    <div class="section-card"><div class="slot-status-grid" id="mgr-slots"><div class="loading-inline">載入中...</div></div></div>
+
+    <div class="sec-label">患者追蹤專案</div>
+    <div id="mgr-projects"><div class="loading-inline">載入中...</div></div>
+
     <div class="sec-label">AI 今日建議</div>
-    <div class="section-card"><div class="ai-text" id="mgr-ai">分析中...</div></div>
+    <div class="section-card"><div class="ai-text" id="mgr-ai">從 Notion 分析中...</div></div>
   </div>
 
   <!-- ===== 老闆看板 ===== -->
@@ -260,14 +353,42 @@ textarea.note-area:focus{border-color:var(--accent)}
         <div><div class="dash-title">老闆看板</div><div class="dash-sub" id="owner-date"></div></div>
         <button class="refresh-btn" onclick="loadOwnerData()">🔄 更新</button>
       </div>
-      <div class="sec-label">今日全覽</div>
-      <div class="metric-grid" id="owner-metrics"></div>
-      <div class="sec-label">今日營收</div>
-      <div class="section-card" id="owner-revenue"></div>
+
+      <div class="sec-label">本週核心指標</div>
+      <div class="kpi-card">
+        <div>
+          <div class="kpi-label">初診轉單率</div>
+          <div class="kpi-val" id="o-conv">—</div>
+          <div class="kpi-sub">目標 30%</div>
+        </div>
+        <div class="kpi-right">
+          <div class="kpi-detail" id="o-conv-detail">載入中</div>
+          <div class="kpi-bar-wrap"><div class="kpi-bar danger" id="o-conv-bar" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div class="kpi-card" style="margin-bottom:16px">
+        <div>
+          <div class="kpi-label">空檔填滿率</div>
+          <div class="kpi-val" id="o-slot">—</div>
+          <div class="kpi-sub">目標 90%</div>
+        </div>
+        <div class="kpi-right">
+          <div class="kpi-detail" id="o-slot-detail">載入中</div>
+          <div class="kpi-bar-wrap"><div class="kpi-bar danger" id="o-slot-bar" style="width:0%"></div></div>
+        </div>
+      </div>
+
+      <div class="sec-label">本週數量總覽</div>
+      <div class="metric-grid" id="owner-metrics">
+        <div class="loading-inline" style="grid-column:span 2">載入中...</div>
+      </div>
+
       <div class="sec-label">明後天空檔</div>
-      <div class="section-card"><div class="slot-status-grid" id="owner-slots"></div></div>
+      <div class="section-card"><div class="slot-status-grid" id="owner-slots"><div class="loading-inline">載入中...</div></div></div>
+
       <div class="sec-label">AI 策略分析</div>
-      <div class="section-card"><div class="ai-text" id="owner-ai">分析中...</div></div>
+      <div class="section-card"><div class="ai-text" id="owner-ai">從 Notion 分析中...</div></div>
+
       <button onclick="lockOwner()" style="margin-top:8px;width:100%;padding:12px;font-size:13px;font-family:'Noto Sans TC',sans-serif;border-radius:12px;border:1px solid var(--border);background:var(--card);cursor:pointer;color:var(--text3)">登出老闆模式</button>
     </div>
   </div>
@@ -280,15 +401,13 @@ textarea.note-area:focus{border-color:var(--accent)}
 
 <script>
 const OWNER_PWD="18166";
-const NAMES=["惠玲","詩瑩","韻鈞","其他"];
+const FIXED_NAMES=["惠玲","詩瑩","韻鈞"];
 const SLOT_DEFS=[
   {key:"明天美顏針空檔",label:"明天 ✨ 美顏針"},
   {key:"明天針刀空檔",label:"明天 🔪 針刀"},
   {key:"後天美顏針空檔",label:"後天 ✨ 美顏針"},
   {key:"後天針刀空檔",label:"後天 🔪 針刀"},
 ];
-const NP_SOURCES=[{key:"form",label:"📋 表單"},{key:"walk",label:"🚶 現場"},{key:"phone",label:"📞 電話"}];
-const NP_ITEMS=["美顏針","針刀","轉骨","其他"];
 const PATIENTS=[
   {name:"郭巧富",status:"需預約",grade:"A好咖",last:"2026-02-05",therapy:"美顏針"},
   {name:"周暐珈",status:"需預約",grade:"A好咖",last:"2025-09-02",therapy:"美顏針"},
@@ -298,8 +417,8 @@ const PATIENTS=[
   {name:"李慧婷",status:"需預約",grade:"B老客戶",last:"2025-06-17",therapy:"美顏針"},
 ];
 
-let cur=0,imgBase64="";
-let D={m:0,a:0,e:0,f:0,nk:0,h1:0,h2:0,slots:{},newpt:{},note:"",reporter:"",revenue:0};
+let cur=0;
+let D={m:0,a:0,e:0,f:0,nk:0,h1:0,h2:0,fu:0,cv:0,np_consult:0,slots:{},note:"",reporter:""};
 
 const today=new Date();
 const dateDisp=today.toLocaleDateString('zh-TW',{month:'long',day:'numeric',weekday:'short'});
@@ -308,27 +427,48 @@ document.getElementById('topbar-date').textContent=dateDisp;
 document.getElementById('mgr-date').textContent=dateDisp;
 document.getElementById('owner-date').textContent=dateDisp;
 
+// 頁面切換
 function switchPage(p,btn){
   document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(el=>el.classList.remove('active'));
   document.getElementById('page-'+p).classList.add('active');
   btn.classList.add('active');
-  if(p==='manager')loadManagerData();
+  document.getElementById('prog-bar').style.display=p==='report'?'flex':'none';
+  if(p==='manager') loadManagerData();
 }
 
 // 填報者
 const ng=document.getElementById('name-grid');
-NAMES.forEach(n=>{
+FIXED_NAMES.forEach(n=>{
   const b=document.createElement('button');
-  b.style.cssText="padding:18px 12px;font-size:16px;font-weight:500;font-family:'Noto Sans TC',sans-serif;border-radius:14px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;color:var(--text2);transition:all .18s";
-  b.textContent=n;
+  b.className='name-btn'; b.textContent=n;
   b.onclick=()=>{
-    ng.querySelectorAll('button').forEach(x=>{x.style.background='var(--card)';x.style.color='var(--text2)';x.style.borderColor='var(--border)';});
-    b.style.background='var(--accent)';b.style.color='#fff';b.style.borderColor='var(--accent)';
-    D.reporter=n;document.getElementById('btn-next').disabled=false;
+    ng.querySelectorAll('.name-btn').forEach(x=>x.classList.remove('picked'));
+    b.classList.add('picked');
+    D.reporter=n;
+    document.getElementById('name-input-wrap').style.display='none';
+    document.getElementById('btn-next').disabled=false;
   };
   ng.appendChild(b);
 });
+// 其他按鈕
+const otherBtn=document.createElement('button');
+otherBtn.className='name-btn'; otherBtn.textContent='其他';
+otherBtn.onclick=()=>{
+  ng.querySelectorAll('.name-btn').forEach(x=>x.classList.remove('picked'));
+  otherBtn.classList.add('picked');
+  D.reporter='';
+  document.getElementById('name-input-wrap').style.display='block';
+  document.getElementById('name-input').focus();
+  document.getElementById('btn-next').disabled=true;
+};
+ng.appendChild(otherBtn);
+
+function onNameInput(){
+  const val=document.getElementById('name-input').value.trim();
+  D.reporter=val;
+  document.getElementById('btn-next').disabled=!val;
+}
 
 // 空檔
 const sg=document.getElementById('slot-grid');
@@ -338,114 +478,58 @@ SLOT_DEFS.forEach(slot=>{
   const opts=document.createElement('div');opts.className='slot-opts';opts.id='sl-'+slot.key;
   [{l:'額滿',c:'pf'},{l:'有空檔',c:'po'},{l:'未確認',c:'pu'}].forEach(opt=>{
     const b=document.createElement('button');b.className='slot-opt';b.textContent=opt.l;
-    b.onclick=()=>{opts.querySelectorAll('.slot-opt').forEach(x=>x.className='slot-opt');b.className='slot-opt '+opt.c;D.slots[slot.key]=opt.l;};
+    b.onclick=()=>{
+      opts.querySelectorAll('.slot-opt').forEach(x=>x.className='slot-opt');
+      b.className='slot-opt '+opt.c; D.slots[slot.key]=opt.l;
+    };
     opts.appendChild(b);
   });
-  card.appendChild(opts);sg.appendChild(card);
+  card.appendChild(opts); sg.appendChild(card);
 });
 
-// 初診
-const nps=document.getElementById('newpt-section');
-NP_SOURCES.forEach(src=>{
-  const box=document.createElement('div');box.className='newpt-source';
-  box.innerHTML=`<div class="newpt-source-title">${src.label}</div>
-  <div class="newpt-items">${NP_ITEMS.map(item=>`
-    <div class="newpt-item">
-      <div class="newpt-item-label">${item}</div>
-      <div class="sm-controls">
-        <button class="sm-btn" onclick="adjNP('${src.key}','${item}',-1)">−</button>
-        <span class="sm-val" id="np-${src.key}-${item}">0</span>
-        <button class="sm-btn" onclick="adjNP('${src.key}','${item}',1)">+</button>
-      </div>
-    </div>`).join('')}
-  </div>`;
-  nps.appendChild(box);
-});
-function adjNP(src,item,d){if(!D.newpt[src])D.newpt[src]={};D.newpt[src][item]=Math.max(0,(D.newpt[src][item]||0)+d);document.getElementById(`np-${src}-${item}`).textContent=D.newpt[src][item];}
-function adj(k,d){D[k]=Math.max(0,(D[k]||0)+d);document.getElementById('v-'+k).textContent=D[k];}
-
-// 照片上傳
-document.getElementById('file-input').addEventListener('change',function(){
-  const file=this.files[0];if(!file)return;
-  const reader=new FileReader();
-  reader.onload=e=>{
-    imgBase64=e.target.result.split(',')[1];
-    const area=document.getElementById('upload-area');
-    area.classList.add('has-img');
-    area.innerHTML=`<img src="${e.target.result}" alt="報表">`;
-    document.getElementById('ai-read-btn').disabled=false;
-  };
-  reader.readAsDataURL(file);
-});
-
-async function aiReadImage(){
-  const btn=document.getElementById('ai-read-btn');
-  btn.disabled=true;btn.textContent='🔍 AI 讀取中...';
-  showLoading('AI 判讀報表中...');
-  try{
-    const res=await fetch('/api/readimage',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({image:imgBase64})});
-    const result=await res.json();
-    if(result.error)throw new Error(result.error);
-    const d=result.data;
-    if(d.morning!=null)D.m=d.morning;
-    if(d.afternoon!=null)D.a=d.afternoon;
-    if(d.evening!=null)D.e=d.evening;
-    if(d.facial!=null)D.f=d.facial;
-    if(d.needleknife!=null)D.nk=d.needleknife;
-    if(d.herbal_custom!=null)D.h2=d.herbal_custom;
-    if(d.herbal_growth!=null)D.h1=d.herbal_growth;
-    if(d.revenue!=null)D.revenue=d.revenue;
-    ['m','a','e','f','nk','h1','h2'].forEach(k=>{document.getElementById('v-'+k).textContent=D[k]||0;});
-    const found=[];
-    if(D.m||D.a||D.e)found.push(`就診 早${D.m}/午${D.a}/晚${D.e}`);
-    if(D.f)found.push(`美顏針 ${D.f}`);if(D.nk)found.push(`針刀 ${D.nk}`);
-    if(D.h2)found.push(`客製水藥 ${D.h2}`);if(D.revenue)found.push(`實收 ${D.revenue.toLocaleString()}`);
-    const el=document.getElementById('parse-msg');
-    el.className='parse-msg msg-ok';
-    el.innerHTML='✓ 已讀取：'+found.join('、')+'<br>請確認，可手動調整';
-    el.style.display='block';
-    btn.textContent='✓ 已讀取';
-  }catch(e){
-    const el=document.getElementById('parse-msg');
-    el.className='parse-msg msg-warn';
-    el.textContent='⚠️ 讀取失敗，請手動填寫數字';
-    el.style.display='block';
-    btn.textContent='重新讀取';btn.disabled=false;
-  }
-  hideLoading();
+function adj(k,d){
+  if(!(k in D)) D[k]=0;
+  D[k]=Math.max(0,(D[k]||0)+d);
+  document.getElementById('v-'+k).textContent=D[k];
 }
 
-function updProg(){for(let i=0;i<5;i++)document.getElementById('ps'+i).className='prog-seg'+(i<=cur?' on':'');}
+function updProg(){
+  for(let i=0;i<4;i++) document.getElementById('ps'+i).className='prog-seg'+(i<=cur?' on':'');
+}
+
 function goStep(n){
   document.getElementById('s'+cur).classList.remove('visible');
   cur=n;
   document.getElementById('s'+n).classList.add('visible');
   updProg();
   const nav=document.getElementById('report-nav');
-  if(n===5){nav.style.display='none';return;}
+  if(n===4){nav.style.display='none';return;}
   nav.style.display='flex';
   document.getElementById('btn-back').style.display=n===0?'none':'block';
   document.getElementById('btn-next').disabled=n===0&&!D.reporter;
-  document.getElementById('btn-next').textContent=n===4?'✓ 確認送出':'下一步 →';
-  if(n===4)buildSummary();
+  document.getElementById('btn-next').textContent=n===3?'✓ 確認送出':'下一步 →';
+  if(n===3) buildSummary();
   window.scrollTo(0,0);
 }
-function goNext(){if(cur===4)submitReport();else goStep(cur+1);}
+function goNext(){if(cur===3)submitReport();else goStep(cur+1);}
 function goBack(){if(cur>0)goStep(cur-1);}
 
 function buildSummary(){
   D.note=document.getElementById('note').value;
-  let npLines=[];
-  NP_SOURCES.forEach(src=>{const items=NP_ITEMS.filter(it=>(D.newpt[src.key]||{})[it]>0);if(items.length)npLines.push(src.label.replace(/📋|🚶|📞/,'').trim()+': '+items.map(it=>`${it}×${D.newpt[src.key][it]}`).join(' '));});
+  const tot=D.m+D.a+D.e;
+  const convRate=D.fu>0?Math.round(D.cv/D.fu*100)+'%':'—';
   document.getElementById('sum-card').innerHTML=`
     <div class="sum-section-title">今日數字</div>
-    <div class="sum-row"><span class="sum-key">就診人數</span><span class="sum-val">${D.m+D.a+D.e} 人（早${D.m}／午${D.a}／晚${D.e}）</span></div>
+    <div class="sum-row"><span class="sum-key">填報者</span><span class="sum-val">${D.reporter}</span></div>
+    <div class="sum-row"><span class="sum-key">就診人數</span><span class="sum-val">${tot} 人（早${D.m}／午${D.a}／晚${D.e}）</span></div>
     <div class="sum-row"><span class="sum-key">美顏針 / 針刀</span><span class="sum-val">${D.f} 次 ／ ${D.nk} 次</span></div>
     <div class="sum-row"><span class="sum-key">轉骨 / 客製水藥</span><span class="sum-val">${D.h1} 張 ／ ${D.h2} 張</span></div>
+    <div class="sum-section-title">今日初診跟進</div>
+    <div class="sum-row"><span class="sum-key">今日諮詢總人數</span><span class="sum-val">${D.np_consult} 人</span></div>
+    <div class="sum-row"><span class="sum-key">48小時內跟進</span><span class="sum-val">${D.fu} 人</span></div>
+    <div class="sum-row"><span class="sum-key">成功轉預約</span><span class="sum-val">${D.cv} 人（轉單率 ${convRate}）</span></div>
     <div class="sum-section-title">空檔狀態</div>
     ${SLOT_DEFS.map(s=>`<div class="sum-row"><span class="sum-key">${s.label}</span><span class="sum-val">${D.slots[s.key]||'—'}</span></div>`).join('')}
-    <div class="sum-section-title">今日初診</div>
-    <div class="sum-row"><span class="sum-key">初診諮詢</span><span class="sum-val" style="font-weight:400;font-size:12px">${npLines.length?npLines.join('；'):'無'}</span></div>
     <div class="sum-section-title">備注</div>
     <div class="sum-row"><span class="sum-key">備注</span><span class="sum-val" style="font-weight:400;font-size:12px">${D.note||'—'}</span></div>`;
 }
@@ -454,53 +538,89 @@ async function submitReport(){
   D.note=document.getElementById('note').value;
   showLoading('儲存到 Notion...');
   document.getElementById('err-box').style.display='none';
-  let npSummary=[];
-  NP_SOURCES.forEach(src=>NP_ITEMS.forEach(item=>{const cnt=(D.newpt[src.key]||{})[item]||0;if(cnt>0)npSummary.push(`${src.label.replace(/📋|🚶|📞/,'').trim()}-${item}×${cnt}`);}));
   try{
-    const res=await fetch('/api/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...D,date:dateStr,newpt_summary:npSummary.join('、')})});
+    const res=await fetch('/api/submit',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({...D,date:dateStr})
+    });
     hideLoading();
     if(!res.ok){const e=await res.json();throw new Error(e.error||'伺服器錯誤');}
     const tot=D.m+D.a+D.e;
-    const npTot=Object.values(D.newpt).reduce((s,src)=>s+Object.values(src).reduce((a,b)=>a+b,0),0);
-    document.getElementById('success-sub').innerHTML=`${D.reporter} 完成今日填報 🎉<br>就診 <strong>${tot}</strong> 人 ／ 美顏針 <strong>${D.f}</strong> 次<br>初診諮詢 <strong>${npTot}</strong> 人<br><br>資料已存入 Notion ✓`;
-    goStep(5);
-  }catch(e){hideLoading();const el=document.getElementById('err-box');el.textContent='⚠️ 儲存失敗：'+(e.message||'請重試');el.style.display='block';}
+    const convRate=D.fu>0?Math.round(D.cv/D.fu*100)+'%':'—';
+    document.getElementById('success-sub').innerHTML=
+      `${D.reporter} 完成今日填報 🎉<br>就診 <strong>${tot}</strong> 人 ／ 美顏針 <strong>${D.f}</strong> 次<br>諮詢 <strong>${D.np_consult}</strong> 人，轉預約 <strong>${D.cv}</strong> 人（${convRate}）<br><br>資料已存入 Notion ✓`;
+    goStep(4);
+  }catch(e){
+    hideLoading();
+    const el=document.getElementById('err-box');
+    el.textContent='⚠️ 儲存失敗：'+(e.message||'請重試');
+    el.style.display='block';
+  }
 }
 
 function resetReport(){
-  D={m:0,a:0,e:0,f:0,nk:0,h1:0,h2:0,slots:{},newpt:{},note:"",reporter:"",revenue:0};
-  imgBase64="";
-  ['m','a','e','f','nk','h1','h2'].forEach(k=>{document.getElementById('v-'+k).textContent='0';});
-  NP_SOURCES.forEach(src=>NP_ITEMS.forEach(item=>{const el=document.getElementById(`np-${src.key}-${item}`);if(el)el.textContent='0';}));
+  D={m:0,a:0,e:0,f:0,nk:0,h1:0,h2:0,fu:0,cv:0,np_consult:0,slots:{},note:"",reporter:""};
+  ['m','a','e','f','nk','h1','h2','fu','cv','np_consult'].forEach(k=>{
+    const el=document.getElementById('v-'+k); if(el) el.textContent='0';
+  });
   document.getElementById('note').value='';
-  document.getElementById('parse-msg').style.display='none';
   document.getElementById('btn-next').disabled=true;
-  ng.querySelectorAll('button').forEach(b=>{b.style.background='var(--card)';b.style.color='var(--text2)';b.style.borderColor='var(--border)';});
+  document.getElementById('name-input').value='';
+  document.getElementById('name-input-wrap').style.display='none';
+  ng.querySelectorAll('.name-btn').forEach(b=>b.classList.remove('picked'));
   document.querySelectorAll('.slot-opt').forEach(b=>b.className='slot-opt');
-  const area=document.getElementById('upload-area');
-  area.classList.remove('has-img');
-  area.innerHTML='<div class="upload-icon">📷</div><div class="upload-label">點此拍照或上傳報表</div><div class="upload-sub">支援 JPG、PNG</div>';
-  document.getElementById('ai-read-btn').disabled=true;
-  document.getElementById('ai-read-btn').textContent='✨ AI 讀取報表數字';
   document.getElementById('report-nav').style.display='flex';
+  document.getElementById('prog-bar').style.display='flex';
   goStep(0);
+}
+
+// 共用：更新 KPI 顯示
+function updateKPI(convId,convDetailId,convBarId,slotId,slotDetailId,slotBarId,metrics){
+  const {convRate,totalFU,totalCV,slotRate,fullSlots,totalSlots}=metrics;
+  document.getElementById(convId).textContent=convRate!==null?convRate+'%':'—';
+  document.getElementById(convDetailId).textContent=totalFU>0?`${totalCV}/${totalFU} 人`:convRate===null?'本週無跟進資料':'—';
+  const cbar=document.getElementById(convBarId);
+  cbar.style.width=Math.min(convRate||0,100)+'%';
+  cbar.className='kpi-bar '+(convRate>=30?'':convRate>=20?'warn':'danger');
+  document.getElementById(slotId).textContent=slotRate!==null?slotRate+'%':'—';
+  document.getElementById(slotDetailId).textContent=totalSlots>0?`${fullSlots}/${totalSlots} 格額滿`:'尚未填報空檔';
+  const sbar=document.getElementById(slotBarId);
+  sbar.style.width=Math.min(slotRate||0,100)+'%';
+  sbar.className='kpi-bar '+(slotRate>=90?'':slotRate>=70?'warn':'danger');
+}
+
+// 渲染空檔
+function renderSlots(containerId,latestSlots){
+  document.getElementById(containerId).innerHTML=SLOT_DEFS.map(s=>{
+    const val=(latestSlots&&latestSlots[s.key])||'未填';
+    const cls=val==='額滿'?'slot-full':val==='有空檔'?'slot-open':'slot-unk';
+    return `<div class="slot-status-card ${cls}"><div class="slot-status-label">${s.label}</div><div class="slot-status-val">${val}</div></div>`;
+  }).join('');
 }
 
 // 店長看板
 function daysSince(d){if(!d)return 999;return Math.floor((new Date()-new Date(d))/864e5);}
 
 async function loadManagerData(){
+  try{
+    const res=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({role:'manager'})});
+    const result=await res.json();
+    if(result.metrics){
+      updateKPI('kpi-conv','kpi-conv-detail','kpi-conv-bar','kpi-slot','kpi-slot-detail','kpi-slot-bar',result.metrics);
+      renderSlots('mgr-slots',result.metrics.latestSlots);
+    }
+    if(result.text) document.getElementById('mgr-ai').innerHTML=result.text;
+    else document.getElementById('mgr-ai').textContent='AI 分析需要 Anthropic API Key，請聯繫管理員設定。';
+  }catch(e){
+    document.getElementById('mgr-ai').textContent='載入失敗，請重試。';
+  }
+
+  // 患者追蹤
   const urgent=PATIENTS.filter(p=>p.status==='需預約'&&(p.grade.includes('A')||p.grade.includes('B')));
   const track=PATIENTS.filter(p=>p.status==='需追蹤');
-  const slots=getSavedSlots();
-  document.getElementById('mgr-slots').innerHTML=SLOT_DEFS.map(s=>{
-    const val=slots[s.key]||'未填';
-    const cls=val==='額滿'?'slot-full':val==='有空檔'?'slot-open':'slot-unk';
-    return `<div class="slot-status-card ${cls}"><div class="slot-status-label">${s.label}</div><div class="slot-status-val">${val}</div></div>`;
-  }).join('');
   document.getElementById('mgr-projects').innerHTML=`
     <div class="proj-card">
-      <div class="proj-header"><div class="proj-title">🔴 需立即追蹤（A/B 級）</div><span class="proj-badge badge-red">${urgent.length} 人</span></div>
+      <div class="proj-header"><div class="proj-title">🔴 A/B 級患者待追蹤</div><span class="proj-badge badge-red">${urgent.length} 人</span></div>
       <div class="proj-body">${urgent.map(p=>`<div class="proj-item">
         <div class="proj-check" onclick="toggleCheck(this)">○</div>
         <div style="flex:1"><div class="proj-name">${p.name}</div><div class="proj-meta">${p.grade} · ${p.therapy} · ${daysSince(p.last)} 天未回診</div></div>
@@ -513,18 +633,11 @@ async function loadManagerData(){
         <div style="flex:1"><div class="proj-name">${p.name}</div><div class="proj-meta">${p.grade} · ${daysSince(p.last)} 天未回診</div></div>
       </div>`).join('')}${track.length>5?`<div style="text-align:center;padding:8px;font-size:12px;color:var(--text3)">還有 ${track.length-5} 人...</div>`:''}</div>
     </div>`;
-  document.getElementById('mgr-ai').textContent='分析中...';
-  try{
-    const res=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({urgent:urgent.length,track:track.length,role:'manager',slots})});
-    const result=await res.json();
-    if(result.text)document.getElementById('mgr-ai').innerHTML=result.text;
-  }catch(e){document.getElementById('mgr-ai').textContent='建議暫時無法載入。';}
 }
 
 function toggleCheck(el){const done=el.classList.toggle('done');el.textContent=done?'✓':'○';}
-function getSavedSlots(){try{return JSON.parse(localStorage.getItem('yj_slots')||'{}');}catch(e){return {};}}
 
-// 老闆看板
+// 老闆
 function checkPwd(){
   if(document.getElementById('pwd-input').value===OWNER_PWD){
     document.getElementById('owner-lock').style.display='none';
@@ -538,25 +651,24 @@ function checkPwd(){
 document.getElementById('pwd-input').addEventListener('keydown',e=>{if(e.key==='Enter')checkPwd();});
 
 async function loadOwnerData(){
-  const slots=getSavedSlots();
-  document.getElementById('owner-metrics').innerHTML=`
-    <div class="metric-card"><div class="metric-label">今日就診</div><div class="metric-val">—</div><div class="metric-sub">讀取最新填報</div></div>
-    <div class="metric-card"><div class="metric-label">美顏針 / 針刀</div><div class="metric-val">—</div><div class="metric-sub">自費人次</div></div>
-    <div class="metric-card"><div class="metric-label">今日實收</div><div class="metric-val" style="color:var(--accent)">—</div><div class="metric-sub">元</div></div>
-    <div class="metric-card"><div class="metric-label">初診諮詢</div><div class="metric-val">—</div><div class="metric-sub">今日新患</div></div>`;
-  document.getElementById('owner-revenue').innerHTML=`
-    <div class="revenue-row"><span class="revenue-label">今日實收（從報表讀取）</span><span class="revenue-val" id="rev-amount">填報後顯示</span></div>
-    <div class="revenue-row"><span class="revenue-label">各醫師自費產值</span><span class="revenue-val">見 Notion</span></div>`;
-  document.getElementById('owner-slots').innerHTML=SLOT_DEFS.map(s=>{
-    const val=slots[s.key]||'未填';
-    const cls=val==='額滿'?'slot-full':val==='有空檔'?'slot-open':'slot-unk';
-    return `<div class="slot-status-card ${cls}"><div class="slot-status-label">${s.label}</div><div class="slot-status-val">${val}</div></div>`;
-  }).join('');
   try{
-    const res=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({role:'owner',slots})});
+    const res=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({role:'owner'})});
     const result=await res.json();
-    if(result.text)document.getElementById('owner-ai').innerHTML=result.text;
-  }catch(e){document.getElementById('owner-ai').textContent='策略分析暫時無法載入。';}
+    if(result.metrics){
+      const m=result.metrics;
+      updateKPI('o-conv','o-conv-detail','o-conv-bar','o-slot','o-slot-detail','o-slot-bar',m);
+      renderSlots('owner-slots',m.latestSlots);
+      document.getElementById('owner-metrics').innerHTML=`
+        <div class="metric-card"><div class="metric-label">本週就診</div><div class="metric-val">${m.totalPts}</div><div class="metric-sub">人次</div></div>
+        <div class="metric-card"><div class="metric-label">美顏針</div><div class="metric-val">${m.totalF}</div><div class="metric-sub">人次</div></div>
+        <div class="metric-card"><div class="metric-label">針刀</div><div class="metric-val">${m.totalNK}</div><div class="metric-sub">人次</div></div>
+        <div class="metric-card"><div class="metric-label">初診諮詢</div><div class="metric-val">${m.totalNP||'—'}</div><div class="metric-sub">本週累計</div></div>`;
+    }
+    if(result.text) document.getElementById('owner-ai').innerHTML=result.text;
+    else document.getElementById('owner-ai').textContent='AI 分析需要 Anthropic API Key，請聯繫管理員設定。';
+  }catch(e){
+    document.getElementById('owner-ai').textContent='載入失敗，請重試。';
+  }
 }
 
 function lockOwner(){
@@ -568,6 +680,7 @@ function lockOwner(){
 
 function showLoading(txt){document.getElementById('loading-text').textContent=txt||'處理中...';document.getElementById('loading').classList.add('show');}
 function hideLoading(){document.getElementById('loading').classList.remove('show');}
+
 updProg();
 </script>
 </body>
