@@ -5,22 +5,19 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') { res.status(200).end(); return; }
   if (req.method !== 'POST') { res.status(405).json({ error: 'Method not allowed' }); return; }
 
-  const NOTION_TOKEN = process.env.NOTION_TOKEN;
-  const DATABASE_ID  = process.env.DATABASE_ID;
-  if (!NOTION_TOKEN || !DATABASE_ID) {
-    res.status(500).json({ error: '環境變數未設定' }); return;
-  }
+  const NOTION_TOKEN     = process.env.NOTION_TOKEN;
+  const DATABASE_ID      = process.env.DATABASE_ID;       // 雲玖
+  const DATABASE_ID_FUSHAN = process.env.DATABASE_ID_FUSHAN; // 福山
+
+  if (!NOTION_TOKEN) { res.status(500).json({ error: '環境變數未設定' }); return; }
 
   const d = req.body;
+  const isFushan = d.clinic === 'fushan';
+  const dbId = isFushan ? DATABASE_ID_FUSHAN : DATABASE_ID;
 
-  // 計算填滿率
-  const facialRate = d.slot_facial_total > 0
-    ? Math.round((d.f || 0) / d.slot_facial_total * 100) : null;
-  const nkRate = d.slot_nk_total > 0
-    ? Math.round((d.nk || 0) / d.slot_nk_total * 100) : null;
+  if (!dbId) { res.status(500).json({ error: `診所資料庫 ID 未設定` }); return; }
 
-  // 整體空檔填滿率
-  const totalSlots = (d.slot_facial_total || 0) + (d.slot_nk_total || 0);
+  const totalSlots  = (d.slot_facial_total || 0) + (d.slot_nk_total || 0);
   const totalFilled = (d.f || 0) + (d.nk || 0);
   const overallRate = totalSlots > 0 ? Math.round(totalFilled / totalSlots * 100) : null;
 
@@ -42,9 +39,12 @@ export default async function handler(req, res) {
     "針刀開放格數":   { number: d.slot_nk_total || 0 },
   };
 
-  // 填滿率（有值才存）
-  if (facialRate !== null) props["美顏針填滿率"] = { number: facialRate };
-  if (nkRate !== null)     props["針刀填滿率"]   = { number: nkRate };
+  // 福山專屬欄位
+  if (isFushan) {
+    props["結構治療人次"] = { number: d.struct || 0 };
+    props["AMCT人次"]     = { number: d.amct || 0 };
+  }
+
   if (overallRate !== null) props["整體空檔填滿率"] = { number: overallRate };
 
   try {
@@ -55,11 +55,11 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
         'Notion-Version': '2022-06-28',
       },
-      body: JSON.stringify({ parent: { database_id: DATABASE_ID }, properties: props }),
+      body: JSON.stringify({ parent: { database_id: dbId }, properties: props }),
     });
     const result = await response.json();
     if (!response.ok) { res.status(400).json({ error: result.message || '寫入失敗' }); return; }
-    res.status(200).json({ success: true, id: result.id });
+    res.status(200).json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
