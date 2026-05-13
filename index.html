@@ -403,10 +403,26 @@ textarea.note-area:focus{border-color:var(--accent)}
       <div><div class="kpi-label">自費空檔填滿率</div><div class="kpi-val" id="kpi-slot">—</div><div class="kpi-sub">目標 90%</div></div>
       <div class="kpi-right"><div class="kpi-detail" id="kpi-slot-detail">載入中</div><div class="kpi-bar-wrap"><div class="kpi-bar danger" id="kpi-slot-bar" style="width:0%"></div></div></div>
     </div>
+    <div class="sec-label">今日初診諮詢表單</div>
+    <div id="mgr-forms"><div class="loading-inline">載入中...</div></div>
+
+    <div class="sec-label">待跟進名單</div>
+    <div id="mgr-pending"><div class="loading-inline">載入中...</div></div>
+
     <div class="sec-label">首次回診提醒</div>
     <div id="mgr-followup"><div class="loading-inline">載入中...</div></div>
+
     <div class="sec-label">美顏針患者追蹤</div>
     <div id="mgr-projects"><div class="loading-inline">載入中...</div></div>
+
+    <div class="sec-label">店長備注</div>
+    <div class="section-card">
+      <div style="font-size:12px;color:var(--text3);margin-bottom:8px">今日待辦、重點事項、注意事項</div>
+      <textarea id="mgr-note" class="note-area" style="margin-bottom:8px" placeholder="今日備注、待辦事項、重點完成事項..."></textarea>
+      <button onclick="saveMgrNote()" style="width:100%;padding:10px;font-size:13px;font-family:'Noto Sans TC',sans-serif;font-weight:700;border-radius:10px;border:none;background:var(--accent-light);color:var(--accent);cursor:pointer">💾 儲存備注</button>
+      <div id="mgr-note-saved" style="text-align:center;font-size:12px;color:var(--green);margin-top:6px;display:none">✓ 已儲存</div>
+    </div>
+
     <div class="sec-label">AI 今日建議</div>
     <div class="section-card"><div class="ai-text" id="mgr-ai">分析中...</div></div>
   </div>
@@ -846,7 +862,78 @@ function updateKPI(cId,cdId,cbId,sId,sdId,sbId,m){
   sb.className='kpi-bar '+(slotRate>=90?'':slotRate>=70?'warn':'danger');
 }
 
+// 備注欄
+function saveMgrNote(){
+  const note = document.getElementById('mgr-note').value;
+  const key = 'yj_mgr_note_' + todayISO;
+  try{ localStorage.setItem(key, note); }catch(e){}
+  document.getElementById('mgr-note-saved').style.display = 'block';
+  setTimeout(()=>document.getElementById('mgr-note-saved').style.display='none', 2000);
+}
+
+function loadMgrNote(){
+  const key = 'yj_mgr_note_' + todayISO;
+  try{
+    const note = localStorage.getItem(key)||'';
+    document.getElementById('mgr-note').value = note;
+  }catch(e){}
+}
+
 async function loadManagerData(){
+  loadMgrNote();
+
+  // Google 表單數據
+  try{
+    const res = await fetch('/api/forms',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({})});
+    const result = await res.json();
+    if(result.success){
+      const c = result.consult;
+      const b = result.beauty;
+      const todayTotal = c.today_total;
+      const t = c.today_by_type;
+
+      document.getElementById('mgr-forms').innerHTML=`
+        <div class="proj-card">
+          <div class="proj-header"><div class="proj-title">📋 今日新增諮詢</div><span class="proj-badge badge-${todayTotal>0?'amber':'green'}">${todayTotal} 筆</span></div>
+          <div class="proj-body">
+            ${t.needle>0?`<div class="proj-item"><div class="proj-name">🔪 針刀</div><div class="proj-meta">${t.needle} 筆</div></div>`:''}
+            ${t.growth>0?`<div class="proj-item"><div class="proj-name">🌿 轉骨</div><div class="proj-meta">${t.growth} 筆</div></div>`:''}
+            ${t.beauty>0?`<div class="proj-item"><div class="proj-name">✨ 美顏針</div><div class="proj-meta">${t.beauty} 筆</div></div>`:''}
+            ${t.other>0?`<div class="proj-item"><div class="proj-name">📌 其他</div><div class="proj-meta">${t.other} 筆</div></div>`:''}
+            ${todayTotal===0?'<div style="text-align:center;padding:8px;font-size:13px;color:var(--text3)">今日尚無新諮詢</div>':''}
+            <div class="proj-item" style="border-top:1px solid var(--border);margin-top:4px">
+              <div class="proj-name" style="color:var(--text2)">本月轉單率</div>
+              <div class="proj-meta" style="font-size:13px;font-weight:700;color:var(--accent)">${c.month_conv_rate!==null?c.month_conv_rate+'%':'—'} <span style="font-weight:400;color:var(--text3)">（${c.month_booked}/${c.month_total}人）</span></div>
+            </div>
+            <div class="proj-item">
+              <div class="proj-name" style="color:var(--text2)">✨ 美顏針今日填單</div>
+              <div class="proj-meta" style="font-size:13px;font-weight:700;color:var(--accent)">${b.today_new} 筆 <span style="font-weight:400;color:var(--text3)">本月共 ${b.month_new} 筆</span></div>
+            </div>
+          </div>
+        </div>`;
+
+      // 待跟進名單
+      const pending = c.pending_followup;
+      if(!pending.length){
+        document.getElementById('mgr-pending').innerHTML='<div class="empty-note">🎉 目前無待跟進名單</div>';
+      }else{
+        document.getElementById('mgr-pending').innerHTML=`
+          <div class="proj-card">
+            <div class="proj-header"><div class="proj-title">📞 待跟進（未接需回電）</div><span class="proj-badge badge-red">${pending.length} 人</span></div>
+            <div class="proj-body">${pending.map(p=>`<div class="proj-item">
+              <div class="proj-check" onclick="toggleCheck(this)">○</div>
+              <div style="flex:1">
+                <div class="proj-name">${p.name} <span style="font-size:11px;color:var(--text3)">${p.type}</span></div>
+                <div class="proj-meta">${p.phone}${p.item?' · '+p.item.slice(0,15):''}${p.time?' · '+p.time.slice(0,10):''}</div>
+              </div>
+            </div>`).join('')}</div>
+          </div>`;
+      }
+    }
+  }catch(e){
+    document.getElementById('mgr-forms').innerHTML='<div class="empty-note">表單數據載入失敗</div>';
+    document.getElementById('mgr-pending').innerHTML='<div class="empty-note">待跟進名單載入失敗</div>';
+  }
   try{
     const res=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({role:'manager'})});
     const result=await res.json();
