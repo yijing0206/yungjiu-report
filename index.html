@@ -311,11 +311,23 @@ textarea.note-area:focus{border-color:var(--accent)}
       <div class="sec-label">今日現場直接預約</div>
       <div class="followup-card">
         <div class="followup-row">
-          <div>
-            <div class="followup-label">現場 / 電話當場預約</div>
-            <div class="followup-sub">不是透過表單，直接在現場成交的</div>
+          <div><div class="followup-label">🔪 針刀</div><div class="followup-sub">現場 / 電話當場預約</div></div>
+          <input type="number" class="num-input" id="v-cv_nk" value="0" min="0" oninput="setVal('cv_nk',this.value)" style="width:70px;font-size:28px">
+        </div>
+        <div class="followup-row">
+          <div><div class="followup-label">🌿 轉骨</div><div class="followup-sub">現場 / 電話當場預約</div></div>
+          <input type="number" class="num-input" id="v-cv_growth" value="0" min="0" oninput="setVal('cv_growth',this.value)" style="width:70px;font-size:28px">
+        </div>
+        <!-- 福山專屬 -->
+        <div id="cv-fushan-extra" style="display:none">
+          <div class="followup-row" style="border-top:1px solid var(--border);margin-top:0">
+            <div><div class="followup-label">🦴 結構治療</div><div class="followup-sub">現場 / 電話當場預約</div></div>
+            <input type="number" class="num-input" id="v-cv_struct" value="0" min="0" oninput="setVal('cv_struct',this.value)" style="width:70px;font-size:28px">
           </div>
-          <input type="number" class="num-input" id="v-cv" value="0" min="0" oninput="setVal('cv',this.value)" style="width:70px;font-size:28px">
+          <div class="followup-row">
+            <div><div class="followup-label">⚡ AMCT</div><div class="followup-sub">現場 / 電話當場預約</div></div>
+            <input type="number" class="num-input" id="v-cv_amct" value="0" min="0" oninput="setVal('cv_amct',this.value)" style="width:70px;font-size:28px">
+          </div>
         </div>
         <div class="consult-note">💡 表單諮詢的轉預約狀況，系統會從 Google 表單自動抓取</div>
       </div>
@@ -490,8 +502,8 @@ let cur = 0;
 let clinic = ''; // 'yungjiu' | 'fushan'
 let settingClinic = 'yungjiu';
 let D = {m:0,a:0,e:0,f:0,nk:0,h1:0,h2:0,struct:0,amct:0,
-         fu:0,cv:0,np_consult:0,slot_facial_total:0,slot_nk_total:0,
-         note:"",reporter:""};
+         fu:0,cv:0,cv_nk:0,cv_growth:0,cv_struct:0,cv_amct:0,np_consult:0,
+         slot_facial_total:0,slot_nk_total:0,note:"",reporter:""};
 let newPatients = {needleknife:[],growth:[]};
 let checkinDone = new Set();
 
@@ -514,6 +526,7 @@ function pickClinic(c){
   document.getElementById('header').className = 'header-fixed' + (isFushan?' fushan':'');
   document.getElementById('topbar-logo').textContent = isFushan ? '🏥 福山雲玖' : '🏥 雲玖中醫';
   document.getElementById('fushan-extra').style.display = isFushan ? 'block' : 'none';
+  document.getElementById('cv-fushan-extra').style.display = isFushan ? 'block' : 'none';
   document.getElementById('btn-next').className = 'btn-next' + (isFushan?' fushan':'');
   document.getElementById('notion-link').href = isFushan
     ? 'https://www.notion.so/35e2437f4e10816d9422ebf0e08d92c5'
@@ -746,7 +759,7 @@ function goBack(){ if(cur>0) goStep(cur-1); }
 
 function buildSummary(){
   // 同步所有 input 的值到 D
-  ['m','a','e','f','nk','h1','h2','struct','amct','fu','cv','np_consult'].forEach(k=>{
+  ['m','a','e','f','nk','h1','h2','struct','amct','fu','cv','cv_nk','cv_growth','cv_struct','cv_amct','np_consult'].forEach(k=>{
     const el=document.getElementById('v-'+k);
     if(el) D[k]=Math.max(0,parseInt(el.value)||0);
   });
@@ -773,9 +786,11 @@ function buildSummary(){
     <div class="sum-row"><span class="sum-key">針刀</span><span class="sum-val">${D.nk}/${D.slot_nk_total}格（${nkRate}）</span></div>
     ${clinic==='fushan'?`<div class="sum-row"><span class="sum-key">結構治療 / AMCT</span><span class="sum-val">${D.struct} 次 ／ ${D.amct} 次</span></div>`:''}
     <div class="sum-row"><span class="sum-key">轉骨／客製水藥</span><span class="sum-val">${D.h1}張／${D.h2}張</span></div>
-    <div class="sum-sec">今日跟進</div>
-    <div class="sum-row"><span class="sum-key">諮詢總人數</span><span class="sum-val">${D.np_consult} 人</span></div>
-    <div class="sum-row"><span class="sum-key">成功轉預約</span><span class="sum-val">${D.cv} 人（${convRate}）</span></div>
+    <div class="sum-sec">今日現場直接預約</div>
+    <div class="sum-row"><span class="sum-key">🔪 針刀</span><span class="sum-val">${D.cv_nk} 人</span></div>
+    <div class="sum-row"><span class="sum-key">🌿 轉骨</span><span class="sum-val">${D.cv_growth} 人</span></div>
+    ${clinic==='fushan'?`<div class="sum-row"><span class="sum-key">🦴 結構治療</span><span class="sum-val">${D.cv_struct} 人</span></div>
+    <div class="sum-row"><span class="sum-key">⚡ AMCT</span><span class="sum-val">${D.cv_amct} 人</span></div>`:''}`,
     <div class="sum-sec">今日初診登記</div>
     <div class="sum-row"><span class="sum-key">針刀初診</span><span class="sum-val" style="font-weight:400;font-size:12px">${nkNew}</span></div>
     <div class="sum-row"><span class="sum-key">轉骨初診</span><span class="sum-val" style="font-weight:400;font-size:12px">${growthNew}</span></div>
@@ -785,7 +800,7 @@ function buildSummary(){
 
 async function submitReport(){
   // 同步所有 input 的值到 D
-  ['m','a','e','f','nk','h1','h2','struct','amct','fu','cv','np_consult'].forEach(k=>{
+  ['m','a','e','f','nk','h1','h2','struct','amct','fu','cv','cv_nk','cv_growth','cv_struct','cv_amct','np_consult'].forEach(k=>{
     const el=document.getElementById('v-'+k);
     if(el) D[k]=Math.max(0,parseInt(el.value)||0);
   });
@@ -835,7 +850,7 @@ function resetReport(){
   clinic = '';
   newPatients = {needleknife:[],growth:[]};
   checkinDone = new Set();
-  ['m','a','e','f','nk','h1','h2','struct','amct','fu','cv','np_consult'].forEach(k=>{const el=document.getElementById('v-'+k);if(el)el.value='0';});
+  ['m','a','e','f','nk','h1','h2','struct','amct','fu','cv','cv_nk','cv_growth','cv_struct','cv_amct','np_consult'].forEach(k=>{const el=document.getElementById('v-'+k);if(el)el.value='0';});
   document.getElementById('note').value = '';
   document.getElementById('name-input').value = '';
   document.getElementById('name-input-wrap').style.display = 'none';
