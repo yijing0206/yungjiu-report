@@ -60,14 +60,10 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text
 .num-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
 .num-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}
 .num-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:14px 8px;text-align:center}
-.num-card-label{font-size:11px;color:var(--text2);margin-bottom:10px;font-weight:500}
-.num-controls{display:flex;align-items:center;justify-content:center;gap:8px}
-.nc-btn{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--border);background:var(--bg);cursor:pointer;font-size:18px;color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;transition:all .12s}
-.nc-btn:active{background:var(--accent-light);transform:scale(.9)}
-.nc-btn.fushan{color:var(--fushan)}
-.nc-val{font-size:22px;font-weight:700;min-width:50px;text-align:center;border:none;background:transparent;color:var(--text);font-family:'Noto Sans TC',sans-serif;-moz-appearance:textfield}
-.nc-val::-webkit-outer-spin-button,.nc-val::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
-.nc-val:focus{outline:2px solid var(--accent);border-radius:8px;background:var(--accent-light)}
+.num-card-label{font-size:11px;color:var(--text2);margin-bottom:8px;font-weight:500}
+.num-input{width:100%;font-size:32px;font-weight:700;font-family:'Noto Sans TC',sans-serif;text-align:center;border:none;background:transparent;color:var(--text);outline:none;padding:4px 0;-moz-appearance:textfield;cursor:text}
+.num-input::-webkit-outer-spin-button,.num-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.num-input:focus{color:var(--accent)}
 
 /* 空檔 */
 .slot-input-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
@@ -270,25 +266,25 @@ textarea.note-area:focus{border-color:var(--accent)}
       <div class="step-sub">從報表直接填，沒開診填 0</div>
       <div class="sec-label">就診人數</div>
       <div class="num-grid-3">
-        <div class="num-card"><div class="num-card-label">☀️ 早診</div><div class="num-controls"><button class="nc-btn" onclick="adj('m',-1)">−</button><input type="number" class="nc-val" id="v-m" value="0" min="0" oninput="setVal('m',this.value)"><button class="nc-btn" onclick="adj('m',1)">+</button></div></div>
-        <div class="num-card"><div class="num-card-label">🌤 午診</div><div class="num-controls"><button class="nc-btn" onclick="adj('a',-1)">−</button><input type="number" class="nc-val" id="v-a" value="0" min="0" oninput="setVal('a',this.value)"><button class="nc-btn" onclick="adj('a',1)">+</button></div></div>
-        <div class="num-card"><div class="num-card-label">🌙 晚診</div><div class="num-controls"><button class="nc-btn" onclick="adj('e',-1)">−</button><input type="number" class="nc-val" id="v-e" value="0" min="0" oninput="setVal('e',this.value)"><button class="nc-btn" onclick="adj('e',1)">+</button></div></div>
+        <div class="num-card"><div class="num-card-label">☀️ 早診</div><input type="number" class="num-input" id="v-m" value="0" min="0" oninput="setVal('m',this.value)"></div>
+        <div class="num-card"><div class="num-card-label">🌤 午診</div><input type="number" class="num-input" id="v-a" value="0" min="0" oninput="setVal('a',this.value)"></div>
+        <div class="num-card"><div class="num-card-label">🌙 晚診</div><input type="number" class="num-input" id="v-e" value="0" min="0" oninput="setVal('e',this.value)"></div>
       </div>
       <div class="sec-label">自費人次</div>
       <div class="num-grid-3">
-        <div class="num-card"><div class="num-card-label">✨ 美顏針</div><div class="num-controls"><button class="nc-btn" onclick="adj('f',-1)">−</button><input type="number" class="nc-val" id="v-f" value="0" min="0" oninput="setVal('f',this.value)"><button class="nc-btn" onclick="adj('f',1)">+</button></div></div>
-        <div class="num-card"><div class="num-card-label">🔪 針刀</div><div class="num-controls"><button class="nc-btn" onclick="adj('nk',-1)">−</button><input type="number" class="nc-val" id="v-nk" value="0" min="0" oninput="setVal('nk',this.value)"><button class="nc-btn" onclick="adj('nk',1)">+</button></div></div>
-        <div class="num-card"><div class="num-card-label">🧪 客製水藥</div><div class="num-controls"><button class="nc-btn" onclick="adj('h2',-1)">−</button><input type="number" class="nc-val" id="v-h2" value="0" min="0" oninput="setVal('h2',this.value)"><button class="nc-btn" onclick="adj('h2',1)">+</button></div></div>
+        <div class="num-card"><div class="num-card-label">✨ 美顏針</div><input type="number" class="num-input" id="v-f" value="0" min="0" oninput="setVal('f',this.value)"></div>
+        <div class="num-card"><div class="num-card-label">🔪 針刀</div><input type="number" class="num-input" id="v-nk" value="0" min="0" oninput="setVal('nk',this.value)"></div>
+        <div class="num-card"><div class="num-card-label">🧪 客製水藥</div><input type="number" class="num-input" id="v-h2" value="0" min="0" oninput="setVal('h2',this.value)"></div>
       </div>
       <div id="fushan-extra" style="display:none">
         <div class="num-grid-2" style="margin-bottom:16px">
-          <div class="num-card"><div class="num-card-label">🦴 結構治療</div><div class="num-controls"><button class="nc-btn" onclick="adj('struct',-1)">−</button><input type="number" class="nc-val" id="v-struct" value="0" min="0" oninput="setVal('struct',this.value)"><button class="nc-btn" onclick="adj('struct',1)">+</button></div></div>
-          <div class="num-card"><div class="num-card-label">⚡ AMCT</div><div class="num-controls"><button class="nc-btn" onclick="adj('amct',-1)">−</button><input type="number" class="nc-val" id="v-amct" value="0" min="0" oninput="setVal('amct',this.value)"><button class="nc-btn" onclick="adj('amct',1)">+</button></div></div>
+          <div class="num-card"><div class="num-card-label">🦴 結構治療</div><input type="number" class="num-input" id="v-struct" value="0" min="0" oninput="setVal('struct',this.value)"></div>
+          <div class="num-card"><div class="num-card-label">⚡ AMCT</div><input type="number" class="num-input" id="v-amct" value="0" min="0" oninput="setVal('amct',this.value)"></div>
         </div>
       </div>
       <div class="sec-label">轉骨水藥</div>
       <div class="num-grid-2">
-        <div class="num-card"><div class="num-card-label">🌿 轉骨水藥（張）</div><div class="num-controls"><button class="nc-btn" onclick="adj('h1',-1)">−</button><input type="number" class="nc-val" id="v-h1" value="0" min="0" oninput="setVal('h1',this.value)"><button class="nc-btn" onclick="adj('h1',1)">+</button></div></div>
+        <div class="num-card"><div class="num-card-label">🌿 轉骨水藥（張）</div><input type="number" class="num-input" id="v-h1" value="0" min="0" oninput="setVal('h1',this.value)"></div>
         <div class="num-card" style="display:flex;align-items:center;justify-content:center"><span style="font-size:12px;color:var(--text3)">無則留 0</span></div>
       </div>
     </div>
@@ -316,15 +312,15 @@ textarea.note-area:focus{border-color:var(--accent)}
       <div class="followup-card">
         <div class="followup-row">
           <div><div class="followup-label">今日諮詢總人數</div><div class="followup-sub">現場 + 電話 + 表單</div></div>
-          <div class="num-controls"><button class="nc-btn" onclick="adj('np_consult',-1)">−</button><input type="number" class="nc-val" id="v-np_consult" value="0" min="0" oninput="setVal('np_consult',this.value)"><button class="nc-btn" onclick="adj('np_consult',1)">+</button></div>
+          <input type="number" class="num-input" id="v-np_consult" value="0" min="0" oninput="setVal('np_consult',this.value)" style="width:70px;font-size:24px">
         </div>
         <div class="followup-row">
           <div><div class="followup-label">48小時內跟進</div><div class="followup-sub">店長主動聯繫</div></div>
-          <div class="num-controls"><button class="nc-btn" onclick="adj('fu',-1)">−</button><input type="number" class="nc-val" id="v-fu" value="0" min="0" oninput="setVal('fu',this.value)"><button class="nc-btn" onclick="adj('fu',1)">+</button></div>
+          <input type="number" class="num-input" id="v-fu" value="0" min="0" oninput="setVal('fu',this.value)" style="width:70px;font-size:24px">
         </div>
         <div class="followup-row">
           <div><div class="followup-label">成功轉預約</div><div class="followup-sub">當場或跟進後</div></div>
-          <div class="num-controls"><button class="nc-btn" onclick="adj('cv',-1)">−</button><input type="number" class="nc-val" id="v-cv" value="0" min="0" oninput="setVal('cv',this.value)"><button class="nc-btn" onclick="adj('cv',1)">+</button></div>
+          <input type="number" class="num-input" id="v-cv" value="0" min="0" oninput="setVal('cv',this.value)" style="width:70px;font-size:24px">
         </div>
         <div class="consult-note">💡 沒有當場轉單的，請引導填 Google 表單，店長 48 小時內跟進</div>
       </div>
