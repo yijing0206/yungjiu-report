@@ -308,21 +308,16 @@ textarea.note-area:focus{border-color:var(--accent)}
           <div class="slot-input-row"><span class="slot-input-sublabel">填滿率</span><span style="font-size:14px;font-weight:700" id="slot-nk-rate">—</span></div>
         </div>
       </div>
-      <div class="sec-label">今日初診諮詢跟進</div>
+      <div class="sec-label">今日現場直接預約</div>
       <div class="followup-card">
         <div class="followup-row">
-          <div><div class="followup-label">今日諮詢總人數</div><div class="followup-sub">現場 + 電話 + 表單</div></div>
-          <input type="number" class="num-input" id="v-np_consult" value="0" min="0" oninput="setVal('np_consult',this.value)" style="width:70px;font-size:24px">
+          <div>
+            <div class="followup-label">現場 / 電話當場預約</div>
+            <div class="followup-sub">不是透過表單，直接在現場成交的</div>
+          </div>
+          <input type="number" class="num-input" id="v-cv" value="0" min="0" oninput="setVal('cv',this.value)" style="width:70px;font-size:28px">
         </div>
-        <div class="followup-row">
-          <div><div class="followup-label">48小時內跟進</div><div class="followup-sub">店長主動聯繫</div></div>
-          <input type="number" class="num-input" id="v-fu" value="0" min="0" oninput="setVal('fu',this.value)" style="width:70px;font-size:24px">
-        </div>
-        <div class="followup-row">
-          <div><div class="followup-label">成功轉預約</div><div class="followup-sub">當場或跟進後</div></div>
-          <input type="number" class="num-input" id="v-cv" value="0" min="0" oninput="setVal('cv',this.value)" style="width:70px;font-size:24px">
-        </div>
-        <div class="consult-note">💡 沒有當場轉單的，請引導填 Google 表單，店長 48 小時內跟進</div>
+        <div class="consult-note">💡 表單諮詢的轉預約狀況，系統會從 Google 表單自動抓取</div>
       </div>
       <div class="note-label">今日備注（選填）</div>
       <textarea class="note-area" id="note" placeholder="庫存異常、人力調度、補位情況..."></textarea>
@@ -909,15 +904,23 @@ async function loadManagerData(){
 
       document.getElementById('mgr-forms').innerHTML=`
         <div class="proj-card">
-          <div class="proj-header"><div class="proj-title">📋 今日新增諮詢</div><span class="proj-badge badge-${todayTotal>0?'amber':'green'}">${todayTotal} 筆</span></div>
+          <div class="proj-header"><div class="proj-title">📋 今日表單諮詢</div><span class="proj-badge badge-${todayTotal>0?'amber':'green'}">${todayTotal} 筆</span></div>
           <div class="proj-body">
+            <div class="proj-item">
+              <div class="proj-name">今日新填單</div>
+              <div class="proj-meta" style="font-size:13px;font-weight:700;color:var(--text)">${todayTotal} 人</div>
+            </div>
+            <div class="proj-item">
+              <div class="proj-name" style="color:var(--green)">✓ 已預約</div>
+              <div class="proj-meta" style="font-size:13px;font-weight:700;color:var(--green)">${c.today_booked} 人</div>
+            </div>
             ${t.needle>0?`<div class="proj-item"><div class="proj-name">🔪 針刀</div><div class="proj-meta">${t.needle} 筆</div></div>`:''}
             ${t.growth>0?`<div class="proj-item"><div class="proj-name">🌿 轉骨</div><div class="proj-meta">${t.growth} 筆</div></div>`:''}
             ${t.beauty>0?`<div class="proj-item"><div class="proj-name">✨ 美顏針</div><div class="proj-meta">${t.beauty} 筆</div></div>`:''}
             ${t.other>0?`<div class="proj-item"><div class="proj-name">📌 其他</div><div class="proj-meta">${t.other} 筆</div></div>`:''}
-            ${todayTotal===0?'<div style="text-align:center;padding:8px;font-size:13px;color:var(--text3)">今日尚無新諮詢</div>':''}
+            ${todayTotal===0?'<div style="text-align:center;padding:8px;font-size:13px;color:var(--text3)">今日尚無新填單</div>':''}
             <div class="proj-item" style="border-top:1px solid var(--border);margin-top:4px">
-              <div class="proj-name" style="color:var(--text2)">本月轉單率</div>
+              <div class="proj-name" style="color:var(--text2)">本月表單轉單率</div>
               <div class="proj-meta" style="font-size:13px;font-weight:700;color:var(--accent)">${c.month_conv_rate!==null?c.month_conv_rate+'%':'—'} <span style="font-weight:400;color:var(--text3)">（${c.month_booked}/${c.month_total}人）</span></div>
             </div>
             <div class="proj-item">
