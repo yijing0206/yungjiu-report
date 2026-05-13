@@ -11,11 +11,13 @@
   --border:#E8E4DC;--green-bg:#EAF4E8;--green:#2E7D32;
   --amber-bg:#FFF8E8;--amber:#B45309;--red-bg:#FEF0EF;--red:#C0392B;
   --accent:#2C5F5A;--accent-light:#EAF2F1;
+  --fushan:#3D4E8A;--fushan-light:#EAECF8;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 .app{max-width:480px;margin:0 auto;min-height:100vh}
 .header-fixed{position:sticky;top:0;z-index:50;background:var(--accent)}
+.header-fixed.fushan{background:var(--fushan)}
 .topbar{padding:12px 20px 0;display:flex;align-items:center;justify-content:space-between}
 .topbar-logo{font-size:15px;font-weight:700;color:#fff}
 .topbar-date{font-size:11px;color:rgba(255,255,255,.65)}
@@ -30,11 +32,31 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text
 .step-heading{font-size:21px;font-weight:700;margin-bottom:4px;letter-spacing:-.3px}
 .step-sub{font-size:13px;color:var(--text2);margin-bottom:22px;font-weight:300;line-height:1.6}
 .sec-label{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;margin-top:4px}
+
+/* 診所選擇 */
+.clinic-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.clinic-btn{padding:16px 12px;font-size:15px;font-weight:500;font-family:'Noto Sans TC',sans-serif;border-radius:14px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;color:var(--text2);transition:all .18s;text-align:center;line-height:1.4}
+.clinic-btn .clinic-sub{font-size:11px;font-weight:400;color:var(--text3);display:block;margin-top:3px}
+.clinic-btn.picked-yj{background:var(--accent);color:#fff;border-color:var(--accent)}
+.clinic-btn.picked-yj .clinic-sub{color:rgba(255,255,255,.7)}
+.clinic-btn.picked-fs{background:var(--fushan);color:#fff;border-color:var(--fushan)}
+.clinic-btn.picked-fs .clinic-sub{color:rgba(255,255,255,.7)}
+
+/* 填報者 */
 .name-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
-.name-btn{padding:20px 12px;font-size:17px;font-weight:500;font-family:'Noto Sans TC',sans-serif;border-radius:14px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;color:var(--text2);transition:all .18s;text-align:center}
+.name-btn{padding:18px 12px;font-size:16px;font-weight:500;font-family:'Noto Sans TC',sans-serif;border-radius:14px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;color:var(--text2);transition:all .18s;text-align:center}
 .name-btn.picked{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700}
+.name-btn.picked.fushan{background:var(--fushan);border-color:var(--fushan)}
 .name-input-wrap{display:none;margin-bottom:8px}
 .name-input{width:100%;font-size:16px;font-family:'Noto Sans TC',sans-serif;padding:14px 16px;border-radius:14px;border:1.5px solid var(--accent);background:var(--card);color:var(--text);outline:none}
+
+/* 日期選擇 */
+.date-row{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;margin-top:14px}
+.date-row-label{font-size:13px;color:var(--text2)}
+.date-input{font-size:14px;font-family:'Noto Sans TC',sans-serif;border:none;background:transparent;color:var(--text);font-weight:500;outline:none;text-align:right}
+.date-hint{font-size:11px;color:var(--text3);margin-top:6px;padding:0 4px}
+
+/* 數字卡 */
 .num-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
 .num-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}
 .num-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:14px 8px;text-align:center}
@@ -42,7 +64,10 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text
 .num-controls{display:flex;align-items:center;justify-content:center;gap:8px}
 .nc-btn{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--border);background:var(--bg);cursor:pointer;font-size:18px;color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;transition:all .12s}
 .nc-btn:active{background:var(--accent-light);transform:scale(.9)}
+.nc-btn.fushan{color:var(--fushan)}
 .nc-val{font-size:24px;font-weight:700;min-width:34px;text-align:center}
+
+/* 空檔 */
 .slot-input-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
 .slot-input-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:14px 12px}
 .slot-input-label{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:10px}
@@ -51,14 +76,16 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text
 .slot-input-sublabel{font-size:12px;color:var(--text2)}
 .slot-num-input{width:56px;font-size:16px;font-family:'Noto Sans TC',sans-serif;padding:6px 8px;border-radius:8px;border:1px solid var(--border);text-align:center;outline:none;background:var(--bg)}
 .slot-num-input:focus{border-color:var(--accent)}
+
+/* 跟進卡 */
 .followup-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:16px;margin-bottom:16px}
 .followup-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0}
 .followup-row+.followup-row{border-top:1px solid var(--border)}
 .followup-label{font-size:13px;color:var(--text)}
 .followup-sub{font-size:11px;color:var(--text3);margin-top:2px}
 .consult-note{font-size:12px;color:var(--amber);background:var(--amber-bg);border-radius:10px;padding:10px 12px;margin-top:12px;line-height:1.6}
+
 /* 初診登記 */
-.reg-section{margin-bottom:16px}
 .reg-card{background:var(--card);border-radius:14px;border:1px solid var(--border);overflow:hidden;margin-bottom:10px}
 .reg-header{padding:12px 14px;background:#FAFAF8;border-bottom:1px solid var(--border);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:space-between}
 .reg-body{padding:12px 14px}
@@ -70,12 +97,10 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text
 .patient-tag{display:flex;align-items:center;gap:6px;background:var(--accent-light);border-radius:8px;padding:6px 10px;margin-bottom:6px;font-size:13px}
 .patient-tag-name{flex:1;color:var(--accent);font-weight:500}
 .patient-tag-remove{background:none;border:none;cursor:pointer;color:var(--text3);font-size:16px;padding:0 2px}
+
 /* 回診確認 */
 .checkin-card{background:var(--card);border-radius:14px;border:1px solid var(--border);overflow:hidden;margin-bottom:10px}
 .checkin-header{padding:12px 14px;border-bottom:1px solid var(--border);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:space-between}
-.checkin-badge{font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px}
-.badge-red{background:var(--red-bg);color:var(--red)}
-.badge-green{background:var(--green-bg);color:var(--green)}
 .checkin-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px}
 .checkin-item:last-child{border-bottom:none}
 .checkin-info{flex:1}
@@ -83,24 +108,37 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text
 .checkin-meta{font-size:11px;color:var(--text3);margin-top:2px}
 .checkin-btn{padding:6px 14px;font-size:12px;font-family:'Noto Sans TC',sans-serif;font-weight:700;border-radius:20px;border:1.5px solid var(--border);background:var(--bg);cursor:pointer;color:var(--text2);transition:all .15s;white-space:nowrap}
 .checkin-btn.checked{background:var(--green-bg);color:var(--green);border-color:var(--green)}
+.checkin-badge{font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px}
+.badge-red{background:var(--red-bg);color:var(--red)}
+.badge-amber{background:var(--amber-bg);color:var(--amber)}
+
 textarea.note-area{width:100%;font-size:13px;font-family:'Noto Sans TC',sans-serif;border-radius:12px;padding:12px 14px;min-height:72px;border:1px solid var(--border);background:var(--card);color:var(--text);resize:vertical;outline:none;margin-bottom:16px}
 textarea.note-area:focus{border-color:var(--accent)}
 .note-label{font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:500}
+
+/* 總覽 */
 .sum-card{background:var(--card);border-radius:16px;border:1px solid var(--border);overflow:hidden;margin-bottom:16px}
 .sum-sec{padding:7px 14px;font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.8px;text-transform:uppercase;border-bottom:1px solid var(--border);background:#FAFAF8}
 .sum-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px}
 .sum-row:last-child{border-bottom:none}
 .sum-key{color:var(--text2)}.sum-val{font-weight:700;text-align:right;max-width:60%}
+
+/* 底部 */
 .bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:rgba(247,245,240,.96);backdrop-filter:blur(10px);padding:10px 20px 26px;border-top:1px solid var(--border);display:flex;gap:10px;z-index:100}
 .btn-back{flex:1;padding:14px;font-size:13px;font-family:'Noto Sans TC',sans-serif;font-weight:500;border-radius:14px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;color:var(--text2)}
 .btn-next{flex:2;padding:14px;font-size:14px;font-family:'Noto Sans TC',sans-serif;font-weight:700;border-radius:14px;border:none;background:var(--accent);color:#fff;cursor:pointer;transition:all .15s}
+.btn-next.fushan{background:var(--fushan)}
 .btn-next:active{transform:scale(.97)}.btn-next:disabled{opacity:.35;cursor:not-allowed}
+
+/* 成功 */
 .success-wrap{text-align:center;padding:48px 20px}
 .success-circle{width:80px;height:80px;border-radius:50%;background:var(--green-bg);display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 20px}
 .success-title{font-size:20px;font-weight:700;margin-bottom:8px}
 .success-sub{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:24px}
 .notion-btn{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;font-family:'Noto Sans TC',sans-serif;color:var(--accent);border:1.5px solid var(--accent);border-radius:12px;padding:10px 18px;text-decoration:none;margin-bottom:14px;background:var(--accent-light)}
 .reset-btn{display:block;font-size:13px;color:var(--text3);background:none;border:none;cursor:pointer;font-family:'Noto Sans TC',sans-serif;margin:10px auto 0;text-decoration:underline}
+
+/* 看板 */
 .dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .dash-title{font-size:16px;font-weight:700}.dash-sub{font-size:12px;color:var(--text3)}
 .metric-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}
@@ -123,13 +161,14 @@ textarea.note-area:focus{border-color:var(--accent)}
 .proj-header{padding:12px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
 .proj-title{font-size:13px;font-weight:700}
 .proj-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
-.badge-amber{background:var(--amber-bg);color:var(--amber)}
 .proj-body{padding:10px 14px}
 .proj-item{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px}
 .proj-item:last-child{border-bottom:none}
 .proj-name{flex:1}.proj-meta{font-size:11px;color:var(--text3)}
 .proj-check{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--border);background:var(--bg);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;transition:all .15s}
 .proj-check.done{background:var(--green);border-color:var(--green);color:#fff}
+
+/* 設定 */
 .setting-table{background:var(--card);border-radius:14px;border:1px solid var(--border);overflow:hidden;margin-bottom:16px}
 .setting-header{display:grid;grid-template-columns:72px 1fr 1fr;background:#FAFAF8;border-bottom:1px solid var(--border)}
 .setting-header-cell{padding:10px 12px;font-size:11px;font-weight:700;color:var(--text3);text-align:center}
@@ -140,8 +179,14 @@ textarea.note-area:focus{border-color:var(--accent)}
 .setting-cell{padding:10px 12px;display:flex;align-items:center;justify-content:center}
 .setting-input{width:60px;font-size:16px;font-family:'Noto Sans TC',sans-serif;padding:7px 8px;border-radius:8px;border:1px solid var(--border);text-align:center;outline:none;background:var(--bg)}
 .setting-input:focus{border-color:var(--accent)}
+.setting-clinic-tab{display:flex;gap:8px;margin-bottom:14px}
+.setting-clinic-btn{flex:1;padding:10px;font-size:13px;font-family:'Noto Sans TC',sans-serif;font-weight:500;border-radius:10px;border:1.5px solid var(--border);background:var(--card);cursor:pointer;color:var(--text2)}
+.setting-clinic-btn.active-yj{background:var(--accent);color:#fff;border-color:var(--accent)}
+.setting-clinic-btn.active-fs{background:var(--fushan);color:#fff;border-color:var(--fushan)}
 .save-setting-btn{width:100%;padding:14px;font-size:14px;font-family:'Noto Sans TC',sans-serif;font-weight:700;border-radius:14px;border:none;background:var(--accent);color:#fff;cursor:pointer}
 .setting-saved{text-align:center;font-size:12px;color:var(--green);margin-top:8px;display:none}
+
+/* 密碼 */
 .pwd-wrap{padding:48px 20px;text-align:center}
 .pwd-icon{font-size:40px;margin-bottom:16px}
 .pwd-title{font-size:18px;font-weight:700;margin-bottom:8px}
@@ -150,6 +195,7 @@ textarea.note-area:focus{border-color:var(--accent)}
 .pwd-input:focus{border-color:var(--accent)}
 .pwd-btn{padding:12px 32px;font-size:14px;font-family:'Noto Sans TC',sans-serif;font-weight:700;border-radius:14px;border:none;background:var(--accent);color:#fff;cursor:pointer}
 .pwd-err{font-size:12px;color:var(--red);margin-top:8px;display:none}
+
 .err-box{background:var(--red-bg);color:var(--red);border-radius:10px;padding:10px 14px;font-size:13px;margin-bottom:12px;display:none;line-height:1.6}
 .loading-overlay{display:none;position:fixed;inset:0;background:rgba(44,95,90,.88);z-index:999;align-items:center;justify-content:center;flex-direction:column;gap:16px}
 .loading-overlay.show{display:flex}
@@ -163,9 +209,9 @@ textarea.note-area:focus{border-color:var(--accent)}
 </head>
 <body>
 <div class="app">
-  <div class="header-fixed">
+  <div class="header-fixed" id="header">
     <div class="topbar">
-      <span class="topbar-logo">🏥 雲玖中醫</span>
+      <span class="topbar-logo" id="topbar-logo">🏥 雲玖中醫</span>
       <span class="topbar-date" id="topbar-date"></span>
     </div>
     <div class="nav-bar">
@@ -186,14 +232,34 @@ textarea.note-area:focus{border-color:var(--accent)}
   <!-- ===== 填報頁 ===== -->
   <div class="page active" id="page-report">
 
-    <!-- S0 填報者 -->
+    <!-- S0 診所 + 填報者 + 日期 -->
     <div class="step visible" id="s0">
       <div class="step-heading">今天是誰在填？</div>
-      <div class="step-sub">點你的名字，或選「其他」自己輸入</div>
+      <div class="step-sub">選診所、選名字、確認日期</div>
+
+      <div class="sec-label">選診所</div>
+      <div class="clinic-grid">
+        <button class="clinic-btn" id="clinic-yj" onclick="pickClinic('yungjiu')">
+          🏥 雲玖中醫
+          <span class="clinic-sub">左營</span>
+        </button>
+        <button class="clinic-btn" id="clinic-fs" onclick="pickClinic('fushan')">
+          🏥 福山雲玖
+          <span class="clinic-sub">福山</span>
+        </button>
+      </div>
+
+      <div class="sec-label">填報者</div>
       <div class="name-grid" id="name-grid"></div>
       <div class="name-input-wrap" id="name-input-wrap">
         <input type="text" class="name-input" id="name-input" placeholder="請輸入你的名字" oninput="onNameInput()">
       </div>
+
+      <div class="date-row">
+        <span class="date-row-label">📅 報表日期</span>
+        <input type="date" id="report-date" class="date-input">
+      </div>
+      <div class="date-hint">忘記填的話，可以改成昨天的日期</div>
     </div>
 
     <!-- S1 數字 -->
@@ -202,7 +268,7 @@ textarea.note-area:focus{border-color:var(--accent)}
       <div class="step-sub">從報表直接填，沒開診填 0</div>
       <div class="sec-label">就診人數</div>
       <div class="num-grid-3">
-        <div class="num-card"><div class="num-card-label">☀️ 早診</div><div class="num-controls"><button class="nc-btn" onclick="adj('m',-1)">−</button><span class="nc-val" id="v-m">0</span><button class="nc-btn" onclick="adj('m',1)">+</button></div></div>
+        <div class="num-card"><div class="num-card-label">☀️ 早診</div><div class="num-controls"><button class="nc-btn" id="nc-m" onclick="adj('m',-1)">−</button><span class="nc-val" id="v-m">0</span><button class="nc-btn" id="nc-m2" onclick="adj('m',1)">+</button></div></div>
         <div class="num-card"><div class="num-card-label">🌤 午診</div><div class="num-controls"><button class="nc-btn" onclick="adj('a',-1)">−</button><span class="nc-val" id="v-a">0</span><button class="nc-btn" onclick="adj('a',1)">+</button></div></div>
         <div class="num-card"><div class="num-card-label">🌙 晚診</div><div class="num-controls"><button class="nc-btn" onclick="adj('e',-1)">−</button><span class="nc-val" id="v-e">0</span><button class="nc-btn" onclick="adj('e',1)">+</button></div></div>
       </div>
@@ -211,6 +277,13 @@ textarea.note-area:focus{border-color:var(--accent)}
         <div class="num-card"><div class="num-card-label">✨ 美顏針</div><div class="num-controls"><button class="nc-btn" onclick="adj('f',-1)">−</button><span class="nc-val" id="v-f">0</span><button class="nc-btn" onclick="adj('f',1)">+</button></div></div>
         <div class="num-card"><div class="num-card-label">🔪 針刀</div><div class="num-controls"><button class="nc-btn" onclick="adj('nk',-1)">−</button><span class="nc-val" id="v-nk">0</span><button class="nc-btn" onclick="adj('nk',1)">+</button></div></div>
         <div class="num-card"><div class="num-card-label">🧪 客製水藥</div><div class="num-controls"><button class="nc-btn" onclick="adj('h2',-1)">−</button><span class="nc-val" id="v-h2">0</span><button class="nc-btn" onclick="adj('h2',1)">+</button></div></div>
+      </div>
+      <!-- 福山專屬 -->
+      <div id="fushan-extra" style="display:none">
+        <div class="num-grid-2" style="margin-bottom:16px">
+          <div class="num-card"><div class="num-card-label">🦴 結構治療</div><div class="num-controls"><button class="nc-btn" onclick="adj('struct',-1)">−</button><span class="nc-val" id="v-struct">0</span><button class="nc-btn" onclick="adj('struct',1)">+</button></div></div>
+          <div class="num-card"><div class="num-card-label">⚡ AMCT</div><div class="num-controls"><button class="nc-btn" onclick="adj('amct',-1)">−</button><span class="nc-val" id="v-amct">0</span><button class="nc-btn" onclick="adj('amct',1)">+</button></div></div>
+        </div>
       </div>
       <div class="sec-label">轉骨水藥</div>
       <div class="num-grid-2">
@@ -262,7 +335,6 @@ textarea.note-area:focus{border-color:var(--accent)}
     <div class="step" id="s3">
       <div class="step-heading">初診登記 & 回診確認</div>
       <div class="step-sub">登記今日新初診，確認預計回診患者</div>
-
       <div class="sec-label">今日初診登記</div>
       <div class="reg-card">
         <div class="reg-header">🔪 針刀初診 <span style="font-size:11px;font-weight:400;color:var(--text3)">7天後提醒回診</span></div>
@@ -286,7 +358,6 @@ textarea.note-area:focus{border-color:var(--accent)}
           </div>
         </div>
       </div>
-
       <div class="sec-label">今日回診確認</div>
       <div id="checkin-loading" class="loading-inline">載入應回診患者中...</div>
       <div id="checkin-list"></div>
@@ -295,7 +366,7 @@ textarea.note-area:focus{border-color:var(--accent)}
     <!-- S4 確認送出 -->
     <div class="step" id="s4">
       <div class="step-heading">確認後送出</div>
-      <div class="step-sub">資料直接存進 Notion</div>
+      <div class="step-sub" id="s4-sub">資料直接存進 Notion</div>
       <div class="sum-card" id="sum-card"></div>
       <div class="err-box" id="err-box"></div>
     </div>
@@ -306,7 +377,7 @@ textarea.note-area:focus{border-color:var(--accent)}
         <div class="success-circle">✅</div>
         <div class="success-title">今日回報完成！</div>
         <div class="success-sub" id="success-sub"></div>
-        <a class="notion-btn" href="https://www.notion.so/3592437f4e1081a1aa8dfc014e2e3fc0" target="_blank">📊 在 Notion 查看</a><br>
+        <a class="notion-btn" id="notion-link" href="https://www.notion.so/3592437f4e1081a1aa8dfc014e2e3fc0" target="_blank">📊 在 Notion 查看</a><br>
         <button class="reset-btn" onclick="resetReport()">填明天的資料</button>
       </div>
     </div>
@@ -379,6 +450,10 @@ textarea.note-area:focus{border-color:var(--accent)}
     <div class="dash-header">
       <div><div class="dash-title">空檔格數設定</div><div class="dash-sub">填一次，填報時自動帶入，可隨時修改</div></div>
     </div>
+    <div class="setting-clinic-tab">
+      <button class="setting-clinic-btn active-yj" id="set-tab-yj" onclick="switchSettingClinic('yungjiu')">🏥 雲玖中醫</button>
+      <button class="setting-clinic-btn" id="set-tab-fs" onclick="switchSettingClinic('fushan')">🏥 福山雲玖</button>
+    </div>
     <div class="sec-label">每週固定開放格數</div>
     <div class="setting-table">
       <div class="setting-header">
@@ -388,8 +463,8 @@ textarea.note-area:focus{border-color:var(--accent)}
       </div>
       <div id="setting-rows"></div>
     </div>
-    <button class="save-setting-btn" onclick="saveSettings()">💾 儲存設定</button>
-    <div class="setting-saved" id="setting-saved">✓ 已儲存！填報時會自動帶入今天格數</div>
+    <button class="save-setting-btn" id="save-setting-btn" onclick="saveSettings()">💾 儲存設定</button>
+    <div class="setting-saved" id="setting-saved">✓ 已儲存！</div>
   </div>
 
   <div class="loading-overlay" id="loading">
@@ -399,87 +474,157 @@ textarea.note-area:focus{border-color:var(--accent)}
 </div>
 
 <script>
-const OWNER_PWD="18166";
-const FIXED_NAMES=["惠玲","詩瑩","韻鈞"];
-const DAYS=["週一","週二","週三","週四","週五","週六"];
+const OWNER_PWD = "18166";
+const FIXED_NAMES = ["惠玲","詩瑩","韻鈞"];
+const DAYS = ["週一","週二","週三","週四","週五","週六"];
 
+let cur = 0;
+let clinic = ''; // 'yungjiu' | 'fushan'
+let settingClinic = 'yungjiu';
+let D = {m:0,a:0,e:0,f:0,nk:0,h1:0,h2:0,struct:0,amct:0,
+         fu:0,cv:0,np_consult:0,slot_facial_total:0,slot_nk_total:0,
+         note:"",reporter:""};
+let newPatients = {needleknife:[],growth:[]};
+let checkinDone = new Set();
 
-let cur=0;
-let D={m:0,a:0,e:0,f:0,nk:0,h1:0,h2:0,fu:0,cv:0,np_consult:0,
-       slot_facial_total:0,slot_nk_total:0,note:"",reporter:""};
-let newPatients={needleknife:[],growth:[]};
-let checkinDone=new Set(); // 已勾選的 page_id
+const today = new Date();
+const todayDow = today.getDay();
+const dateDisp = today.toLocaleDateString('zh-TW',{month:'long',day:'numeric',weekday:'short'});
+const todayISO = today.toISOString().split('T')[0];
 
-const today=new Date();
-const todayDow=today.getDay();
-const dateDisp=today.toLocaleDateString('zh-TW',{month:'long',day:'numeric',weekday:'short'});
-const dateStr=today.toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'});
-document.getElementById('topbar-date').textContent=dateDisp;
-document.getElementById('mgr-date').textContent=dateDisp;
-document.getElementById('owner-date').textContent=dateDisp;
+document.getElementById('topbar-date').textContent = dateDisp;
+document.getElementById('mgr-date').textContent = dateDisp;
+document.getElementById('owner-date').textContent = dateDisp;
+document.getElementById('report-date').value = todayISO;
+
+// 診所選擇
+function pickClinic(c){
+  clinic = c;
+  const isFushan = c === 'fushan';
+  document.getElementById('clinic-yj').className = 'clinic-btn' + (c==='yungjiu'?' picked-yj':'');
+  document.getElementById('clinic-fs').className = 'clinic-btn' + (isFushan?' picked-fs':'');
+  document.getElementById('header').className = 'header-fixed' + (isFushan?' fushan':'');
+  document.getElementById('topbar-logo').textContent = isFushan ? '🏥 福山雲玖' : '🏥 雲玖中醫';
+  document.getElementById('fushan-extra').style.display = isFushan ? 'block' : 'none';
+  document.getElementById('btn-next').className = 'btn-next' + (isFushan?' fushan':'');
+  document.getElementById('notion-link').href = isFushan
+    ? 'https://www.notion.so/35e2437f4e10816d9422ebf0e08d92c5'
+    : 'https://www.notion.so/3592437f4e1081a1aa8dfc014e2e3fc0';
+  checkS0Ready();
+}
+
+// 填報者
+const ng = document.getElementById('name-grid');
+FIXED_NAMES.forEach(n=>{
+  const b = document.createElement('button');
+  b.className = 'name-btn'; b.textContent = n;
+  b.onclick = ()=>{
+    ng.querySelectorAll('.name-btn').forEach(x=>x.classList.remove('picked'));
+    b.classList.add('picked'); D.reporter = n;
+    document.getElementById('name-input-wrap').style.display = 'none';
+    checkS0Ready();
+  };
+  ng.appendChild(b);
+});
+const otherBtn = document.createElement('button');
+otherBtn.className = 'name-btn'; otherBtn.textContent = '其他';
+otherBtn.onclick = ()=>{
+  ng.querySelectorAll('.name-btn').forEach(x=>x.classList.remove('picked'));
+  otherBtn.classList.add('picked'); D.reporter = '';
+  document.getElementById('name-input-wrap').style.display = 'block';
+  document.getElementById('name-input').focus();
+  checkS0Ready();
+};
+ng.appendChild(otherBtn);
+
+function onNameInput(){
+  D.reporter = document.getElementById('name-input').value.trim();
+  checkS0Ready();
+}
+
+function checkS0Ready(){
+  document.getElementById('btn-next').disabled = !clinic || !D.reporter;
+}
+
+function adj(k,d){
+  if(!(k in D)) D[k]=0;
+  D[k] = Math.max(0,(D[k]||0)+d);
+  document.getElementById('v-'+k).textContent = D[k];
+  if(k==='f'||k==='nk') updateSlotRates();
+}
 
 // 設定頁
-const settingRows=document.getElementById('setting-rows');
+const settingRows = document.getElementById('setting-rows');
 DAYS.forEach((day,i)=>{
-  const row=document.createElement('div'); row.className='setting-row';
-  row.innerHTML=`<div class="setting-day">${day}</div>
+  const row = document.createElement('div'); row.className = 'setting-row';
+  row.innerHTML = `<div class="setting-day">${day}</div>
     <div class="setting-cell"><input type="number" class="setting-input" id="set-f-${i}" min="0" placeholder="0"></div>
     <div class="setting-cell"><input type="number" class="setting-input" id="set-nk-${i}" min="0" placeholder="0"></div>`;
   settingRows.appendChild(row);
 });
 
+function switchSettingClinic(c){
+  settingClinic = c;
+  document.getElementById('set-tab-yj').className = 'setting-clinic-btn' + (c==='yungjiu'?' active-yj':'');
+  document.getElementById('set-tab-fs').className = 'setting-clinic-btn' + (c==='fushan'?' active-fs':'');
+  loadSettings();
+}
+
 function loadSettings(){
+  const key = `yj_slot_settings_${settingClinic}`;
   try{
-    const s=JSON.parse(localStorage.getItem('yj_slot_settings')||'{}');
+    const s = JSON.parse(localStorage.getItem(key)||'{}');
     DAYS.forEach((_,i)=>{
-      if(s[`f_${i}`]!=null) document.getElementById(`set-f-${i}`).value=s[`f_${i}`];
-      if(s[`nk_${i}`]!=null) document.getElementById(`set-nk-${i}`).value=s[`nk_${i}`];
+      document.getElementById(`set-f-${i}`).value = s[`f_${i}`] != null ? s[`f_${i}`] : '';
+      document.getElementById(`set-nk-${i}`).value = s[`nk_${i}`] != null ? s[`nk_${i}`] : '';
     });
   }catch(e){}
 }
 
 function saveSettings(){
-  const s={};
+  const key = `yj_slot_settings_${settingClinic}`;
+  const s = {};
   DAYS.forEach((_,i)=>{
-    s[`f_${i}`]=parseInt(document.getElementById(`set-f-${i}`).value)||0;
-    s[`nk_${i}`]=parseInt(document.getElementById(`set-nk-${i}`).value)||0;
+    s[`f_${i}`] = parseInt(document.getElementById(`set-f-${i}`).value)||0;
+    s[`nk_${i}`] = parseInt(document.getElementById(`set-nk-${i}`).value)||0;
   });
-  try{localStorage.setItem('yj_slot_settings',JSON.stringify(s));}catch(e){}
-  document.getElementById('setting-saved').style.display='block';
-  setTimeout(()=>document.getElementById('setting-saved').style.display='none',2500);
+  try{localStorage.setItem(key,JSON.stringify(s));}catch(e){}
+  document.getElementById('setting-saved').style.display = 'block';
+  setTimeout(()=>document.getElementById('setting-saved').style.display='none', 2500);
 }
 
 function getTodaySlots(){
+  const key = `yj_slot_settings_${clinic||'yungjiu'}`;
   try{
-    const s=JSON.parse(localStorage.getItem('yj_slot_settings')||'{}');
-    const dow=todayDow===0?null:todayDow-1;
+    const s = JSON.parse(localStorage.getItem(key)||'{}');
+    const dow = todayDow===0 ? null : todayDow-1;
     if(dow===null||dow>5) return {facial:0,nk:0};
-    return {facial:s[`f_${dow}`]||0,nk:s[`nk_${dow}`]||0};
+    return {facial:s[`f_${dow}`]||0, nk:s[`nk_${dow}`]||0};
   }catch(e){return {facial:0,nk:0};}
 }
 
 function autoFillTodaySlots(){
-  const slots=getTodaySlots();
-  document.getElementById('slot-facial-total').value=slots.facial||'';
-  document.getElementById('slot-nk-total').value=slots.nk||'';
+  const slots = getTodaySlots();
+  document.getElementById('slot-facial-total').value = slots.facial||'';
+  document.getElementById('slot-nk-total').value = slots.nk||'';
   updateSlotRates();
 }
 
 function updateSlotRates(){
-  const fTotal=parseInt(document.getElementById('slot-facial-total').value)||0;
-  const nkTotal=parseInt(document.getElementById('slot-nk-total').value)||0;
-  document.getElementById('slot-facial-actual').textContent=D.f||0;
-  document.getElementById('slot-nk-actual').textContent=D.nk||0;
-  const setRate=(elId,actual,total)=>{
-    const el=document.getElementById(elId);
+  const fTotal = parseInt(document.getElementById('slot-facial-total').value)||0;
+  const nkTotal = parseInt(document.getElementById('slot-nk-total').value)||0;
+  document.getElementById('slot-facial-actual').textContent = D.f||0;
+  document.getElementById('slot-nk-actual').textContent = D.nk||0;
+  const setRate = (elId,actual,total)=>{
+    const el = document.getElementById(elId);
     if(total>0){
-      const r=Math.round(actual/total*100);
-      el.textContent=r+'%';
-      el.style.color=r>=90?'var(--green)':r>=70?'var(--amber)':'var(--red)';
-    }else el.textContent='—';
+      const r = Math.round(actual/total*100);
+      el.textContent = r+'%';
+      el.style.color = r>=90?'var(--green)':r>=70?'var(--amber)':'var(--red)';
+    }else el.textContent = '—';
   };
-  setRate('slot-facial-rate',D.f||0,fTotal);
-  setRate('slot-nk-rate',D.nk||0,nkTotal);
+  setRate('slot-facial-rate', D.f||0, fTotal);
+  setRate('slot-nk-rate', D.nk||0, nkTotal);
 }
 
 // 頁面切換
@@ -488,55 +633,21 @@ function switchPage(p,btn){
   document.querySelectorAll('.nav-btn').forEach(el=>el.classList.remove('active'));
   document.getElementById('page-'+p).classList.add('active');
   btn.classList.add('active');
-  document.getElementById('prog-bar').style.display=p==='report'?'flex':'none';
+  document.getElementById('prog-bar').style.display = p==='report'?'flex':'none';
   if(p==='manager') loadManagerData();
   if(p==='setting') loadSettings();
 }
 
-// 填報者
-const ng=document.getElementById('name-grid');
-FIXED_NAMES.forEach(n=>{
-  const b=document.createElement('button'); b.className='name-btn'; b.textContent=n;
-  b.onclick=()=>{
-    ng.querySelectorAll('.name-btn').forEach(x=>x.classList.remove('picked'));
-    b.classList.add('picked'); D.reporter=n;
-    document.getElementById('name-input-wrap').style.display='none';
-    document.getElementById('btn-next').disabled=false;
-  };
-  ng.appendChild(b);
-});
-const otherBtn=document.createElement('button');
-otherBtn.className='name-btn'; otherBtn.textContent='其他';
-otherBtn.onclick=()=>{
-  ng.querySelectorAll('.name-btn').forEach(x=>x.classList.remove('picked'));
-  otherBtn.classList.add('picked'); D.reporter='';
-  document.getElementById('name-input-wrap').style.display='block';
-  document.getElementById('name-input').focus();
-  document.getElementById('btn-next').disabled=true;
-};
-ng.appendChild(otherBtn);
-function onNameInput(){
-  D.reporter=document.getElementById('name-input').value.trim();
-  document.getElementById('btn-next').disabled=!D.reporter;
-}
-
-function adj(k,d){
-  if(!(k in D)) D[k]=0;
-  D[k]=Math.max(0,(D[k]||0)+d);
-  document.getElementById('v-'+k).textContent=D[k];
-  if(k==='f'||k==='nk') updateSlotRates();
-}
-
-// 初診登記
+// 初診
 function addPatient(therapy){
-  const nameId=therapy==='needleknife'?'nk-name':'growth-name';
-  const chartId=therapy==='needleknife'?'nk-chart':'growth-chart';
-  const name=document.getElementById(nameId).value.trim();
-  const chart=document.getElementById(chartId).value.trim();
+  const nameId = therapy==='needleknife'?'nk-name':'growth-name';
+  const chartId = therapy==='needleknife'?'nk-chart':'growth-chart';
+  const name = document.getElementById(nameId).value.trim();
+  const chart = document.getElementById(chartId).value.trim();
   if(!name){alert('請填寫姓名');return;}
   newPatients[therapy].push({name,chart_no:chart});
-  document.getElementById(nameId).value='';
-  document.getElementById(chartId).value='';
+  document.getElementById(nameId).value = '';
+  document.getElementById(chartId).value = '';
   renderPatientTags(therapy);
 }
 
@@ -546,9 +657,8 @@ function removePatient(therapy,idx){
 }
 
 function renderPatientTags(therapy){
-  const containerId=therapy==='needleknife'?'nk-patients':'growth-patients';
-  const el=document.getElementById(containerId);
-  el.innerHTML=newPatients[therapy].map((p,i)=>`
+  const id = therapy==='needleknife'?'nk-patients':'growth-patients';
+  document.getElementById(id).innerHTML = newPatients[therapy].map((p,i)=>`
     <div class="patient-tag">
       <span class="patient-tag-name">${p.name}${p.chart_no?' ('+p.chart_no+')':''}</span>
       <button class="patient-tag-remove" onclick="removePatient('${therapy}',${i})">×</button>
@@ -558,18 +668,18 @@ function renderPatientTags(therapy){
 // 回診確認
 async function loadCheckinList(){
   try{
-    const res=await fetch('/api/patients',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({})});
-    const result=await res.json();
-    document.getElementById('checkin-loading').style.display='none';
-    const patients=result.patients||[];
+    const res = await fetch('/api/patients',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({})});
+    const result = await res.json();
+    document.getElementById('checkin-loading').style.display = 'none';
+    const patients = result.patients||[];
     if(!patients.length){
-      document.getElementById('checkin-list').innerHTML='<div class="empty-note">今日無預計回診患者 🎉</div>';
+      document.getElementById('checkin-list').innerHTML = '<div class="empty-note">今日無預計回診患者 🎉</div>';
       return;
     }
-    document.getElementById('checkin-list').innerHTML=patients.map(p=>`
-      <div class="checkin-card" id="ci-${p.id}">
+    document.getElementById('checkin-list').innerHTML = patients.map(p=>`
+      <div class="checkin-card">
         <div class="checkin-header">
-          ${p.therapy==='針刀'?'🔪':'🌿'} ${p.therapy} 首次回診提醒
+          ${p.therapy==='針刀'?'🔪':'🌿'} ${p.therapy} 首次回診
           <span class="checkin-badge ${p.days_over>0?'badge-red':'badge-amber'}">${p.days_over>0?'逾期'+p.days_over+'天':'今日'}</span>
         </div>
         <div class="checkin-item">
@@ -581,60 +691,66 @@ async function loadCheckinList(){
         </div>
       </div>`).join('');
   }catch(e){
-    document.getElementById('checkin-loading').textContent='載入失敗，請重試';
+    document.getElementById('checkin-loading').textContent = '載入失敗，請重試';
   }
 }
 
 async function markCheckin(pageId,therapy,btn){
-  btn.disabled=true; btn.textContent='更新中...';
+  btn.disabled = true; btn.textContent = '更新中...';
   try{
-    const res=await fetch('/api/checkin',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page_id:pageId,therapy})});
-    const result=await res.json();
-    if(result.success){
-      btn.classList.add('checked'); btn.textContent='✓ 已確認';
-      checkinDone.add(pageId);
-    }
-  }catch(e){btn.disabled=false; btn.textContent='已回診 ✓';}
+    const res = await fetch('/api/checkin',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page_id:pageId,therapy})});
+    const result = await res.json();
+    if(result.success){ btn.classList.add('checked'); btn.textContent = '✓ 已確認'; }
+  }catch(e){ btn.disabled = false; btn.textContent = '已回診 ✓'; }
 }
 
 // 步驟
-function updProg(){for(let i=0;i<5;i++) document.getElementById('ps'+i).className='prog-seg'+(i<=cur?' on':'');}
+function updProg(){ for(let i=0;i<5;i++) document.getElementById('ps'+i).className='prog-seg'+(i<=cur?' on':''); }
 
 function goStep(n){
   document.getElementById('s'+cur).classList.remove('visible');
-  cur=n;
+  cur = n;
   document.getElementById('s'+n).classList.add('visible');
   updProg();
-  const nav=document.getElementById('report-nav');
+  const nav = document.getElementById('report-nav');
   if(n===5){nav.style.display='none';return;}
-  nav.style.display='flex';
-  document.getElementById('btn-back').style.display=n===0?'none':'block';
-  document.getElementById('btn-next').disabled=n===0&&!D.reporter;
-  document.getElementById('btn-next').textContent=n===4?'✓ 確認送出':'下一步 →';
-  if(n===2){autoFillTodaySlots();document.getElementById('slot-facial-actual').textContent=D.f;document.getElementById('slot-nk-actual').textContent=D.nk;}
+  nav.style.display = 'flex';
+  document.getElementById('btn-back').style.display = n===0?'none':'block';
+  const isFushan = clinic==='fushan';
+  document.getElementById('btn-next').className = 'btn-next'+(isFushan?' fushan':'');
+  document.getElementById('btn-next').disabled = n===0 && (!clinic||!D.reporter);
+  document.getElementById('btn-next').textContent = n===4?'✓ 確認送出':'下一步 →';
+  if(n===2){ autoFillTodaySlots(); document.getElementById('slot-facial-actual').textContent=D.f; document.getElementById('slot-nk-actual').textContent=D.nk; }
   if(n===3) loadCheckinList();
   if(n===4) buildSummary();
   window.scrollTo(0,0);
 }
-function goNext(){if(cur===4)submitReport();else goStep(cur+1);}
-function goBack(){if(cur>0)goStep(cur-1);}
+function goNext(){ if(cur===4) submitReport(); else goStep(cur+1); }
+function goBack(){ if(cur>0) goStep(cur-1); }
 
 function buildSummary(){
-  D.note=document.getElementById('note').value;
-  D.slot_facial_total=parseInt(document.getElementById('slot-facial-total').value)||0;
-  D.slot_nk_total=parseInt(document.getElementById('slot-nk-total').value)||0;
-  const tot=D.m+D.a+D.e;
-  const convRate=D.fu>0?Math.round(D.cv/D.fu*100)+'%':'—';
-  const fRate=D.slot_facial_total>0?Math.round(D.f/D.slot_facial_total*100)+'%':'—';
-  const nkRate=D.slot_nk_total>0?Math.round(D.nk/D.slot_nk_total*100)+'%':'—';
-  const nkNew=newPatients.needleknife.map(p=>p.name).join('、')||'無';
-  const growthNew=newPatients.growth.map(p=>p.name).join('、')||'無';
+  D.note = document.getElementById('note').value;
+  D.slot_facial_total = parseInt(document.getElementById('slot-facial-total').value)||0;
+  D.slot_nk_total = parseInt(document.getElementById('slot-nk-total').value)||0;
+  const tot = D.m+D.a+D.e;
+  const convRate = D.fu>0?Math.round(D.cv/D.fu*100)+'%':'—';
+  const fRate = D.slot_facial_total>0?Math.round(D.f/D.slot_facial_total*100)+'%':'—';
+  const nkRate = D.slot_nk_total>0?Math.round(D.nk/D.slot_nk_total*100)+'%':'—';
+  const nkNew = newPatients.needleknife.map(p=>p.name).join('、')||'無';
+  const growthNew = newPatients.growth.map(p=>p.name).join('、')||'無';
+  const clinicName = clinic==='fushan'?'福山雲玖':'雲玖中醫';
+  const selectedDate = document.getElementById('report-date').value||todayISO;
+  document.getElementById('s4-sub').textContent = `${clinicName} · ${selectedDate} 資料存進 Notion`;
   document.getElementById('sum-card').innerHTML=`
-    <div class="sum-sec">今日數字</div>
+    <div class="sum-sec">診所與填報者</div>
+    <div class="sum-row"><span class="sum-key">診所</span><span class="sum-val">${clinicName}</span></div>
     <div class="sum-row"><span class="sum-key">填報者</span><span class="sum-val">${D.reporter}</span></div>
+    <div class="sum-row"><span class="sum-key">報表日期</span><span class="sum-val">${selectedDate}</span></div>
+    <div class="sum-sec">今日數字</div>
     <div class="sum-row"><span class="sum-key">就診人數</span><span class="sum-val">${tot} 人（早${D.m}／午${D.a}／晚${D.e}）</span></div>
     <div class="sum-row"><span class="sum-key">美顏針</span><span class="sum-val">${D.f}/${D.slot_facial_total}格（${fRate}）</span></div>
     <div class="sum-row"><span class="sum-key">針刀</span><span class="sum-val">${D.nk}/${D.slot_nk_total}格（${nkRate}）</span></div>
+    ${clinic==='fushan'?`<div class="sum-row"><span class="sum-key">結構治療 / AMCT</span><span class="sum-val">${D.struct} 次 ／ ${D.amct} 次</span></div>`:''}
     <div class="sum-row"><span class="sum-key">轉骨／客製水藥</span><span class="sum-val">${D.h1}張／${D.h2}張</span></div>
     <div class="sum-sec">今日跟進</div>
     <div class="sum-row"><span class="sum-key">諮詢總人數</span><span class="sum-val">${D.np_consult} 人</span></div>
@@ -647,57 +763,69 @@ function buildSummary(){
 }
 
 async function submitReport(){
-  D.note=document.getElementById('note').value;
-  D.slot_facial_total=parseInt(document.getElementById('slot-facial-total').value)||0;
-  D.slot_nk_total=parseInt(document.getElementById('slot-nk-total').value)||0;
+  D.note = document.getElementById('note').value;
+  D.slot_facial_total = parseInt(document.getElementById('slot-facial-total').value)||0;
+  D.slot_nk_total = parseInt(document.getElementById('slot-nk-total').value)||0;
   showLoading('儲存到 Notion...');
-  document.getElementById('err-box').style.display='none';
+  document.getElementById('err-box').style.display = 'none';
+
+  const selectedDate = document.getElementById('report-date').value||todayISO;
+  const submitDateObj = new Date(selectedDate+'T00:00:00');
+  const submitDate = submitDateObj.toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'});
 
   try{
-    // 1. 存每日填報
-    const res=await fetch('/api/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...D,date:dateStr})});
+    const res = await fetch('/api/submit',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({...D, date:submitDate, clinic})
+    });
     if(!res.ok){const e=await res.json();throw new Error(e.error||'填報儲存失敗');}
 
-    // 2. 登記新初診患者
-    const allNew=[
+    const allNew = [
       ...newPatients.needleknife.map(p=>({...p,therapy:'needleknife'})),
       ...newPatients.growth.map(p=>({...p,therapy:'growth'})),
     ];
     for(const p of allNew){
-      await fetch('/api/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...p,date:dateStr})});
+      await fetch('/api/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...p,date:selectedDate})});
     }
 
     hideLoading();
-    const tot=D.m+D.a+D.e;
-    const fRate=D.slot_facial_total>0?Math.round(D.f/D.slot_facial_total*100)+'%':'—';
-    const nkRate=D.slot_nk_total>0?Math.round(D.nk/D.slot_nk_total*100)+'%':'—';
-    const newCount=allNew.length;
-    document.getElementById('success-sub').innerHTML=
-      `${D.reporter} 完成今日填報 🎉<br>就診 <strong>${tot}</strong> 人<br>美顏針填滿率 <strong>${fRate}</strong> ／ 針刀 <strong>${nkRate}</strong><br>轉預約 <strong>${D.cv}</strong> 人${newCount?'<br>新初診登記 <strong>'+newCount+'</strong> 人':''}<br><br>資料已存入 Notion ✓`;
+    const tot = D.m+D.a+D.e;
+    const fRate = D.slot_facial_total>0?Math.round(D.f/D.slot_facial_total*100)+'%':'—';
+    const nkRate = D.slot_nk_total>0?Math.round(D.nk/D.slot_nk_total*100)+'%':'—';
+    const clinicName = clinic==='fushan'?'福山雲玖':'雲玖中醫';
+    document.getElementById('success-sub').innerHTML =
+      `${clinicName} · ${D.reporter} 完成填報 🎉<br>就診 <strong>${tot}</strong> 人<br>美顏針填滿率 <strong>${fRate}</strong> ／ 針刀 <strong>${nkRate}</strong><br>轉預約 <strong>${D.cv}</strong> 人<br><br>資料已存入 Notion ✓`;
     goStep(5);
   }catch(e){
     hideLoading();
-    const el=document.getElementById('err-box');
-    el.textContent='⚠️ 儲存失敗：'+(e.message||'請重試');
-    el.style.display='block';
+    const el = document.getElementById('err-box');
+    el.textContent = '⚠️ 儲存失敗：'+(e.message||'請重試');
+    el.style.display = 'block';
   }
 }
 
 function resetReport(){
-  D={m:0,a:0,e:0,f:0,nk:0,h1:0,h2:0,fu:0,cv:0,np_consult:0,slot_facial_total:0,slot_nk_total:0,note:"",reporter:""};
-  newPatients={needleknife:[],growth:[]};
-  checkinDone=new Set();
-  ['m','a','e','f','nk','h1','h2','fu','cv','np_consult'].forEach(k=>{const el=document.getElementById('v-'+k);if(el)el.textContent='0';});
-  document.getElementById('note').value='';
-  document.getElementById('btn-next').disabled=true;
-  document.getElementById('name-input').value='';
-  document.getElementById('name-input-wrap').style.display='none';
+  D = {m:0,a:0,e:0,f:0,nk:0,h1:0,h2:0,struct:0,amct:0,fu:0,cv:0,np_consult:0,slot_facial_total:0,slot_nk_total:0,note:"",reporter:""};
+  clinic = '';
+  newPatients = {needleknife:[],growth:[]};
+  checkinDone = new Set();
+  ['m','a','e','f','nk','h1','h2','struct','amct','fu','cv','np_consult'].forEach(k=>{const el=document.getElementById('v-'+k);if(el)el.textContent='0';});
+  document.getElementById('note').value = '';
+  document.getElementById('name-input').value = '';
+  document.getElementById('name-input-wrap').style.display = 'none';
+  document.getElementById('report-date').value = todayISO;
+  document.getElementById('header').className = 'header-fixed';
+  document.getElementById('topbar-logo').textContent = '🏥 雲玖中醫';
+  document.getElementById('fushan-extra').style.display = 'none';
+  document.getElementById('btn-next').className = 'btn-next';
+  document.getElementById('clinic-yj').className = 'clinic-btn';
+  document.getElementById('clinic-fs').className = 'clinic-btn';
   ng.querySelectorAll('.name-btn').forEach(b=>b.classList.remove('picked'));
   ['nk-patients','growth-patients'].forEach(id=>document.getElementById(id).innerHTML='');
-  document.getElementById('checkin-loading').style.display='block';
-  document.getElementById('checkin-list').innerHTML='';
-  document.getElementById('report-nav').style.display='flex';
-  document.getElementById('prog-bar').style.display='flex';
+  document.getElementById('checkin-loading').style.display = 'block';
+  document.getElementById('checkin-list').innerHTML = '';
+  document.getElementById('report-nav').style.display = 'flex';
+  document.getElementById('prog-bar').style.display = 'flex';
   goStep(0);
 }
 
@@ -719,7 +847,6 @@ function updateKPI(cId,cdId,cbId,sId,sdId,sbId,m){
 }
 
 async function loadManagerData(){
-  // KPI
   try{
     const res=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({role:'manager'})});
     const result=await res.json();
@@ -727,7 +854,6 @@ async function loadManagerData(){
     document.getElementById('mgr-ai').innerHTML=result.text||'AI 分析需要 Anthropic API Key。';
   }catch(e){document.getElementById('mgr-ai').textContent='載入失敗';}
 
-  // 首次回診提醒
   try{
     const res=await fetch('/api/patients',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({})});
     const result=await res.json();
@@ -742,50 +868,45 @@ async function loadManagerData(){
             <div class="proj-check" onclick="toggleCheck(this)">○</div>
             <div style="flex:1">
               <div class="proj-name">${p.therapy==='針刀'?'🔪':'🌿'} ${p.name}${p.chart_no?' · '+p.chart_no:''}</div>
-              <div class="proj-meta">預計回診：${p.next_date}${p.days_over>0?' · 已逾期'+p.days_over+'天':''}</div>
+              <div class="proj-meta">預計回診：${p.next_date}${p.days_over>0?' · 逾期'+p.days_over+'天':''}</div>
             </div>
           </div>`).join('')}</div>
         </div>`;
     }
-  }catch(e){document.getElementById('mgr-followup').innerHTML='<div class="empty-note">載入失敗，請重試</div>';}
+  }catch(e){document.getElementById('mgr-followup').innerHTML='<div class="empty-note">載入失敗</div>';}
 
-  // 美顏針患者：從 Notion 即時抓
-  try {
-    const bRes = await fetch('/api/beauty', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({})});
-    const bData = await bRes.json();
-    const urgent = bData.urgent || [];
-    const track = bData.tracking || [];
-
-    if (!urgent.length && !track.length) {
-      document.getElementById('mgr-projects').innerHTML = '<div class="empty-note">✨ 目前無需追蹤的美顏針患者 🎉</div>';
-    } else {
-      document.getElementById('mgr-projects').innerHTML = `
-        ${urgent.length ? `<div class="proj-card">
+  try{
+    const res=await fetch('/api/beauty',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({})});
+    const bData=await res.json();
+    const urgent=bData.urgent||[];
+    const track=bData.tracking||[];
+    if(!urgent.length&&!track.length){
+      document.getElementById('mgr-projects').innerHTML='<div class="empty-note">✨ 目前無需追蹤的美顏針患者 🎉</div>';
+    }else{
+      document.getElementById('mgr-projects').innerHTML=`
+        ${urgent.length?`<div class="proj-card">
           <div class="proj-header"><div class="proj-title">✨ 美顏針待預約</div><span class="proj-badge badge-red">${urgent.length} 人</span></div>
           <div class="proj-body">${urgent.map(p=>`<div class="proj-item">
             <div class="proj-check" onclick="toggleCheck(this)">○</div>
             <div style="flex:1">
               <div class="proj-name">${p.name} <span style="font-size:11px;color:var(--text3);font-weight:400">${p.grade||''}</span></div>
-              <div class="proj-meta">${p.type} · ${p.daysAgo!=null?p.daysAgo+'天未回診':''}${p.note?' · '+p.note:''}</div>
+              <div class="proj-meta">${p.type}${p.daysAgo!=null?' · '+p.daysAgo+'天未回診':''}${p.note?' · '+p.note:''}</div>
             </div>
           </div>`).join('')}</div>
-        </div>` : ''}
-        ${track.length ? `<div class="proj-card">
+        </div>`:''}
+        ${track.length?`<div class="proj-card">
           <div class="proj-header"><div class="proj-title">✨ 美顏針需追蹤</div><span class="proj-badge badge-amber">${track.length} 人</span></div>
           <div class="proj-body">${track.slice(0,8).map(p=>`<div class="proj-item">
             <div class="proj-check" onclick="toggleCheck(this)">○</div>
             <div style="flex:1">
               <div class="proj-name">${p.name} <span style="font-size:11px;color:var(--text3);font-weight:400">${p.grade||''}</span></div>
-              <div class="proj-meta">${p.type} · ${p.daysAgo!=null?p.daysAgo+'天未回診':''}${p.note?' · '+p.note:''}</div>
+              <div class="proj-meta">${p.type}${p.daysAgo!=null?' · '+p.daysAgo+'天未回診':''}${p.note?' · '+p.note:''}</div>
             </div>
           </div>`).join('')}
-          ${track.length>8?`<div style="text-align:center;padding:8px;font-size:12px;color:var(--text3)">還有 ${track.length-8} 人...</div>`:''}
-          </div>
-        </div>` : ''}`;
+          ${track.length>8?`<div style="text-align:center;padding:8px;font-size:12px;color:var(--text3)">還有 ${track.length-8} 人...</div>`:''}</div>
+        </div>`:''}`;
     }
-  } catch(e) {
-    document.getElementById('mgr-projects').innerHTML = '<div class="empty-note">美顏針患者資料載入失敗，請重試</div>';
-  }
+  }catch(e){document.getElementById('mgr-projects').innerHTML='<div class="empty-note">載入失敗</div>';}
 }
 
 function toggleCheck(el){const done=el.classList.toggle('done');el.textContent=done?'✓':'○';}
