@@ -90,22 +90,19 @@ export default async function handler(req, res) {
       else todayByType.other++;
     });
 
-    // 本月轉單率
-    const monthBooked = thisMonthConsult.filter(r => {
+    // 今日已預約人數
+    const todayBooked = todayConsult.filter(r => {
       const status = r['處理狀態'] || r['狀態'] || '';
       return status.includes('已預約');
     }).length;
-    const monthConvRate = thisMonthConsult.length > 0
-      ? Math.round(monthBooked / thisMonthConsult.length * 100)
-      : null;
 
-    // 待跟進名單（未接需回電）
+    // 待跟進名單（未接需回電 或 狀態空白）
     const pendingFollowup = consultRows
       .filter(r => {
         const status = r['處理狀態'] || r['狀態'] || '';
         return status.includes('未接') || status.includes('回電') || status === '';
       })
-      .slice(-20) // 最近 20 筆
+      .slice(-30)
       .map(r => ({
         name: r['您的姓名'] || r['姓名'] || r['名字'] || '—',
         phone: r['您的聯絡電話'] || r['電話'] || '',
@@ -114,7 +111,7 @@ export default async function handler(req, res) {
         status: r['處理狀態'] || r['狀態'] || '未處理',
         type: classifyItem(r['您希望諮詢的項目'] || r['諮詢項目'] || ''),
       }))
-      .reverse(); // 最新的在前
+      .reverse();
 
     // ── 美顏針表單分析 ──
     const todayBeauty = beautyRows.filter(r => {
@@ -127,10 +124,19 @@ export default async function handler(req, res) {
       return ts.startsWith(thisMonth);
     }).length;
 
+    // 本月轉單率
+    const monthBooked = thisMonthConsult.filter(r => {
+      const status = r['處理狀態'] || r['狀態'] || '';
+      return status.includes('已預約');
+    }).length;
+    const monthConvRate = thisMonthConsult.length > 0
+      ? Math.round(monthBooked / thisMonthConsult.length * 100) : null;
+
     res.status(200).json({
       success: true,
       consult: {
         today_total: todayConsult.length,
+        today_booked: todayBooked,
         today_by_type: todayByType,
         month_total: thisMonthConsult.length,
         month_booked: monthBooked,
