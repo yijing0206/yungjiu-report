@@ -65,7 +65,9 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);color:var(--text
 .nc-btn{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--border);background:var(--bg);cursor:pointer;font-size:18px;color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;transition:all .12s}
 .nc-btn:active{background:var(--accent-light);transform:scale(.9)}
 .nc-btn.fushan{color:var(--fushan)}
-.nc-val{font-size:24px;font-weight:700;min-width:34px;text-align:center}
+.nc-val{font-size:22px;font-weight:700;min-width:50px;text-align:center;border:none;background:transparent;color:var(--text);font-family:'Noto Sans TC',sans-serif;-moz-appearance:textfield}
+.nc-val::-webkit-outer-spin-button,.nc-val::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.nc-val:focus{outline:2px solid var(--accent);border-radius:8px;background:var(--accent-light)}
 
 /* 空檔 */
 .slot-input-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
@@ -268,26 +270,25 @@ textarea.note-area:focus{border-color:var(--accent)}
       <div class="step-sub">從報表直接填，沒開診填 0</div>
       <div class="sec-label">就診人數</div>
       <div class="num-grid-3">
-        <div class="num-card"><div class="num-card-label">☀️ 早診</div><div class="num-controls"><button class="nc-btn" id="nc-m" onclick="adj('m',-1)">−</button><span class="nc-val" id="v-m">0</span><button class="nc-btn" id="nc-m2" onclick="adj('m',1)">+</button></div></div>
-        <div class="num-card"><div class="num-card-label">🌤 午診</div><div class="num-controls"><button class="nc-btn" onclick="adj('a',-1)">−</button><span class="nc-val" id="v-a">0</span><button class="nc-btn" onclick="adj('a',1)">+</button></div></div>
-        <div class="num-card"><div class="num-card-label">🌙 晚診</div><div class="num-controls"><button class="nc-btn" onclick="adj('e',-1)">−</button><span class="nc-val" id="v-e">0</span><button class="nc-btn" onclick="adj('e',1)">+</button></div></div>
+        <div class="num-card"><div class="num-card-label">☀️ 早診</div><div class="num-controls"><button class="nc-btn" onclick="adj('m',-1)">−</button><input type="number" class="nc-val" id="v-m" value="0" min="0" oninput="setVal('m',this.value)"><button class="nc-btn" onclick="adj('m',1)">+</button></div></div>
+        <div class="num-card"><div class="num-card-label">🌤 午診</div><div class="num-controls"><button class="nc-btn" onclick="adj('a',-1)">−</button><input type="number" class="nc-val" id="v-a" value="0" min="0" oninput="setVal('a',this.value)"><button class="nc-btn" onclick="adj('a',1)">+</button></div></div>
+        <div class="num-card"><div class="num-card-label">🌙 晚診</div><div class="num-controls"><button class="nc-btn" onclick="adj('e',-1)">−</button><input type="number" class="nc-val" id="v-e" value="0" min="0" oninput="setVal('e',this.value)"><button class="nc-btn" onclick="adj('e',1)">+</button></div></div>
       </div>
       <div class="sec-label">自費人次</div>
       <div class="num-grid-3">
-        <div class="num-card"><div class="num-card-label">✨ 美顏針</div><div class="num-controls"><button class="nc-btn" onclick="adj('f',-1)">−</button><span class="nc-val" id="v-f">0</span><button class="nc-btn" onclick="adj('f',1)">+</button></div></div>
-        <div class="num-card"><div class="num-card-label">🔪 針刀</div><div class="num-controls"><button class="nc-btn" onclick="adj('nk',-1)">−</button><span class="nc-val" id="v-nk">0</span><button class="nc-btn" onclick="adj('nk',1)">+</button></div></div>
-        <div class="num-card"><div class="num-card-label">🧪 客製水藥</div><div class="num-controls"><button class="nc-btn" onclick="adj('h2',-1)">−</button><span class="nc-val" id="v-h2">0</span><button class="nc-btn" onclick="adj('h2',1)">+</button></div></div>
+        <div class="num-card"><div class="num-card-label">✨ 美顏針</div><div class="num-controls"><button class="nc-btn" onclick="adj('f',-1)">−</button><input type="number" class="nc-val" id="v-f" value="0" min="0" oninput="setVal('f',this.value)"><button class="nc-btn" onclick="adj('f',1)">+</button></div></div>
+        <div class="num-card"><div class="num-card-label">🔪 針刀</div><div class="num-controls"><button class="nc-btn" onclick="adj('nk',-1)">−</button><input type="number" class="nc-val" id="v-nk" value="0" min="0" oninput="setVal('nk',this.value)"><button class="nc-btn" onclick="adj('nk',1)">+</button></div></div>
+        <div class="num-card"><div class="num-card-label">🧪 客製水藥</div><div class="num-controls"><button class="nc-btn" onclick="adj('h2',-1)">−</button><input type="number" class="nc-val" id="v-h2" value="0" min="0" oninput="setVal('h2',this.value)"><button class="nc-btn" onclick="adj('h2',1)">+</button></div></div>
       </div>
-      <!-- 福山專屬 -->
       <div id="fushan-extra" style="display:none">
         <div class="num-grid-2" style="margin-bottom:16px">
-          <div class="num-card"><div class="num-card-label">🦴 結構治療</div><div class="num-controls"><button class="nc-btn" onclick="adj('struct',-1)">−</button><span class="nc-val" id="v-struct">0</span><button class="nc-btn" onclick="adj('struct',1)">+</button></div></div>
-          <div class="num-card"><div class="num-card-label">⚡ AMCT</div><div class="num-controls"><button class="nc-btn" onclick="adj('amct',-1)">−</button><span class="nc-val" id="v-amct">0</span><button class="nc-btn" onclick="adj('amct',1)">+</button></div></div>
+          <div class="num-card"><div class="num-card-label">🦴 結構治療</div><div class="num-controls"><button class="nc-btn" onclick="adj('struct',-1)">−</button><input type="number" class="nc-val" id="v-struct" value="0" min="0" oninput="setVal('struct',this.value)"><button class="nc-btn" onclick="adj('struct',1)">+</button></div></div>
+          <div class="num-card"><div class="num-card-label">⚡ AMCT</div><div class="num-controls"><button class="nc-btn" onclick="adj('amct',-1)">−</button><input type="number" class="nc-val" id="v-amct" value="0" min="0" oninput="setVal('amct',this.value)"><button class="nc-btn" onclick="adj('amct',1)">+</button></div></div>
         </div>
       </div>
       <div class="sec-label">轉骨水藥</div>
       <div class="num-grid-2">
-        <div class="num-card"><div class="num-card-label">🌿 轉骨水藥（張）</div><div class="num-controls"><button class="nc-btn" onclick="adj('h1',-1)">−</button><span class="nc-val" id="v-h1">0</span><button class="nc-btn" onclick="adj('h1',1)">+</button></div></div>
+        <div class="num-card"><div class="num-card-label">🌿 轉骨水藥（張）</div><div class="num-controls"><button class="nc-btn" onclick="adj('h1',-1)">−</button><input type="number" class="nc-val" id="v-h1" value="0" min="0" oninput="setVal('h1',this.value)"><button class="nc-btn" onclick="adj('h1',1)">+</button></div></div>
         <div class="num-card" style="display:flex;align-items:center;justify-content:center"><span style="font-size:12px;color:var(--text3)">無則留 0</span></div>
       </div>
     </div>
@@ -315,15 +316,15 @@ textarea.note-area:focus{border-color:var(--accent)}
       <div class="followup-card">
         <div class="followup-row">
           <div><div class="followup-label">今日諮詢總人數</div><div class="followup-sub">現場 + 電話 + 表單</div></div>
-          <div class="num-controls"><button class="nc-btn" onclick="adj('np_consult',-1)">−</button><span class="nc-val" id="v-np_consult">0</span><button class="nc-btn" onclick="adj('np_consult',1)">+</button></div>
+          <div class="num-controls"><button class="nc-btn" onclick="adj('np_consult',-1)">−</button><input type="number" class="nc-val" id="v-np_consult" value="0" min="0" oninput="setVal('np_consult',this.value)"><button class="nc-btn" onclick="adj('np_consult',1)">+</button></div>
         </div>
         <div class="followup-row">
           <div><div class="followup-label">48小時內跟進</div><div class="followup-sub">店長主動聯繫</div></div>
-          <div class="num-controls"><button class="nc-btn" onclick="adj('fu',-1)">−</button><span class="nc-val" id="v-fu">0</span><button class="nc-btn" onclick="adj('fu',1)">+</button></div>
+          <div class="num-controls"><button class="nc-btn" onclick="adj('fu',-1)">−</button><input type="number" class="nc-val" id="v-fu" value="0" min="0" oninput="setVal('fu',this.value)"><button class="nc-btn" onclick="adj('fu',1)">+</button></div>
         </div>
         <div class="followup-row">
           <div><div class="followup-label">成功轉預約</div><div class="followup-sub">當場或跟進後</div></div>
-          <div class="num-controls"><button class="nc-btn" onclick="adj('cv',-1)">−</button><span class="nc-val" id="v-cv">0</span><button class="nc-btn" onclick="adj('cv',1)">+</button></div>
+          <div class="num-controls"><button class="nc-btn" onclick="adj('cv',-1)">−</button><input type="number" class="nc-val" id="v-cv" value="0" min="0" oninput="setVal('cv',this.value)"><button class="nc-btn" onclick="adj('cv',1)">+</button></div>
         </div>
         <div class="consult-note">💡 沒有當場轉單的，請引導填 Google 表單，店長 48 小時內跟進</div>
       </div>
@@ -562,10 +563,18 @@ function checkS0Ready(){
   document.getElementById('btn-next').disabled = !clinic || !D.reporter;
 }
 
+function setVal(k, v){
+  D[k] = Math.max(0, parseInt(v)||0);
+  const el = document.getElementById('v-'+k);
+  if(el) el.value = D[k];
+  if(k==='f'||k==='nk') updateSlotRates();
+}
+
 function adj(k,d){
   if(!(k in D)) D[k]=0;
   D[k] = Math.max(0,(D[k]||0)+d);
-  document.getElementById('v-'+k).textContent = D[k];
+  const el = document.getElementById('v-'+k);
+  if(el) el.value = D[k];
   if(k==='f'||k==='nk') updateSlotRates();
 }
 
@@ -745,6 +754,11 @@ function goNext(){ if(cur===4) submitReport(); else goStep(cur+1); }
 function goBack(){ if(cur>0) goStep(cur-1); }
 
 function buildSummary(){
+  // 同步所有 input 的值到 D
+  ['m','a','e','f','nk','h1','h2','struct','amct','fu','cv','np_consult'].forEach(k=>{
+    const el=document.getElementById('v-'+k);
+    if(el) D[k]=Math.max(0,parseInt(el.value)||0);
+  });
   D.note = document.getElementById('note').value;
   D.slot_facial_total = parseInt(document.getElementById('slot-facial-total').value)||0;
   D.slot_nk_total = parseInt(document.getElementById('slot-nk-total').value)||0;
@@ -779,6 +793,11 @@ function buildSummary(){
 }
 
 async function submitReport(){
+  // 同步所有 input 的值到 D
+  ['m','a','e','f','nk','h1','h2','struct','amct','fu','cv','np_consult'].forEach(k=>{
+    const el=document.getElementById('v-'+k);
+    if(el) D[k]=Math.max(0,parseInt(el.value)||0);
+  });
   D.note = document.getElementById('note').value;
   D.slot_facial_total = parseInt(document.getElementById('slot-facial-total').value)||0;
   D.slot_nk_total = parseInt(document.getElementById('slot-nk-total').value)||0;
@@ -825,7 +844,7 @@ function resetReport(){
   clinic = '';
   newPatients = {needleknife:[],growth:[]};
   checkinDone = new Set();
-  ['m','a','e','f','nk','h1','h2','struct','amct','fu','cv','np_consult'].forEach(k=>{const el=document.getElementById('v-'+k);if(el)el.textContent='0';});
+  ['m','a','e','f','nk','h1','h2','struct','amct','fu','cv','np_consult'].forEach(k=>{const el=document.getElementById('v-'+k);if(el)el.value='0';});
   document.getElementById('note').value = '';
   document.getElementById('name-input').value = '';
   document.getElementById('name-input-wrap').style.display = 'none';
