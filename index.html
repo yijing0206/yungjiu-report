@@ -344,10 +344,10 @@ textarea.note-area:focus{border-color:var(--accent)}
         <div class="reg-header">🔪 針刀初診 <span style="font-size:11px;font-weight:400;color:var(--text3)">7天後提醒回診</span></div>
         <div class="reg-body">
           <div id="nk-patients"></div>
-          <div class="reg-row">
-            <input type="text" class="reg-input" id="nk-name" placeholder="姓名">
-            <input type="text" class="reg-input chart" id="nk-chart" placeholder="病歷號">
-            <button class="add-patient-btn" onclick="addPatient('needleknife')">+ 新增</button>
+          <div style="display:flex;gap:8px;align-items:center;margin-top:4px">
+            <input type="text" class="reg-input" id="nk-name" placeholder="姓名" style="flex:1;min-width:0">
+            <input type="text" class="reg-input" id="nk-chart" placeholder="病歷號" style="width:90px;flex:none">
+            <button class="add-patient-btn" onclick="addPatient('needleknife')" style="flex:none">＋新增</button>
           </div>
         </div>
       </div>
@@ -355,10 +355,10 @@ textarea.note-area:focus{border-color:var(--accent)}
         <div class="reg-header">🌿 轉骨初診 <span style="font-size:11px;font-weight:400;color:var(--text3)">14天後提醒回診</span></div>
         <div class="reg-body">
           <div id="growth-patients"></div>
-          <div class="reg-row">
-            <input type="text" class="reg-input" id="growth-name" placeholder="姓名">
-            <input type="text" class="reg-input chart" id="growth-chart" placeholder="病歷號">
-            <button class="add-patient-btn" onclick="addPatient('growth')">+ 新增</button>
+          <div style="display:flex;gap:8px;align-items:center;margin-top:4px">
+            <input type="text" class="reg-input" id="growth-name" placeholder="姓名" style="flex:1;min-width:0">
+            <input type="text" class="reg-input" id="growth-chart" placeholder="病歷號" style="width:90px;flex:none">
+            <button class="add-patient-btn" onclick="addPatient('growth')" style="flex:none">＋新增</button>
           </div>
         </div>
       </div>
@@ -945,21 +945,29 @@ async function loadManagerData(){
           </div>
         </div>`;
 
-      // 待跟進名單
-      const pending = c.pending_followup;
+      // 待跟進名單 — 過濾掉沒有姓名的，依類型分組
+      const pending = c.pending_followup.filter(p => p.name && p.name !== '—' && p.name.trim() !== '');
       if(!pending.length){
         document.getElementById('mgr-pending').innerHTML='<div class="empty-note">🎉 目前無待跟進名單</div>';
       }else{
+        const typeLabel = {needle:'🔪 針刀', growth:'🌿 轉骨', beauty:'✨ 美顏針', other:'📌 其他'};
+        const typeColor = {needle:'var(--red)', growth:'var(--accent)', beauty:'var(--amber)', other:'var(--text3)'};
         document.getElementById('mgr-pending').innerHTML=`
           <div class="proj-card">
             <div class="proj-header"><div class="proj-title">📞 待跟進（未接需回電）</div><span class="proj-badge badge-red">${pending.length} 人</span></div>
-            <div class="proj-body">${pending.map(p=>`<div class="proj-item">
-              <div class="proj-check" onclick="toggleCheck(this)">○</div>
-              <div style="flex:1">
-                <div class="proj-name">${p.name} <span style="font-size:11px;color:var(--text3)">${p.type}</span></div>
-                <div class="proj-meta">${p.phone}${p.item?' · '+p.item.slice(0,15):''}${p.time?' · '+p.time.slice(0,10):''}</div>
-              </div>
-            </div>`).join('')}</div>
+            <div class="proj-body">${pending.map(p=>{
+              const tKey = p.type==='針刀'?'needle':p.type==='轉骨'?'growth':p.type==='美顏針'?'beauty':'other';
+              return `<div class="proj-item">
+                <div class="proj-check" onclick="toggleCheck(this)">○</div>
+                <div style="flex:1;min-width:0">
+                  <div class="proj-name" style="display:flex;align-items:center;gap:6px">
+                    <span>${p.name}</span>
+                    <span style="font-size:11px;font-weight:700;color:${typeColor[tKey]};background:var(--bg);border-radius:4px;padding:1px 6px">${typeLabel[tKey]||p.type}</span>
+                  </div>
+                  <div class="proj-meta">${p.phone||''}${p.time?' · '+p.time.slice(0,10):''}</div>
+                </div>
+              </div>`;
+            }).join('')}</div>
           </div>`;
       }
     }
