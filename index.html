@@ -407,6 +407,9 @@ textarea.note-area:focus{border-color:var(--accent)}
       <div><div class="kpi-label">自費空檔填滿率</div><div class="kpi-val" id="kpi-slot">—</div><div class="kpi-sub">目標 90%</div></div>
       <div class="kpi-right"><div class="kpi-detail" id="kpi-slot-detail">載入中</div><div class="kpi-bar-wrap"><div class="kpi-bar danger" id="kpi-slot-bar" style="width:0%"></div></div></div>
     </div>
+    <div class="sec-label">今日填報狀態</div>
+    <div id="mgr-report-status"><div class="loading-inline">確認中...</div></div>
+
     <div class="sec-label">今日初診諮詢表單</div>
     <div id="mgr-forms"><div class="loading-inline">載入中...</div></div>
 
@@ -914,24 +917,34 @@ async function loadManagerData(){
     if(result.success){
       const c = result.consult;
       const b = result.beauty;
+      const rs = result.report_status || {};
       const todayTotal = c.today_total;
       const t = c.today_by_type;
 
+      // 填報狀態
+      document.getElementById('mgr-report-status').innerHTML=`
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px">
+          <div style="background:var(--card);border-radius:14px;border:2px solid ${rs.today?'var(--green)':'var(--red)'};padding:14px;text-align:center">
+            <div style="font-size:11px;color:var(--text2);margin-bottom:6px">今天</div>
+            <div style="font-size:22px;font-weight:700;color:${rs.today?'var(--green)':'var(--red)'}">${rs.today?'✓ 已填':'✗ 未填'}</div>
+          </div>
+          <div style="background:var(--card);border-radius:14px;border:1px solid var(--border);padding:14px;text-align:center">
+            <div style="font-size:11px;color:var(--text2);margin-bottom:6px">昨天</div>
+            <div style="font-size:22px;font-weight:700;color:${rs.yesterday?'var(--green)':'var(--amber)'}">${rs.yesterday?'✓ 已填':'— 未填'}</div>
+          </div>
+        </div>`;
+
+      // 表單數據
       document.getElementById('mgr-forms').innerHTML=`
         <div class="proj-card">
-          <div class="proj-header"><div class="proj-title">📋 今日表單諮詢</div><span class="proj-badge badge-${todayTotal>0?'amber':'green'}">${todayTotal} 筆</span></div>
+          <div class="proj-header"><div class="proj-title">📋 今日新填單</div><span class="proj-badge badge-${todayTotal>0?'amber':'green'}">${todayTotal} 筆</span></div>
           <div class="proj-body">
-            <div class="proj-item">
-              <div class="proj-name">今日新填單</div>
-              <div class="proj-meta" style="font-size:13px;font-weight:700;color:var(--text)">${todayTotal} 人</div>
-            </div>
-            <div class="proj-item">
-              <div class="proj-name" style="color:var(--green)">✓ 已預約</div>
-              <div class="proj-meta" style="font-size:13px;font-weight:700;color:var(--green)">${c.today_booked} 人</div>
-            </div>
+            <div class="proj-item"><div class="proj-name">今日新填單</div><div class="proj-meta" style="font-size:13px;font-weight:700;color:var(--text)">${todayTotal} 人</div></div>
+            <div class="proj-item"><div class="proj-name" style="color:var(--green)">✓ 今日已預約</div><div class="proj-meta" style="font-size:13px;font-weight:700;color:var(--green)">${c.today_booked} 人</div></div>
             ${t.needle>0?`<div class="proj-item"><div class="proj-name">🔪 針刀</div><div class="proj-meta">${t.needle} 筆</div></div>`:''}
             ${t.growth>0?`<div class="proj-item"><div class="proj-name">🌿 轉骨</div><div class="proj-meta">${t.growth} 筆</div></div>`:''}
-            ${t.beauty>0?`<div class="proj-item"><div class="proj-name">✨ 美顏針</div><div class="proj-meta">${t.beauty} 筆</div></div>`:''}
+            ${t.hoyun>0?`<div class="proj-item"><div class="proj-name">🌸 好韻</div><div class="proj-meta">${t.hoyun} 筆</div></div>`:''}
+            ${t.herbal>0?`<div class="proj-item"><div class="proj-name">🧪 水煎藥</div><div class="proj-meta">${t.herbal} 筆</div></div>`:''}
             ${t.other>0?`<div class="proj-item"><div class="proj-name">📌 其他</div><div class="proj-meta">${t.other} 筆</div></div>`:''}
             ${todayTotal===0?'<div style="text-align:center;padding:8px;font-size:13px;color:var(--text3)">今日尚無新填單</div>':''}
             <div class="proj-item" style="border-top:1px solid var(--border);margin-top:4px">
@@ -945,29 +958,25 @@ async function loadManagerData(){
           </div>
         </div>`;
 
-      // 待跟進名單 — 過濾掉沒有姓名的，依類型分組
-      const pending = c.pending_followup.filter(p => p.name && p.name !== '—' && p.name.trim() !== '');
+      // 待跟進名單（正確分類，有姓名）
+      const pending = c.pending_followup;
+      const typeColor = {needle:'var(--red)',growth:'var(--accent)',hoyun:'#B45394',herbal:'var(--amber)',other:'var(--text3)'};
       if(!pending.length){
         document.getElementById('mgr-pending').innerHTML='<div class="empty-note">🎉 目前無待跟進名單</div>';
       }else{
-        const typeLabel = {needle:'🔪 針刀', growth:'🌿 轉骨', beauty:'✨ 美顏針', other:'📌 其他'};
-        const typeColor = {needle:'var(--red)', growth:'var(--accent)', beauty:'var(--amber)', other:'var(--text3)'};
         document.getElementById('mgr-pending').innerHTML=`
           <div class="proj-card">
             <div class="proj-header"><div class="proj-title">📞 待跟進（未接需回電）</div><span class="proj-badge badge-red">${pending.length} 人</span></div>
-            <div class="proj-body">${pending.map(p=>{
-              const tKey = p.type==='針刀'?'needle':p.type==='轉骨'?'growth':p.type==='美顏針'?'beauty':'other';
-              return `<div class="proj-item">
-                <div class="proj-check" onclick="toggleCheck(this)">○</div>
-                <div style="flex:1;min-width:0">
-                  <div class="proj-name" style="display:flex;align-items:center;gap:6px">
-                    <span>${p.name}</span>
-                    <span style="font-size:11px;font-weight:700;color:${typeColor[tKey]};background:var(--bg);border-radius:4px;padding:1px 6px">${typeLabel[tKey]||p.type}</span>
-                  </div>
-                  <div class="proj-meta">${p.phone||''}${p.time?' · '+p.time.slice(0,10):''}</div>
+            <div class="proj-body">${pending.map(p=>`<div class="proj-item">
+              <div class="proj-check" onclick="toggleCheck(this)">○</div>
+              <div style="flex:1;min-width:0">
+                <div class="proj-name" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+                  <span>${p.name}</span>
+                  <span style="font-size:11px;font-weight:700;color:${typeColor[p.typeKey]||'var(--text3)'};background:var(--bg);border-radius:4px;padding:1px 6px;flex-shrink:0">${p.type}</span>
                 </div>
-              </div>`;
-            }).join('')}</div>
+                <div class="proj-meta">${p.phone||''}${p.time?' · '+p.time:''}</div>
+              </div>
+            </div>`).join('')}</div>
           </div>`;
       }
     }
