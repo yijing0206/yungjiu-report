@@ -12,9 +12,9 @@ export default async function handler(req, res) {
 
   function parseCSV(text) {
     const lines = text.trim().split('\n');
-    if (lines.length < 2) return { headers: [], rows: [] };
+    if (lines.length < 2) return [];
     const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
-    const rows = lines.slice(1).map(line => {
+    return lines.slice(1).map(line => {
       const cols = [];
       let cur = '', inQuote = false;
       for (let i = 0; i < line.length; i++) {
@@ -28,49 +28,48 @@ export default async function handler(req, res) {
       headers.forEach((h, i) => { row[h] = (cols[i] || '').replace(/^"|"$/g, '').trim(); });
       return row;
     });
-    return { headers, rows };
   }
 
-  function getToday() {
-    const d = new Date();
-    // 台灣時區
-    const tw = new Date(d.getTime() + 8 * 60 * 60 * 1000);
-    return `${tw.getUTCFullYear()}/${String(tw.getUTCMonth()+1).padStart(2,'0')}/${String(tw.getUTCDate()).padStart(2,'0')}`;
+  // 台灣時間
+  function getTWDate() {
+    const tw = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
+    return {
+      today: `${tw.getUTCFullYear()}/${String(tw.getUTCMonth()+1).padStart(2,'0')}/${String(tw.getUTCDate()).padStart(2,'0')}`,
+      month: `${tw.getUTCFullYear()}/${String(tw.getUTCMonth()+1).padStart(2,'0')}`,
+      todayFmt: tw.toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'}),
+    };
   }
 
-  function getThisMonth() {
-    const d = new Date();
-    const tw = new Date(d.getTime() + 8 * 60 * 60 * 1000);
-    return `${tw.getUTCFullYear()}/${String(tw.getUTCMonth()+1).padStart(2,'0')}`;
-  }
-
-  // 分類諮詢項目（根據第二欄內容）
+  // 分類（根據第2欄實際內容）
   function classifyItem(item) {
     if (!item) return 'other';
-    const s = item.toLowerCase();
-    if (s.includes('針刀') || s.includes('結構')) return 'needle';
-    if (s.includes('轉骨') || s.includes('成長') || s.includes('兒科') || s.includes('兒童')) return 'growth';
-    if (s.includes('好韻') || s.includes('備孕') || s.includes('產後') || s.includes('婦')) return 'hoyun';
-    if (s.includes('水煎藥') || s.includes('水藥') || s.includes('調理')) return 'herbal';
-    if (s.includes('美顏針') || s.includes('美顔針') || s.includes('韓式')) return 'beauty';
+    if (item.includes('針刀') || item.includes('結構')) return 'needle';
+    if (item.includes('轉骨') || item.includes('兒科') || item.includes('兒童') || item.includes('成長')) return 'growth';
+    if (item.includes('好韻') || item.includes('備孕') || item.includes('產後')) return 'hoyun';
+    if (item.includes('水煎藥') || item.includes('水藥')) return 'herbal';
+    if (item.includes('美顏針') || item.includes('韓式')) return 'beauty';
     return 'other';
   }
 
   const typeLabel = { needle:'針刀', growth:'轉骨', hoyun:'好韻', herbal:'水煎藥', beauty:'美顏針', other:'其他' };
 
-  // 處理狀態判斷
-  function isBooked(status) {
-    return status.includes('已預約') && !status.includes('不用再追');
+  // 欄位取值
+  function getField(r, ...keys) {
+    for (const k of keys) { if (r[k] && r[k].trim()) return r[k].trim(); }
+    return '';
   }
-  function isPending(status) {
-    return status.includes('未接') || status.includes('回電') || status === '' || (status === '已發簡訊' && !status.includes('不用再追'));
-  }
-  function isDone(status) {
-    return status.includes('不用再追') || (status.includes('已預約') && status.includes('不用再追'));
-  }
+  function getName(r)      { return getField(r, '您的姓名', '小朋友的姓名', '姓名'); }
+  function getPhone(r)     { return getField(r, '您的聯絡電話', '聯絡電話', '小朋友的聯絡電話', '電話'); }
+  function getStatus(r)    { return getField(r, '處理狀態', '狀態'); }
+  function getTimestamp(r) { return getField(r, '時間戳記', 'Timestamp'); }
+  function getItem(r)      { return getField(r, '第 2 欄', '您希望諮詢的項目', '諮詢項目'); }
 
-  const today = getToday();
-  const thisMonth = getThisMonth();
+  // 狀態判斷
+  function isBooked(s)  { return s.includes('已預約'); }
+  // 只追蹤：空白 或 未接需回電
+  function isPending(s) { return s === '' || s.includes('未接') || s.includes('回電'); }
+
+  const { today, month, todayFmt } = getTWDate();
 
   try {
     const [consultRes, beautyRes] = await Promise.all([
@@ -78,95 +77,60 @@ export default async function handler(req, res) {
       fetch(FORM_BEAUTY),
     ]);
     const [consultText, beautyText] = await Promise.all([
-      consultRes.text(),
-      beautyRes.text(),
+      consultRes.text(), beautyRes.text(),
     ]);
 
-    const { rows: consultRows } = parseCSV(consultText);
-    const { rows: beautyRows } = parseCSV(beautyText);
+    const consultRows = parseCSV(consultText);
+    const beautyRows  = parseCSV(beautyText);
 
-    // 過濾非美顏針的諮詢（第二欄不是美顏針的才處理）
-    const nonBeautyRows = consultRows.filter(r => {
-      const col2 = r['第 2 欄'] || r['您希望諮詢的項目'] || Object.values(r)[1] || '';
-      return classifyItem(col2) !== 'beauty';
-    });
+    // 過濾美顏針
+    const targetRows = consultRows.filter(r => classifyItem(getItem(r)) !== 'beauty');
 
-    // 找到姓名欄和狀態欄
-    function getName(r) {
-      return r['您的姓名'] || r['姓名'] || r['小朋友的姓名'] || '';
-    }
-    function getPhone(r) {
-      return r['聯絡電話'] || r['您的聯絡電話'] || r['小朋友的聯絡電話'] || '';
-    }
-    function getStatus(r) {
-      return r['處理狀態'] || r['狀態'] || '';
-    }
-    function getTimestamp(r) {
-      return r['時間戳記'] || r['Timestamp'] || '';
-    }
-    function getItemCol(r) {
-      return r['第 2 欄'] || r['您希望諮詢的項目'] || Object.values(r)[1] || '';
-    }
-
-    // 今日新填單
-    const todayRows = nonBeautyRows.filter(r => getTimestamp(r).startsWith(today));
-    const thisMonthRows = nonBeautyRows.filter(r => getTimestamp(r).startsWith(thisMonth));
-
-    // 今日分類
+    // 今日
+    const todayRows = targetRows.filter(r => getTimestamp(r).startsWith(today));
     const todayByType = { needle:0, growth:0, hoyun:0, herbal:0, other:0 };
     todayRows.forEach(r => {
-      const t = classifyItem(getItemCol(r));
-      if (t in todayByType) todayByType[t]++;
-      else todayByType.other++;
+      const t = classifyItem(getItem(r));
+      if (t in todayByType) todayByType[t]++; else todayByType.other++;
     });
-
-    // 今日已預約
     const todayBooked = todayRows.filter(r => isBooked(getStatus(r))).length;
 
-    // 本月統計
-    const monthBooked = thisMonthRows.filter(r => isBooked(getStatus(r))).length;
-    const monthConvRate = thisMonthRows.length > 0
-      ? Math.round(monthBooked / thisMonthRows.length * 100) : null;
+    // 本月
+    const monthRows   = targetRows.filter(r => getTimestamp(r).startsWith(month));
+    const monthBooked = monthRows.filter(r => isBooked(getStatus(r))).length;
+    const monthConvRate = monthRows.length > 0 ? Math.round(monthBooked / monthRows.length * 100) : null;
 
-    // 待跟進：未接需回電，有姓名，排除美顏針，最近30筆
-    const pendingRows = nonBeautyRows
+    // 待跟進：只顯示「空白」或「未接需回電」，且有姓名
+    const pendingRows = targetRows
       .filter(r => {
         const name = getName(r);
         const status = getStatus(r);
-        return name && name.trim() !== '' && isPending(status) && !isDone(status);
+        return name !== '' && isPending(status);
       })
-      .slice(-50)
-      .reverse()
-      .slice(0, 30);
+      .reverse()   // 最新的在前
+      .slice(0, 50);
 
     const pendingFollowup = pendingRows.map(r => ({
-      name: getName(r),
-      phone: getPhone(r),
-      item: getItemCol(r),
-      time: getTimestamp(r).slice(0, 10),
-      status: getStatus(r),
-      type: typeLabel[classifyItem(getItemCol(r))] || '其他',
-      typeKey: classifyItem(getItemCol(r)),
+      name:    getName(r),
+      phone:   getPhone(r),
+      item:    getItem(r),
+      time:    getTimestamp(r).slice(0, 10),
+      status:  getStatus(r) || '未處理',
+      type:    typeLabel[classifyItem(getItem(r))] || '其他',
+      typeKey: classifyItem(getItem(r)),
     }));
 
     // 美顏針表單
-    const todayBeauty = beautyRows.filter(r => {
-      const ts = r['時間戳記'] || r['Timestamp'] || '';
-      return ts.startsWith(today);
-    }).length;
-    const thisMonthBeauty = beautyRows.filter(r => {
-      const ts = r['時間戳記'] || r['Timestamp'] || '';
-      return ts.startsWith(thisMonth);
-    }).length;
+    const todayBeauty = beautyRows.filter(r => getTimestamp(r).startsWith(today)).length;
+    const monthBeauty = beautyRows.filter(r => getTimestamp(r).startsWith(month)).length;
 
-    // 今日是否已填報（從 Notion 查詢）
-    let reportedToday = false;
-    let reportedYesterday = false;
+    // 今日 & 昨天是否填報（查 Notion）
+    let reportedToday = false, reportedYesterday = false;
     if (NOTION_TOKEN && DATABASE_ID) {
       try {
-        const yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
-        const yd = yesterday.toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'});
+        const tw = new Date(new Date().getTime() + 8*60*60*1000);
+        const ydTW = new Date(tw.getTime() - 24*60*60*1000);
+        const ydFmt = ydTW.toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'});
 
         const qRes = await fetch(`https://api.notion.com/v1/databases/${DATABASE_ID}/query`, {
           method: 'POST',
@@ -175,16 +139,12 @@ export default async function handler(req, res) {
             'Content-Type': 'application/json',
             'Notion-Version': '2022-06-28',
           },
-          body: JSON.stringify({ page_size: 5, sorts: [{ property: '日期', direction: 'descending' }] }),
+          body: JSON.stringify({ page_size: 7, sorts: [{ property: '日期', direction: 'descending' }] }),
         });
         const qData = await qRes.json();
-        const recentDates = (qData.results || []).map(p => p.properties['日期']?.title?.[0]?.text?.content || '');
-
-        // 今天的日期格式
-        const tw = new Date(new Date().getTime() + 8*60*60*1000);
-        const todayFmt = tw.toLocaleDateString('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit'});
-        reportedToday = recentDates.some(d => d === todayFmt);
-        reportedYesterday = recentDates.some(d => d === yd);
+        const dates = (qData.results || []).map(p => p.properties['日期']?.title?.[0]?.text?.content || '');
+        reportedToday     = dates.some(d => d === todayFmt);
+        reportedYesterday = dates.some(d => d === ydFmt);
       } catch(e) {}
     }
 
@@ -192,18 +152,15 @@ export default async function handler(req, res) {
       success: true,
       report_status: { today: reportedToday, yesterday: reportedYesterday },
       consult: {
-        today_total: todayRows.length,
-        today_booked: todayBooked,
+        today_total:   todayRows.length,
+        today_booked:  todayBooked,
         today_by_type: todayByType,
-        month_total: thisMonthRows.length,
-        month_booked: monthBooked,
+        month_total:   monthRows.length,
+        month_booked:  monthBooked,
         month_conv_rate: monthConvRate,
         pending_followup: pendingFollowup,
       },
-      beauty: {
-        today_new: todayBeauty,
-        month_new: thisMonthBeauty,
-      },
+      beauty: { today_new: todayBeauty, month_new: monthBeauty },
     });
 
   } catch(e) {
