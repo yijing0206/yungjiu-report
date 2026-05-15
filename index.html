@@ -460,6 +460,9 @@ textarea.note-area:focus{border-color:var(--accent)}
         <div><div class="kpi-label">空檔填滿率</div><div class="kpi-val" id="o-slot">—</div><div class="kpi-sub">目標 90%</div></div>
         <div class="kpi-right"><div class="kpi-detail" id="o-slot-detail">載入中</div><div class="kpi-bar-wrap"><div class="kpi-bar danger" id="o-slot-bar" style="width:0%"></div></div></div>
       </div>
+      <div class="sec-label">⚡ 戰情室</div>
+      <div id="owner-warroom"><div class="loading-inline">載入中...</div></div>
+
       <div class="sec-label">本週數量總覽</div>
       <div class="metric-grid" id="owner-metrics"><div class="loading-inline" style="grid-column:span 2">載入中...</div></div>
       <div class="sec-label">AI 策略分析</div>
@@ -1059,6 +1062,78 @@ function checkPwd(){
 document.getElementById('pwd-input').addEventListener('keydown',e=>{if(e.key==='Enter')checkPwd();});
 
 async function loadOwnerData(){
+  // 戰情室
+  try{
+    const res=await fetch('/api/warroom',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({})});
+    const result=await res.json();
+    if(result.success){
+      const atRisk=result.at_risk||[];
+      const src=result.source_analysis;
+      const gradeColor=g=>{
+        if(!g)return'var(--text3)';
+        if(g.includes('A+'))return'#7C3AED';
+        if(g.startsWith('A'))return'var(--red)';
+        if(g.includes('B'))return'var(--amber)';
+        return'var(--text3)';
+      };
+
+      document.getElementById('owner-warroom').innerHTML=`
+        <!-- 流失預警 -->
+        <div class="proj-card" style="margin-bottom:10px">
+          <div class="proj-header">
+            <div class="proj-title">🚨 美顏針流失預警（60天未回診）</div>
+            <span class="proj-badge badge-${atRisk.length>0?'red':'green'}">${atRisk.length} 人</span>
+          </div>
+          ${atRisk.length===0?
+            '<div style="text-align:center;padding:16px;font-size:13px;color:var(--green)">✓ 目前無流失風險患者</div>':
+            `<div class="proj-body">${atRisk.slice(0,10).map(p=>`
+              <div class="proj-item">
+                <div style="flex:1;min-width:0">
+                  <div class="proj-name" style="display:flex;align-items:center;gap:6px">
+                    <span>${p.name}</span>
+                    <span style="font-size:10px;font-weight:700;color:${gradeColor(p.grade)}">${p.grade||''}</span>
+                    <span style="font-size:10px;color:var(--text3)">${p.type}</span>
+                  </div>
+                  <div class="proj-meta">${p.daysAgo} 天未回診 · 最後：${p.lastDate||'—'}</div>
+                </div>
+                <div style="font-size:12px;font-weight:700;color:${p.daysAgo>=90?'var(--red)':'var(--amber)'}">
+                  ${p.daysAgo>=90?'🔴 高風險':'🟡 注意'}
+                </div>
+              </div>`).join('')}
+              ${atRisk.length>10?`<div style="text-align:center;padding:8px;font-size:12px;color:var(--text3)">還有 ${atRisk.length-10} 人...</div>`:''}
+            </div>`
+          }
+        </div>
+
+        <!-- 來源分析 -->
+        ${src?`<div class="proj-card">
+          <div class="proj-header"><div class="proj-title">📊 新客來源分析</div><span class="proj-badge badge-amber">本月 ${src.this_month.total} 筆</span></div>
+          <div class="proj-body">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+              <div style="background:var(--accent-light);border-radius:10px;padding:10px;text-align:center">
+                <div style="font-size:11px;color:var(--text2);margin-bottom:4px">本月填單</div>
+                <div style="font-size:22px;font-weight:700;color:var(--accent)">${src.this_month.total}</div>
+                <div style="font-size:11px;color:var(--text3)">已預約 ${src.this_month.booked} 人（${src.this_month.total>0?Math.round(src.this_month.booked/src.this_month.total*100):0}%）</div>
+              </div>
+              <div style="background:var(--bg);border-radius:10px;padding:10px;text-align:center;border:1px solid var(--border)">
+                <div style="font-size:11px;color:var(--text2);margin-bottom:4px">上月填單</div>
+                <div style="font-size:22px;font-weight:700">${src.last_month.total}</div>
+                <div style="font-size:11px;color:var(--text3)">已預約 ${src.last_month.booked} 人（${src.last_month.total>0?Math.round(src.last_month.booked/src.last_month.total*100):0}%）</div>
+              </div>
+            </div>
+            <div style="font-size:11px;font-weight:700;color:var(--text3);margin-bottom:8px;letter-spacing:.5px">本月各渠道</div>
+            ${src.this_month.by_source.map(s=>`
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px">
+                <span>${s.name}</span>
+                <span style="display:flex;align-items:center;gap:8px">
+                  <span style="color:var(--text2)">${s.total} 筆</span>
+                  <span style="font-weight:700;color:${s.rate>=30?'var(--green)':'var(--amber)'}">${s.rate}%</span>
+                </span>
+              </div>`).join('')}
+          </div>
+        </div>`:'<div class="empty-note">來源分析載入失敗</div>'}`;
+    }
+  }catch(e){document.getElementById('owner-warroom').innerHTML='<div class="empty-note">戰情室載入失敗，請重試</div>';}
   try{
     const res=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({role:'owner'})});
     const result=await res.json();
