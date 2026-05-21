@@ -605,10 +605,27 @@ function switchSettingClinic(c){
   loadSettings();
 }
 
-function loadSettings(){
-  const key = `yj_slot_settings_${settingClinic}`;
+async function loadSettings(){
+  // 先從 Notion 讀
   try{
-    const s = JSON.parse(localStorage.getItem(key)||'{}');
+    const res = await fetch('/api/settings',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ action:'get', clinic: settingClinic })
+    });
+    const result = await res.json();
+    if(result.success && Object.keys(result.settings).length > 0){
+      DAYS.forEach((_,i)=>{
+        document.getElementById(`set-f-${i}`).value = result.settings[`f_${i}`] ?? '';
+        document.getElementById(`set-nk-${i}`).value = result.settings[`nk_${i}`] ?? '';
+      });
+      // 同步到 localStorage 備用
+      try{ localStorage.setItem(`yj_slot_settings_${settingClinic}`, JSON.stringify(result.settings)); }catch(e){}
+      return;
+    }
+  }catch(e){}
+  // fallback: localStorage
+  try{
+    const s = JSON.parse(localStorage.getItem(`yj_slot_settings_${settingClinic}`)||'{}');
     DAYS.forEach((_,i)=>{
       document.getElementById(`set-f-${i}`).value = s[`f_${i}`] != null ? s[`f_${i}`] : '';
       document.getElementById(`set-nk-${i}`).value = s[`nk_${i}`] != null ? s[`nk_${i}`] : '';
@@ -616,30 +633,57 @@ function loadSettings(){
   }catch(e){}
 }
 
-function saveSettings(){
-  const key = `yj_slot_settings_${settingClinic}`;
+async function saveSettings(){
   const s = {};
   DAYS.forEach((_,i)=>{
     s[`f_${i}`] = parseInt(document.getElementById(`set-f-${i}`).value)||0;
     s[`nk_${i}`] = parseInt(document.getElementById(`set-nk-${i}`).value)||0;
   });
-  try{localStorage.setItem(key,JSON.stringify(s));}catch(e){}
-  document.getElementById('setting-saved').style.display = 'block';
-  setTimeout(()=>document.getElementById('setting-saved').style.display='none', 2500);
-}
 
-function getTodaySlots(){
-  const key = `yj_slot_settings_${clinic||'yungjiu'}`;
+  const btn = document.getElementById('save-setting-btn');
+  btn.disabled = true; btn.textContent = '儲存中...';
+
   try{
-    const s = JSON.parse(localStorage.getItem(key)||'{}');
-    const dow = todayDow===0 ? null : todayDow-1;
-    if(dow===null||dow>5) return {facial:0,nk:0};
-    return {facial:s[`f_${dow}`]||0, nk:s[`nk_${dow}`]||0};
-  }catch(e){return {facial:0,nk:0};}
+    // 存到 Notion
+    const res = await fetch('/api/settings',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ action:'save', clinic: settingClinic, settings: s })
+    });
+    const result = await res.json();
+    if(result.success){
+      // 同步到 localStorage
+      try{ localStorage.setItem(`yj_slot_settings_${settingClinic}`, JSON.stringify(s)); }catch(e){}
+      document.getElementById('setting-saved').style.display = 'block';
+      setTimeout(()=>document.getElementById('setting-saved').style.display='none', 2500);
+    }
+  }catch(e){
+    alert('儲存失敗，請重試');
+  }
+  btn.disabled = false; btn.textContent = '💾 儲存設定';
 }
 
-function autoFillTodaySlots(){
-  const slots = getTodaySlots();
+async function getTodaySlots(){
+  const dow = todayDow===0 ? null : todayDow-1;
+  if(dow===null||dow>5) return {facial:0,nk:0};
+  try{
+    const res = await fetch('/api/settings',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ action:'get', clinic: clinic||'yungjiu' })
+    });
+    const result = await res.json();
+    if(result.success){
+      return { facial: result.settings[`f_${dow}`]||0, nk: result.settings[`nk_${dow}`]||0 };
+    }
+  }catch(e){}
+  // fallback localStorage
+  try{
+    const s = JSON.parse(localStorage.getItem(`yj_slot_settings_${clinic||'yungjiu'}`)||'{}');
+    return { facial: s[`f_${dow}`]||0, nk: s[`nk_${dow}`]||0 };
+  }catch(e){ return {facial:0,nk:0}; }
+}
+
+async function autoFillTodaySlots(){
+  const slots = await getTodaySlots();
   document.getElementById('slot-facial-total').value = slots.facial||'';
   document.getElementById('slot-nk-total').value = slots.nk||'';
   updateSlotRates();
@@ -742,7 +786,7 @@ async function markCheckin(pageId,therapy,btn){
 // 步驟
 function updProg(){ for(let i=0;i<5;i++) document.getElementById('ps'+i).className='prog-seg'+(i<=cur?' on':''); }
 
-function goStep(n){
+async function goStep(n){
   document.getElementById('s'+cur).classList.remove('visible');
   cur = n;
   document.getElementById('s'+n).classList.add('visible');
@@ -755,7 +799,7 @@ function goStep(n){
   document.getElementById('btn-next').className = 'btn-next'+(isFushan?' fushan':'');
   document.getElementById('btn-next').disabled = n===0 && (!clinic||!D.reporter);
   document.getElementById('btn-next').textContent = n===4?'✓ 確認送出':'下一步 →';
-  if(n===2){ autoFillTodaySlots(); document.getElementById('slot-facial-actual').textContent=D.f; document.getElementById('slot-nk-actual').textContent=D.nk; }
+  if(n===2){ await autoFillTodaySlots(); document.getElementById('slot-facial-actual').textContent=D.f; document.getElementById('slot-nk-actual').textContent=D.nk; }
   if(n===3) loadCheckinList();
   if(n===4) buildSummary();
   window.scrollTo(0,0);
@@ -1004,8 +1048,8 @@ async function loadManagerData(){
       document.getElementById('mgr-followup').innerHTML=`
         <div class="proj-card">
           <div class="proj-header"><div class="proj-title">📅 首次回診提醒</div><span class="proj-badge badge-red">${pts.length} 人</span></div>
-          <div class="proj-body">${pts.map(p=>`<div class="proj-item">
-            <div class="proj-check" onclick="toggleCheck(this)">○</div>
+          <div class="proj-body">${pts.map(p=>`<div class="proj-item" id="followup-${p.id}">
+            <div class="proj-check" onclick="markFollowupDone('${p.id}','${p.therapy}',this)">○</div>
             <div style="flex:1">
               <div class="proj-name">${p.therapy==='針刀'?'🔪':'🌿'} ${p.name}${p.chart_no?' · '+p.chart_no:''}</div>
               <div class="proj-meta">預計回診：${p.next_date}${p.days_over>0?' · 逾期'+p.days_over+'天':''}</div>
@@ -1050,6 +1094,33 @@ async function loadManagerData(){
 }
 
 function toggleCheck(el){const done=el.classList.toggle('done');el.textContent=done?'✓':'○';}
+
+async function markFollowupDone(pageId, therapy, btn){
+  btn.classList.add('done');
+  btn.textContent='✓';
+  btn.onclick = null; // 防止重複點
+  try{
+    const res = await fetch('/api/checkin',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({page_id:pageId, therapy})
+    });
+    const result = await res.json();
+    if(result.success){
+      // 淡出並移除
+      const item = document.getElementById('followup-'+pageId);
+      if(item){
+        item.style.transition='opacity .4s';
+        item.style.opacity='0';
+        setTimeout(()=>item.remove(), 400);
+      }
+    }
+  }catch(e){
+    btn.classList.remove('done');
+    btn.textContent='○';
+    btn.onclick = ()=>markFollowupDone(pageId, therapy, btn);
+  }
+}
 
 // 老闆
 function checkPwd(){
