@@ -398,15 +398,7 @@ textarea.note-area:focus{border-color:var(--accent)}
       <div><div class="dash-title">店長看板</div><div class="dash-sub" id="mgr-date"></div></div>
       <button class="refresh-btn" onclick="loadManagerData()">🔄 更新</button>
     </div>
-    <div class="sec-label">本週核心指標</div>
-    <div class="kpi-card">
-      <div><div class="kpi-label">初診轉單率</div><div class="kpi-val" id="kpi-conv">—</div><div class="kpi-sub">目標 30%</div></div>
-      <div class="kpi-right"><div class="kpi-detail" id="kpi-conv-detail">載入中</div><div class="kpi-bar-wrap"><div class="kpi-bar danger" id="kpi-conv-bar" style="width:0%"></div></div></div>
-    </div>
-    <div class="kpi-card" style="margin-bottom:16px">
-      <div><div class="kpi-label">自費空檔填滿率</div><div class="kpi-val" id="kpi-slot">—</div><div class="kpi-sub">目標 90%</div></div>
-      <div class="kpi-right"><div class="kpi-detail" id="kpi-slot-detail">載入中</div><div class="kpi-bar-wrap"><div class="kpi-bar danger" id="kpi-slot-bar" style="width:0%"></div></div></div>
-    </div>
+
     <div class="sec-label">今日填報狀態</div>
     <div id="mgr-report-status"><div class="loading-inline">確認中...</div></div>
 
@@ -429,9 +421,6 @@ textarea.note-area:focus{border-color:var(--accent)}
       <button onclick="saveMgrNote()" style="width:100%;padding:10px;font-size:13px;font-family:'Noto Sans TC',sans-serif;font-weight:700;border-radius:10px;border:none;background:var(--accent-light);color:var(--accent);cursor:pointer">💾 儲存備注</button>
       <div id="mgr-note-saved" style="text-align:center;font-size:12px;color:var(--green);margin-top:6px;display:none">✓ 已儲存</div>
     </div>
-
-    <div class="sec-label">AI 今日建議</div>
-    <div class="section-card"><div class="ai-text" id="mgr-ai">分析中...</div></div>
   </div>
 
   <!-- ===== 老闆看板 ===== -->
@@ -925,16 +914,14 @@ function daysSince(d){if(!d)return 999;return Math.floor((new Date()-new Date(d)
 
 function updateKPI(cId,cdId,cbId,sId,sdId,sbId,m){
   const {convRate,totalFU,totalCV,slotRate,filledSlots,totalSlots}=m;
-  document.getElementById(cId).textContent=convRate!==null?convRate+'%':'—';
-  document.getElementById(cdId).textContent=totalFU>0?`${totalCV}/${totalFU} 人`:'本週無跟進資料';
+  const ce=document.getElementById(cId); if(ce) ce.textContent=convRate!==null?convRate+'%':'—';
+  const cde=document.getElementById(cdId); if(cde) cde.textContent=totalFU>0?`${totalCV}/${totalFU} 人`:'本週無跟進資料';
   const cb=document.getElementById(cbId);
-  cb.style.width=Math.min(convRate||0,100)+'%';
-  cb.className='kpi-bar '+(convRate>=30?'':convRate>=20?'warn':'danger');
-  document.getElementById(sId).textContent=slotRate!==null?slotRate+'%':'—';
-  document.getElementById(sdId).textContent=totalSlots>0?`${filledSlots}/${totalSlots} 格`:'尚未填報';
+  if(cb){ cb.style.width=Math.min(convRate||0,100)+'%'; cb.className='kpi-bar '+(convRate>=30?'':convRate>=20?'warn':'danger'); }
+  const se=document.getElementById(sId); if(se) se.textContent=slotRate!==null?slotRate+'%':'—';
+  const sde=document.getElementById(sdId); if(sde) sde.textContent=totalSlots>0?`${filledSlots}/${totalSlots} 格`:'尚未填報';
   const sb=document.getElementById(sbId);
-  sb.style.width=Math.min(slotRate||0,100)+'%';
-  sb.className='kpi-bar '+(slotRate>=90?'':slotRate>=70?'warn':'danger');
+  if(sb){ sb.style.width=Math.min(slotRate||0,100)+'%'; sb.className='kpi-bar '+(slotRate>=90?'':slotRate>=70?'warn':'danger'); }
 }
 
 // 備注欄
