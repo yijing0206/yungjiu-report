@@ -1210,6 +1210,9 @@ function renderWeeklySummary(records, summary, containerId) {
       </div>
     </div>`;
 }
+
+// 老闆
+function checkPwd(){
   if(document.getElementById('pwd-input').value===OWNER_PWD){
     document.getElementById('owner-lock').style.display='none';
     document.getElementById('owner-content').style.display='block';
