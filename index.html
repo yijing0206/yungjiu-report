@@ -620,8 +620,10 @@ async function loadSettings(){
     const result = await res.json();
     if(result.success && Object.keys(result.settings).length > 0){
       DAYS.forEach((_,i)=>{
-        document.getElementById(`set-f-${i}`).value = result.settings[`f_${i}`] ?? '';
-        document.getElementById(`set-nk-${i}`).value = result.settings[`nk_${i}`] ?? '';
+        const ef = document.getElementById(`set-f-${i}`);
+        const enk = document.getElementById(`set-nk-${i}`);
+        if(ef) ef.value = result.settings[`f_${i}`] ?? '';
+        if(enk) enk.value = result.settings[`nk_${i}`] ?? '';
       });
       // 同步到 localStorage 備用
       try{ localStorage.setItem(`yj_slot_settings_${settingClinic}`, JSON.stringify(result.settings)); }catch(e){}
@@ -632,8 +634,10 @@ async function loadSettings(){
   try{
     const s = JSON.parse(localStorage.getItem(`yj_slot_settings_${settingClinic}`)||'{}');
     DAYS.forEach((_,i)=>{
-      document.getElementById(`set-f-${i}`).value = s[`f_${i}`] != null ? s[`f_${i}`] : '';
-      document.getElementById(`set-nk-${i}`).value = s[`nk_${i}`] != null ? s[`nk_${i}`] : '';
+      const ef = document.getElementById(`set-f-${i}`);
+      const enk = document.getElementById(`set-nk-${i}`);
+      if(ef) ef.value = s[`f_${i}`] != null ? s[`f_${i}`] : '';
+      if(enk) enk.value = s[`nk_${i}`] != null ? s[`nk_${i}`] : '';
     });
   }catch(e){}
 }
@@ -1325,8 +1329,9 @@ function lockOwner(){
 function showLoading(txt){document.getElementById('loading-text').textContent=txt;document.getElementById('loading').classList.add('show');}
 function hideLoading(){document.getElementById('loading').classList.remove('show');}
 
-loadSettings();
+// 初始化
 updProg();
+loadSettings().catch(()=>{});
 </script>
 </body>
 </html>
