@@ -216,6 +216,7 @@ textarea.note-area:focus{border-color:var(--accent)}
       <button class="nav-btn active" onclick="switchPage('report',this)">📋 填報</button>
       <button class="nav-btn" onclick="switchPage('manager',this)">📊 店長</button>
       <button class="nav-btn" onclick="switchPage('owner',this)">🔐 老闆</button>
+      <button class="nav-btn" onclick="switchPage('history',this)">📅 記錄</button>
       <button class="nav-btn" onclick="switchPage('setting',this)">⚙️ 設定</button>
     </div>
     <div class="progress-bar" id="prog-bar">
@@ -449,6 +450,12 @@ textarea.note-area:focus{border-color:var(--accent)}
         <div><div class="kpi-label">空檔填滿率</div><div class="kpi-val" id="o-slot">—</div><div class="kpi-sub">目標 90%</div></div>
         <div class="kpi-right"><div class="kpi-detail" id="o-slot-detail">載入中</div><div class="kpi-bar-wrap"><div class="kpi-bar danger" id="o-slot-bar" style="width:0%"></div></div></div>
       </div>
+      <div class="sec-label">本週每日明細</div>
+      <div id="owner-weekly"><div class="loading-inline">載入中...</div></div>
+
+      <div class="sec-label">上週總結</div>
+      <div id="owner-lastweek"><div class="loading-inline">載入中...</div></div>
+
       <div class="sec-label">⚡ 戰情室</div>
       <div id="owner-warroom"><div class="loading-inline">載入中...</div></div>
 
@@ -458,6 +465,15 @@ textarea.note-area:focus{border-color:var(--accent)}
       <div class="section-card"><div class="ai-text" id="owner-ai">分析中...</div></div>
       <button onclick="lockOwner()" style="margin-top:8px;width:100%;padding:12px;font-size:13px;font-family:'Noto Sans TC',sans-serif;border-radius:12px;border:1px solid var(--border);background:var(--card);cursor:pointer;color:var(--text3)">登出老闆模式</button>
     </div>
+  </div>
+
+  <!-- ===== 歷史記錄頁 ===== -->
+  <div class="page" id="page-history">
+    <div class="dash-header">
+      <div><div class="dash-title">填報記錄</div><div class="dash-sub">最近 14 天</div></div>
+      <button class="refresh-btn" onclick="loadHistory()">🔄 更新</button>
+    </div>
+    <div id="history-list"><div class="loading-inline">載入中...</div></div>
   </div>
 
   <!-- ===== 設定頁 ===== -->
@@ -703,6 +719,7 @@ function switchPage(p,btn){
   btn.classList.add('active');
   document.getElementById('prog-bar').style.display = p==='report'?'flex':'none';
   if(p==='manager') loadManagerData();
+  if(p==='history') loadHistory();
   if(p==='setting') loadSettings();
 }
 
@@ -1109,8 +1126,86 @@ async function markFollowupDone(pageId, therapy, btn){
   }
 }
 
-// 老闆
-function checkPwd(){
+// 歷史記錄
+async function loadHistory(){
+  document.getElementById('history-list').innerHTML='<div class="loading-inline">載入中...</div>';
+  try{
+    const res=await fetch('/api/history',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({days:14})});
+    const result=await res.json();
+    if(!result.success||!result.records.length){
+      document.getElementById('history-list').innerHTML='<div class="empty-note">尚無填報記錄</div>';
+      return;
+    }
+    document.getElementById('history-list').innerHTML = result.records.map(r=>{
+      const tot = r.m+r.a+r.e;
+      const fRate = r.fSlot>0?Math.round(r.facial/r.fSlot*100)+'%':'—';
+      const nkRate = r.nkSlot>0?Math.round(r.nk/r.nkSlot*100)+'%':'—';
+      return `<div class="sum-card" style="margin-bottom:12px">
+        <div class="sum-sec" style="display:flex;justify-content:space-between;align-items:center">
+          <span>${r.date}</span>
+          <span style="font-weight:400;font-size:11px;color:var(--text3)">${r.reporter}</span>
+        </div>
+        <div class="sum-row"><span class="sum-key">就診人數</span><span class="sum-val">${tot} 人（早${r.m}／午${r.a}／晚${r.e}）</span></div>
+        <div class="sum-row"><span class="sum-key">✨ 美顏針</span><span class="sum-val">${r.facial}/${r.fSlot}格（${fRate}）</span></div>
+        <div class="sum-row"><span class="sum-key">🔪 針刀</span><span class="sum-val">${r.nk}/${r.nkSlot}格（${nkRate}）</span></div>
+        <div class="sum-row"><span class="sum-key">轉骨／客製水藥</span><span class="sum-val">${r.h1}張／${r.h2}張</span></div>
+        ${r.cv>0?`<div class="sum-row"><span class="sum-key">成功轉預約</span><span class="sum-val">${r.cv} 人</span></div>`:''}
+        ${r.note?`<div class="sum-row"><span class="sum-key">備注</span><span class="sum-val" style="font-weight:400;font-size:12px">${r.note}</span></div>`:''}
+      </div>`;
+    }).join('');
+  }catch(e){
+    document.getElementById('history-list').innerHTML='<div class="empty-note">載入失敗，請重試</div>';
+  }
+}
+
+function renderWeeklySummary(records, summary, containerId) {
+  const el = document.getElementById(containerId);
+  if(!records.length){ el.innerHTML='<div class="empty-note">本期尚無填報記錄</div>'; return; }
+  const dayRows = records.map(r=>{
+    const tot=r.m+r.a+r.e;
+    const fRate=r.fSlot>0?Math.round(r.facial/r.fSlot*100)+'%':'—';
+    const nkRate=r.nkSlot>0?Math.round(r.nk/r.nkSlot*100)+'%':'—';
+    return `<div style="background:var(--bg);border-radius:10px;padding:10px 12px;margin-bottom:6px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <span style="font-size:13px;font-weight:700">${r.date.slice(5)}</span>
+        <span style="font-size:11px;color:var(--text3)">${r.reporter}</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;font-size:12px;text-align:center">
+        <div><div style="color:var(--text3);margin-bottom:2px">就診</div><div style="font-weight:700">${tot}</div></div>
+        <div><div style="color:var(--text3);margin-bottom:2px">美顏針</div><div style="font-weight:700">${r.facial}<span style="font-size:10px;font-weight:400;color:${r.fSlot>0&&r.facial/r.fSlot>=0.9?'var(--green)':'var(--amber)'}">(${fRate})</span></div></div>
+        <div><div style="color:var(--text3);margin-bottom:2px">針刀</div><div style="font-weight:700">${r.nk}<span style="font-size:10px;font-weight:400;color:${r.nkSlot>0&&r.nk/r.nkSlot>=0.9?'var(--green)':'var(--amber)'}">(${nkRate})</span></div></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  el.innerHTML=`
+    <div class="proj-card">
+      <div class="proj-body">
+        ${dayRows}
+        <div style="border-top:2px solid var(--border);margin-top:8px;padding-top:10px">
+          <div style="font-size:11px;font-weight:700;color:var(--text3);margin-bottom:8px">合計 ${summary.days} 天</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center">
+            <div style="background:var(--accent-light);border-radius:8px;padding:8px">
+              <div style="font-size:10px;color:var(--text2);margin-bottom:3px">就診</div>
+              <div style="font-size:18px;font-weight:700;color:var(--accent)">${summary.total}</div>
+            </div>
+            <div style="background:var(--accent-light);border-radius:8px;padding:8px">
+              <div style="font-size:10px;color:var(--text2);margin-bottom:3px">美顏針</div>
+              <div style="font-size:18px;font-weight:700;color:var(--accent)">${summary.facial}</div>
+            </div>
+            <div style="background:var(--accent-light);border-radius:8px;padding:8px">
+              <div style="font-size:10px;color:var(--text2);margin-bottom:3px">針刀</div>
+              <div style="font-size:18px;font-weight:700;color:var(--accent)">${summary.nk}</div>
+            </div>
+            <div style="background:var(--accent-light);border-radius:8px;padding:8px">
+              <div style="font-size:10px;color:var(--text2);margin-bottom:3px">轉預約</div>
+              <div style="font-size:18px;font-weight:700;color:var(--accent)">${summary.cv}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
   if(document.getElementById('pwd-input').value===OWNER_PWD){
     document.getElementById('owner-lock').style.display='none';
     document.getElementById('owner-content').style.display='block';
@@ -1120,6 +1215,18 @@ function checkPwd(){
 document.getElementById('pwd-input').addEventListener('keydown',e=>{if(e.key==='Enter')checkPwd();});
 
 async function loadOwnerData(){
+  // 週統整
+  try{
+    const res=await fetch('/api/history',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({days:21})});
+    const result=await res.json();
+    if(result.success){
+      renderWeeklySummary(result.this_week.records, result.this_week.summary, 'owner-weekly');
+      renderWeeklySummary(result.last_week.records, result.last_week.summary, 'owner-lastweek');
+    }
+  }catch(e){
+    document.getElementById('owner-weekly').innerHTML='<div class="empty-note">載入失敗</div>';
+    document.getElementById('owner-lastweek').innerHTML='<div class="empty-note">載入失敗</div>';
+  }
   // 戰情室
   try{
     const res=await fetch('/api/warroom',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({})});
