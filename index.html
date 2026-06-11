@@ -451,6 +451,10 @@ textarea.note-area:focus{border-color:var(--accent)}
         <div class="kpi-right"><div class="kpi-detail" id="o-slot-detail">載入中</div><div class="kpi-bar-wrap"><div class="kpi-bar danger" id="o-slot-bar" style="width:0%"></div></div></div>
       </div>
       <div class="sec-label">本週每日明細</div>
+      <div class="setting-clinic-tab" style="margin-bottom:10px">
+        <button class="setting-clinic-btn active-yj" id="owner-tab-yj" onclick="switchOwnerClinic('yungjiu')">🏥 雲玖中醫</button>
+        <button class="setting-clinic-btn" id="owner-tab-fs" onclick="switchOwnerClinic('fushan')">🏥 福山雲玖</button>
+      </div>
       <div id="owner-weekly"><div class="loading-inline">載入中...</div></div>
 
       <div class="sec-label">上週總結</div>
@@ -1135,6 +1139,14 @@ async function markFollowupDone(pageId, therapy, btn){
 }
 
 let historyClinic = 'yungjiu';
+let ownerClinic = 'yungjiu';
+
+function switchOwnerClinic(c){
+  ownerClinic = c;
+  document.getElementById('owner-tab-yj').className = 'setting-clinic-btn' + (c==='yungjiu'?' active-yj':'');
+  document.getElementById('owner-tab-fs').className = 'setting-clinic-btn' + (c==='fushan'?' active-fs':'');
+  loadOwnerWeekly();
+}
 
 // 歷史記錄診所切換
 function switchHistoryClinic(c){
@@ -1235,10 +1247,11 @@ function checkPwd(){
 }
 document.getElementById('pwd-input').addEventListener('keydown',e=>{if(e.key==='Enter')checkPwd();});
 
-async function loadOwnerData(){
-  // 週統整
+async function loadOwnerWeekly(){
+  document.getElementById('owner-weekly').innerHTML='<div class="loading-inline">載入中...</div>';
+  document.getElementById('owner-lastweek').innerHTML='<div class="loading-inline">載入中...</div>';
   try{
-    const res=await fetch('/api/history',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({days:21})});
+    const res=await fetch('/api/history',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({days:21, clinic: ownerClinic})});
     const result=await res.json();
     if(result.success){
       renderWeeklySummary(result.this_week.records, result.this_week.summary, 'owner-weekly');
@@ -1248,6 +1261,11 @@ async function loadOwnerData(){
     document.getElementById('owner-weekly').innerHTML='<div class="empty-note">載入失敗</div>';
     document.getElementById('owner-lastweek').innerHTML='<div class="empty-note">載入失敗</div>';
   }
+}
+
+async function loadOwnerData(){
+  // 週統整
+  await loadOwnerWeekly();
   // 戰情室
   try{
     const res=await fetch('/api/warroom',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({})});
