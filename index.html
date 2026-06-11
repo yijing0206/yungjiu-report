@@ -473,6 +473,10 @@ textarea.note-area:focus{border-color:var(--accent)}
       <div><div class="dash-title">填報記錄</div><div class="dash-sub">最近 14 天</div></div>
       <button class="refresh-btn" onclick="loadHistory()">🔄 更新</button>
     </div>
+    <div class="setting-clinic-tab" style="margin-bottom:14px">
+      <button class="setting-clinic-btn active-yj" id="hist-tab-yj" onclick="switchHistoryClinic('yungjiu')">🏥 雲玖中醫</button>
+      <button class="setting-clinic-btn" id="hist-tab-fs" onclick="switchHistoryClinic('fushan')">🏥 福山雲玖</button>
+    </div>
     <div id="history-list"><div class="loading-inline">載入中...</div></div>
   </div>
 
@@ -1130,11 +1134,21 @@ async function markFollowupDone(pageId, therapy, btn){
   }
 }
 
+let historyClinic = 'yungjiu';
+
+// 歷史記錄診所切換
+function switchHistoryClinic(c){
+  historyClinic = c;
+  document.getElementById('hist-tab-yj').className = 'setting-clinic-btn' + (c==='yungjiu'?' active-yj':'');
+  document.getElementById('hist-tab-fs').className = 'setting-clinic-btn' + (c==='fushan'?' active-fs':'');
+  loadHistory();
+}
+
 // 歷史記錄
 async function loadHistory(){
   document.getElementById('history-list').innerHTML='<div class="loading-inline">載入中...</div>';
   try{
-    const res=await fetch('/api/history',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({days:14})});
+    const res=await fetch('/api/history',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({days:14, clinic: historyClinic})});
     const result=await res.json();
     if(!result.success||!result.records.length){
       document.getElementById('history-list').innerHTML='<div class="empty-note">尚無填報記錄</div>';
