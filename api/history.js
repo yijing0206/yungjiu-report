@@ -6,7 +6,9 @@ export default async function handler(req, res) {
 
   const NOTION_TOKEN = process.env.NOTION_TOKEN;
   const DATABASE_ID  = process.env.DATABASE_ID;
-  const { days = 14 } = req.body || {};
+  const DATABASE_ID_FUSHAN = process.env.DATABASE_ID_FUSHAN;
+  const { days = 14, clinic = 'yungjiu' } = req.body || {};
+  const dbId = clinic === 'fushan' ? DATABASE_ID_FUSHAN : DATABASE_ID;
 
   async function queryDB(dbId) {
     const r = await fetch(`https://api.notion.com/v1/databases/${dbId}/query`, {
@@ -48,7 +50,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const records = await queryDB(DATABASE_ID);
+    const records = await queryDB(dbId);
 
     // 本週（週一到今天）
     const tw = new Date(new Date().getTime() + 8*60*60*1000);
